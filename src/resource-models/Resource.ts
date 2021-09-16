@@ -1,6 +1,7 @@
 
 import React from "react";
 import {Model} from "./Model";
+import {Action} from "./actions/Action";
 
 export interface PropResource{
     model: Model;
@@ -11,10 +12,14 @@ export interface PropResource{
     editPage: React.FC;
     showPage: React.FC;
     table: string[];
+    actions: Action[];
 }
 
+/**
+ * A resource represents
+ */
 export class Resource{
-    model: Model;
+    actions: Action[];
     title: string;
     resourceName: string;
     filters: object[];
@@ -23,19 +28,14 @@ export class Resource{
     showPage: React.FC;
     table: string[];
 
-    constructor({model, title, resourceName, filters, createPage, editPage, showPage, table=[]}:PropResource) {
-        this.model = Model.createFromJson(model, resourceName)
+    constructor({title, resourceName, filters, createPage, editPage, showPage, actions=[], table=[]}:PropResource) {
         this.title = title;
         this.resourceName = resourceName;
         this.filters = filters;
+        this.actions = actions.map(action => new Action(action));
         this.createPage = createPage;
         this.editPage = editPage;
         this.showPage = showPage;
         this.table = table;
     }
-
-    getModel():Model{
-        return this.model;
-    }
-
 }

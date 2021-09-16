@@ -24,7 +24,7 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
     const [modelLoaded, setModelLoaded] = useState<boolean>(false);
     const dispatch = useDispatch();
     useEffect(()=>{
-        fetch(route).then(response => response.json().then(retrieved => retrieved)).then(retrieved => {
+        fetch(route).then(response => response.json()).then(retrieved => {
             const registry = override(retrieved,overrideRegistry);
             const arrayRegistry = Object.keys(registry).map(resourceName => {return{name: resourceName, resource: new Resource(registry[resourceName]) } });
             dispatch(updateRegistry(arrayRegistry))
@@ -32,19 +32,6 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
         })
     },[])
     return modelLoaded;
-}
-
-export function useSetRegistry(registry:any){
-    const [modelLoaded, setModelLoaded] = useState(false);
-    const arrayRegistry = Object.keys(registry).map(resourceName => {return{name: resourceName, resource: new Resource(registry[resourceName]) } });
-    const dispatch = useDispatch();
-    useEffect(()=> {
-        dispatch(updateRegistry(arrayRegistry))
-        setModelLoaded(true)
-    },[])
-
-    return modelLoaded;
-
 }
 
 export function override(original:any, overrideElement:any){
