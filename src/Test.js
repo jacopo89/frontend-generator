@@ -11,11 +11,9 @@ import {units} from "./mock/units";
 import {landlordRelationship} from "./mock/landlordRelationship";
 import {landlord} from "./mock/landlord";
 import {tenancies} from "./mock/tenancies";
-import {ShowPage} from "./generators/pages/ShowPageGenerator";
-import PropertyUnitShow from "./mock/pages/PropertyUnitShow";
-import {FilterList} from "./generators/filters/FilterList";
-import {RouteFilterList} from "./generators/pages/ListPageGenerator";
 import {EditPage} from "./generators/pages/EditPageGenerator";
+import {unit} from "./mock/unit";
+import {RouteFilterList} from "./generators/pages/ListPageGenerator";
 
 export default function Test(){
 
@@ -23,6 +21,7 @@ export default function Test(){
     createServer({
         routes() {
             this.get("http://localhost:1000/api/properties/1", ()=> propertyShow)
+
             this.get("http://localhost:1000/api/properties", () => properties);
             this.get("http://localhost:1000/api/landlords", () => landlords);
             this.get("http://localhost:1000/api/landlord_relationships/1", () => landlordRelationship);
@@ -43,19 +42,10 @@ export default function Test(){
     const render = <div>
 
 
-        {/*<RouteFilterList resourceName={"properties"} filters={{}}/>*/}
+        <RouteFilterList resourceName={"properties"} filters={{}}/>
         {/*<ShowPage propResourceName={"properties"} propId={1} propShowPage={<ShowPageCustom/>}/>*/}
-        <EditPage propResourceName={"landlord_relationships"} propId={1} propEditPage={<Property></Property>}  />
 
 
     </div>
     return modelLoaded ? <div style={{padding:30}}>{render}</div> : <div></div>;
-}
-
-function Property(props){
-    const {model, formValue, record} = props
-
-    return <>
-        {model.getInputField("firstLandlordTenancy.landlordContract.payments", props)}
-    </>
 }

@@ -1,4 +1,4 @@
-import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx } from "react/jsx-runtime";
 import { useState } from "react";
 import { useSetResourceModel } from "./resource-models/modelsRegistry";
 import { createServer } from "miragejs";
@@ -12,7 +12,7 @@ import { units } from "./mock/units";
 import { landlordRelationship } from "./mock/landlordRelationship";
 import { landlord } from "./mock/landlord";
 import { tenancies } from "./mock/tenancies";
-import { EditPage } from "./generators/pages/EditPageGenerator";
+import { RouteFilterList } from "./generators/pages/ListPageGenerator";
 export default function Test() {
     createServer({
         routes() {
@@ -29,10 +29,6 @@ export default function Test() {
     });
     const modelLoaded = useSetResourceModel(overrideRegistry, "http://localhost:1000/resources");
     const [resourceName, setResourceName] = useState(true);
-    const render = _jsx("div", { children: _jsx(EditPage, { propResourceName: "landlord_relationships", propId: 1, propEditPage: _jsx(Property, {}, void 0) }, void 0) }, void 0);
+    const render = _jsx("div", { children: _jsx(RouteFilterList, { resourceName: "properties", filters: {} }, void 0) }, void 0);
     return modelLoaded ? _jsx("div", Object.assign({ style: { padding: 30 } }, { children: render }), void 0) : _jsx("div", {}, void 0);
-}
-function Property(props) {
-    const { model, formValue, record } = props;
-    return _jsx(_Fragment, { children: model.getInputField("firstLandlordTenancy.landlordContract.payments", props) }, void 0);
 }
