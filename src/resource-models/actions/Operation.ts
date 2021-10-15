@@ -1,14 +1,13 @@
-import React from "react";
 import {Model} from "../Model";
 
 type OperationType = "item" | "collection";
-type Verb = "POST" | "GET" | "PATCH" | "PUT";
+type Method = "POST" | "GET" | "PATCH" | "PUT";
 
 export interface PropAction{
     model: Model;
     name: string;
     resourceName: string;
-    verb: Verb;
+    method: Method;
     contentType: string;
     type: OperationType
 }
@@ -16,18 +15,18 @@ export interface PropAction{
 /**
  * A resource represents
  */
-export class Action{
+export class Operation{
     model: Model;
     name: string;
     resourceName: string;
-    verb: Verb;
+    method: Method;
     contentType: string;
     type: OperationType
 
-    constructor({model, name, resourceName, verb, contentType, type}:PropAction) {
+    constructor({model, name, resourceName, method, contentType, type}:PropAction) {
         this.model = Model.createFromJson(model, resourceName)
         this.name = name;
-        this.verb = verb;
+        this.method = method;
         this.resourceName = resourceName;
         this.contentType = contentType;
         this.type = type

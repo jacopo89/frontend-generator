@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {updateRegistry} from "../redux/actions/app/actions";
 import _ from 'lodash';
+import {MainResource} from "./MainResource";
 
 
 export function useGetResourceModel(resourceName:string): Resource{
@@ -26,7 +27,7 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
     useEffect(()=>{
         fetch(route).then(response => response.json()).then(retrieved => {
             const registry = override(retrieved,overrideRegistry);
-            const arrayRegistry = Object.keys(registry).map(resourceName => {return{name: resourceName, resource: new Resource(registry[resourceName]) } });
+            const arrayRegistry = Object.keys(registry).map(resourceName => {return{name: resourceName, resource: new MainResource(registry[resourceName]) } });
             dispatch(updateRegistry(arrayRegistry))
             setModelLoaded(true);
         })

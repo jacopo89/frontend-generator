@@ -1,8 +1,5 @@
-
 import React from "react";
 import {Model} from "./Model";
-import {Action} from "./actions/Action";
-import {ActionsList} from "./actions/ActionsList";
 
 export interface PropResource{
     model: Model;
@@ -13,14 +10,13 @@ export interface PropResource{
     editPage: React.FC;
     showPage: React.FC;
     table: string[];
-    actions: object[]; //TODO CHECK
 }
 
 /**
  * A resource represents
  */
 export class Resource{
-    actions: ActionsList;
+    model: Model;
     title: string;
     resourceName: string;
     filters: object[];
@@ -29,14 +25,18 @@ export class Resource{
     showPage: React.FC;
     table: string[];
 
-    constructor({title, resourceName, filters, createPage, editPage, showPage, actions, table=[]}:PropResource) {
+    constructor({title, model, resourceName, filters, createPage, editPage, showPage, table=[]}:PropResource) {
         this.title = title;
         this.resourceName = resourceName;
         this.filters = filters;
-        this.actions = new ActionsList( actions.map((action:any) => new Action(action)))
         this.createPage = createPage;
         this.editPage = editPage;
         this.showPage = showPage;
         this.table = table;
+        this.model =model;
+    }
+
+    getModel(){
+        return this.model;
     }
 }
