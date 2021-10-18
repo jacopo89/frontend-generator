@@ -18,7 +18,7 @@ export class FormValue extends Object{
             try{
                 const propertyModel = model.getProperty(key);
 
-                if(propertyModel.write){
+                //if(propertyModel.write){
                     if(propertyModel.type===REFERENCE){
                         // @ts-ignore
                         if( typeof value === "object"){
@@ -32,7 +32,7 @@ export class FormValue extends Object{
                         // @ts-ignore
                         formValue[key] =  propertyModel.getFormValue(value);
                     }
-                }
+                //}
 
             }catch(error){
 

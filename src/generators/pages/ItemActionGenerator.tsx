@@ -1,11 +1,11 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {UpdateListings} from "../../utils/referenceFieldUtils";
-import {useEdit} from "../../redux/actions/verbs/edit";
 import {FormGenerator} from "../forms/FormGenerator";
 import {Error as CustomError, Errors} from "../errors/Errors";
 import {FormValue} from "../../resource-models/formvalue/FormValue";
 import {Record} from "../../resource-models/Record";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
+import {useItemOperation} from "../../redux/actions/verbs/operation";
 
 interface EditFormGeneratorProps {
     propResourceName: string,
@@ -29,6 +29,7 @@ interface EditFormGeneratorProps {
  */
 export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, propActionName, propResourceName, record:recordJson, propEditPage, refresh , isEdit=true}) => {
     const {operations, resourceName} = useGetResourceModel(propResourceName);
+    const operation = operations.findItemOperationByName(propActionName);
     const {model} = operations.findItemOperationByName(propActionName);
 
 
@@ -39,8 +40,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
     const [record, setRecord] = useState<Record>(initialValueRecord.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
-    const {edit, errors:responseErrors, loading} = useEdit(); // TODO CHANGE WITH GENERIC
-
+    const {action, errors:responseErrors, loading} = useItemOperation(resourceName, operation);
 
     useEffect(()=>{
         // @ts-ignore
@@ -58,7 +58,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
-    const submitHandler = async (formValue:FormValue)=> edit(resourceName,propId, FormValue.toJson(formValue)).then(response => {
+    const submitHandler = async (formValue:FormValue)=> action(propId,FormValue.toJson(formValue)).then((response:any) => {
         const record = Record.createFromJson(response, model)
         setRecord(record)
         setFormValue(FormValue.createFromRecord(record, model))

@@ -28,7 +28,6 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
         fetch(route).then(response => response.json()).then(retrieved => {
             const registry = override(retrieved,overrideRegistry);
             const arrayRegistry = Object.keys(registry).map(resourceName => {
-                console.log("resource name",resourceName)
                 return{name: resourceName, resource: new MainResource(registry[resourceName]) } });
             dispatch(updateRegistry(arrayRegistry))
             setModelLoaded(true);

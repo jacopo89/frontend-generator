@@ -13,9 +13,6 @@ export interface PropAction{
     path: string | null;
 }
 
-/**
- * A resource represents
- */
 export class Operation{
     model: Model;
     name: string;
@@ -41,18 +38,19 @@ export class Operation{
 }
 
 class Path{
-    path: string
+    path;
     parameters: string[]
 
     constructor(path:string) {
-        this.path = path;
+        // eslint-disable-next-line no-new-func
+        this.path = Path.extractFunction(path);
         this.parameters = Path.extractParameters(path)
     }
 
     static extractFunction(path:string):()=>{}{
 
-        const regexpDollar = new RegExp("\{",'g');
-        const regexpBracket = new RegExp("\}",'g');
+        const regexpDollar = new RegExp("{",'g');
+        const regexpBracket = new RegExp("}",'g');
         const found = Array.from(path.matchAll(regexpDollar))
         const found2 = Array.from(path.matchAll(regexpBracket))
 
