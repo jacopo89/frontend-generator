@@ -6,7 +6,7 @@ import _ from 'lodash';
 import {MainResource} from "./MainResource";
 
 
-export function useGetResourceModel(resourceName:string): Resource{
+export function useGetResourceModel(resourceName:string): MainResource{
 
     const state = useSelector(state=>state);
     // @ts-ignore
@@ -27,7 +27,9 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
     useEffect(()=>{
         fetch(route).then(response => response.json()).then(retrieved => {
             const registry = override(retrieved,overrideRegistry);
-            const arrayRegistry = Object.keys(registry).map(resourceName => {return{name: resourceName, resource: new MainResource(registry[resourceName]) } });
+            const arrayRegistry = Object.keys(registry).map(resourceName => {
+                console.log("resource name",resourceName)
+                return{name: resourceName, resource: new MainResource(registry[resourceName]) } });
             dispatch(updateRegistry(arrayRegistry))
             setModelLoaded(true);
         })

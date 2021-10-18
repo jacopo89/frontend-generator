@@ -24,8 +24,9 @@ interface GenericProps{
 }
 
 export const Create: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new FormValue()}) => {
-    const {model, createPage} = useGetResourceModel(resourceName);
-    const createPageToUse:any = useMemo(()=> propCreatePage ? propCreatePage: createPage,[createPage, propCreatePage])
+    const {operations} = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel("post");
+    const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     const [formValue, setFormValue] = useState<FormValue>(lockedFormValue);
     const {create, errors:responseErrors, loading} = useCreate();
@@ -99,8 +100,9 @@ export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, err
 }
 
 export const CreateResource: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new FormValue()}) => {
-    const {model, createPage} = useGetResourceModel(resourceName);
-    const createPageToUse:any = useMemo(()=> propCreatePage ? propCreatePage: createPage,[createPage, propCreatePage])
+    const {operations} = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel("post")
+    const createPageToUse:any = propCreatePage
 
     const {create, errors:responseErrors, loading} = useCreate();
     const [errors, setErrors] = useState(new Errors([]));

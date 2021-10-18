@@ -1,14 +1,15 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import {useGetResourceModel} from "../../../resource-models/modelsRegistry";
-import {UpdateListings} from "../../../utils/referenceFieldUtils";
-import {useEdit} from "../../../redux/actions/verbs/edit";
-import {FormGenerator} from "../../forms/FormGenerator";
-import {Error as CustomError, Errors} from "../../errors/Errors";
-import {FormValue} from "../../../resource-models/formvalue/FormValue";
-import {Record} from "../../../resource-models/Record";
+import {UpdateListings} from "../../utils/referenceFieldUtils";
+import {useEdit} from "../../redux/actions/verbs/edit";
+import {FormGenerator} from "../forms/FormGenerator";
+import {Error as CustomError, Errors} from "../errors/Errors";
+import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Record} from "../../resource-models/Record";
+import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 
 interface EditFormGeneratorProps {
     propResourceName: string,
+    propActionName:string,
     propId: number,
     record: object,
     propEditPage?: any,
@@ -26,9 +27,10 @@ interface EditFormGeneratorProps {
  *
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
-export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, propResourceName, propEditPage, refresh , isEdit=true}) => {
-    const {model, resourceName, editPage} = useGetResourceModel(propResourceName);
-    const createEditPageToUse:any = useMemo(()=> propEditPage ? propEditPage: editPage,[propEditPage, editPage])
+export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, propActionName, propResourceName, record:recordJson, propEditPage, refresh , isEdit=true}) => {
+    const {operations, resourceName} = useGetResourceModel(propResourceName);
+    const {model} = operations.findItemOperationByName(propActionName);
+    const createEditPageToUse:any = propEditPage;
     const initialValue = useRef(new FormValue());
     const initialValueRecord = useRef(new Record());
     const [formValue, setFormValue] = useState<FormValue>(initialValue.current);

@@ -11,7 +11,6 @@ import appReducer from './redux/reducers/app/appReducer';
 import verbsReducer from './redux/reducers/verbs/index';
 import {createBrowserHistory} from "history";
 import {Provider, useSelector} from "react-redux";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import ErrorBar from "./rendering/errors/ErrorBar";
 
 const history = createBrowserHistory();
@@ -34,10 +33,10 @@ const store = createStore(
 
 function ThemedApp(){
     const {appReducer} = useSelector(state=>state);
-    return <ThemeProvider theme={appReducer.theme}>
+    return  <>
         <App />
         <ErrorBar/>
-    </ThemeProvider>
+        </>
 }
 
 ReactDOM.render(

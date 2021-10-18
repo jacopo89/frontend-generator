@@ -3,7 +3,7 @@ import {useSetResourceModel} from "./resource-models/modelsRegistry";
 import {createServer} from "miragejs"
 import {properties} from "./mock/properties";
 import {listings} from "./mock/listings";
-import {model} from "./mock/model";
+import {modelwop} from "./mock/model";
 import {overrideRegistry} from "./mock/overrideRegistry";
 import {landlords} from "./mock/landlords";
 import {propertyShow} from "./mock/propertyShow";
@@ -14,6 +14,7 @@ import {tenancies} from "./mock/tenancies";
 import {EditPage} from "./generators/pages/EditPageGenerator";
 import {unit} from "./mock/unit";
 import {RouteFilterList} from "./generators/pages/ListPageGenerator";
+import {Create} from "./generators/pages/CreatePageGenerator";
 
 export default function Test(){
 
@@ -26,14 +27,14 @@ export default function Test(){
             this.get("http://localhost:1000/api/landlords", () => landlords);
             this.get("http://localhost:1000/api/landlord_relationships/1", () => landlordRelationship);
             this.post("http://localhost:1000/api/resources/listings", ()=> listings)
-            this.get("http://localhost:1000/resources", ()=> model)
+            this.get("http://localhost:1000/resources", ()=> modelwop)
             this.get("http://localhost:1000/api/units", ()=> units)
             this.get("http://localhost:1000/api/landlords/1", ()=> landlord)
             this.get("http://localhost:1000/api/landlord_relationships", ()=> tenancies)
         },
     })
 
-    const modelLoaded = useSetResourceModel(overrideRegistry,"http://localhost:1000/resources" );
+    const modelLoaded = useSetResourceModel({},"http://localhost:1000/resources" );
 
 
     const [resourceName, setResourceName] = useState(true)
@@ -42,10 +43,24 @@ export default function Test(){
     const render = <div>
 
 
-        <RouteFilterList resourceName={"properties"} filters={{}}/>
+        {<Create propResourceName={"courses"} propCreatePage={<CreatePage></CreatePage>}/>}
         {/*<ShowPage propResourceName={"properties"} propId={1} propShowPage={<ShowPageCustom/>}/>*/}
 
 
     </div>
     return modelLoaded ? <div style={{padding:30}}>{render}</div> : <div></div>;
+}
+
+function CreatePage(props){
+    const {model}= props
+    return <>
+        <div>
+            {model.getInputField("title",props)}
+        </div>
+        <div>
+            {model.getInputField("society",props)}
+        </div>
+    </>
+
+
 }

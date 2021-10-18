@@ -9,7 +9,8 @@ export interface PropAction{
     resourceName: string;
     method: Method;
     contentType: string;
-    type: OperationType
+    operationType: OperationType;
+    path: string | null;
 }
 
 /**
@@ -21,19 +22,80 @@ export class Operation{
     resourceName: string;
     method: Method;
     contentType: string;
-    type: OperationType
+    operationType: OperationType
+    path: Path | null;
 
-    constructor({model, name, resourceName, method, contentType, type}:PropAction) {
+    constructor({model, name, resourceName, method, contentType, operationType, path}:PropAction) {
         this.model = Model.createFromJson(model, resourceName)
         this.name = name;
         this.method = method;
         this.resourceName = resourceName;
         this.contentType = contentType;
-        this.type = type
+        this.operationType = operationType
+        this.path = (path) ? new Path(path) :null;
     }
 
     getModel():Model{
         return this.model;
     }
+}
 
+class Path{
+    path: string
+    parameters: string[]
+
+    constructor(path:string) {
+        this.path = path;
+        this.parameters = Path.extractParameters(path)
+    }
+
+    static extractFunction(path:string):()=>{}{
+
+        const regexpDollar = new RegExp("\{",'g');
+        const regexpBracket = new RegExp("\}",'g');
+        const found = Array.from(path.matchAll(regexpDollar))
+        const found2 = Array.from(path.matchAll(regexpBracket))
+
+        if(found.length !== found2.length){
+            throw new Error("Invalid path")
+        }
+
+        let parameters: any[] = [];
+
+        for(let i=found.length-1; i>=0; i--){
+            // @ts-ignore
+            const element=path.substring(found[i].index + 1, found2[i].index)
+             parameters = [element, ...parameters];
+
+        }
+
+        const parametersString = parameters.join(",")
+
+        // eslint-disable-next-line no-eval
+        return eval("("+parametersString+") => `" + path + "`");
+    }
+
+
+    static extractParameters(path:string):string[]{
+
+        const regexpDollar = new RegExp("\{",'g');
+        const regexpBracket = new RegExp("\}",'g');
+        const found = Array.from(path.matchAll(regexpDollar))
+        const found2 = Array.from(path.matchAll(regexpBracket))
+
+        if(found.length !== found2.length){
+            throw new Error("Invalid path")
+        }
+
+        let parameters: any[] = [];
+
+        for(let i=found.length-1; i>=0; i--){
+            // @ts-ignore
+            const element=path.substring(found[i].index + 1, found2[i].index)
+            parameters = [element, ...parameters];
+
+        }
+
+        return parameters;
+    }
 }

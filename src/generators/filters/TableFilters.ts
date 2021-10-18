@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import _ from "lodash";
 import {replace} from "connected-react-router";
@@ -8,7 +8,7 @@ import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {routeManipulatorWithFilters} from "../../utils/routeUtils";
 
 
-export const useRouteFilters: (resourceNameToUse:string, presetFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceNameToUse, presetFilters) => {
+export const useRouteFilters: (resourceNameToUse:string,operationName:string, presetFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceNameToUse,operationName, presetFilters) => {
     const location = useLocation<any>();
     const [routeFilters, setRouteFilters] = useState<any>({});
     const [inheritedFilters, setInheritedFilters] = useState<any>({});
@@ -86,8 +86,8 @@ export const useRouteFilters: (resourceNameToUse:string, presetFilters:any) => {
 
 
     const clearFilters = ()=>setFilterObject({});
-    const {model, filters:modelFilters} = useGetResourceModel(resourceNameToUse);
-
+    const {operations, filters:modelFilters} = useGetResourceModel(resourceNameToUse);
+    const model = operations.getOperationModel(operationName)
     const modelFi = getFinalFilters(modelFilters, {})
     const propsFiltersList = useMemo(()=> {return {model:model, modelFilters: modelFi, filters: filterObject, setFilters: setFilterObject}},[model, modelFilters, filterObject]);
     const filterComponents = FilterList(propsFiltersList);
@@ -95,12 +95,13 @@ export const useRouteFilters: (resourceNameToUse:string, presetFilters:any) => {
 
 }
 
-export const useTableFilters: (resourceName:string, propLockedFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceName, propLockedFilters) => {
+export const useTableFilters: (resourceName:string, operationName: string, propLockedFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceName,operationName, propLockedFilters) => {
     const [filters, setFilters] = useState<any>(propLockedFilters);
-    const {model, filters:modelFilters} = useGetResourceModel(resourceName);
+    const {filters:modelFilters, operations} = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel(operationName)
     const clearFilters = ()=>setFilters(propLockedFilters);
     const modelFi = getFinalFilters(modelFilters, propLockedFilters);
-    const propsFiltersList = useMemo(()=> {return {model:model, modelFilters:modelFi , filters: filters, setFilters: setFilters}},[model, modelFilters, filters, propLockedFilters]);
+    const propsFiltersList = useMemo(()=> {return {modelFilters:modelFi , filters: filters, setFilters: setFilters, model}},[modelFilters, model, filters, propLockedFilters]);
     const filterComponents = FilterList(propsFiltersList);
     return {filters:filters, components:filterComponents, clearFilters:clearFilters}
 }
