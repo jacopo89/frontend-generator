@@ -26,6 +26,7 @@ interface GenericProps{
 export const Create: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new FormValue()}) => {
     const {operations} = useGetResourceModel(resourceName);
     const model = operations.getOperationModel("post");
+    console.log("model", model);
     const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     const [formValue, setFormValue] = useState<FormValue>(lockedFormValue);

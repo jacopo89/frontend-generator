@@ -12,23 +12,23 @@ export class FormValue extends Object {
         Object.entries(record).forEach(([key, value]) => {
             try {
                 const propertyModel = model.getProperty(key);
-                if (propertyModel.write) {
-                    if (propertyModel.type === REFERENCE) {
+                //if(propertyModel.write){
+                if (propertyModel.type === REFERENCE) {
+                    // @ts-ignore
+                    if (typeof value === "object") {
                         // @ts-ignore
-                        if (typeof value === "object") {
-                            // @ts-ignore
-                            formValue[key] = propertyModel.getFormValue(value["id"]);
-                        }
-                        else {
-                            // @ts-ignore
-                            formValue[key] = propertyModel.getFormValue(value);
-                        }
+                        formValue[key] = propertyModel.getFormValue(value["id"]);
                     }
                     else {
                         // @ts-ignore
                         formValue[key] = propertyModel.getFormValue(value);
                     }
                 }
+                else {
+                    // @ts-ignore
+                    formValue[key] = propertyModel.getFormValue(value);
+                }
+                //}
             }
             catch (error) {
             }

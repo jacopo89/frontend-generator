@@ -38,8 +38,9 @@ import { Record } from "../../../resource-models/Record";
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
 export const EditForm = ({ record: recordJson, propId, propResourceName, propEditPage, refresh, isEdit = true }) => {
-    const { model, resourceName, editPage } = useGetResourceModel(propResourceName);
-    const createEditPageToUse = useMemo(() => propEditPage ? propEditPage : editPage, [propEditPage, editPage]);
+    const { operations, resourceName } = useGetResourceModel(propResourceName);
+    const model = operations.getOperationModel("patch");
+    const createEditPageToUse = propEditPage;
     const initialValue = useRef(new FormValue());
     const initialValueRecord = useRef(new Record());
     const [formValue, setFormValue] = useState(initialValue.current);

@@ -1,7 +1,8 @@
-import { Model } from "./Model";
+/**
+ * A resource represents
+ */
 export class Resource {
-    constructor({ model, title, resourceName, filters, createPage, editPage, showPage, table = [] }) {
-        this.model = Model.createFromJson(model, resourceName);
+    constructor({ title, model, resourceName, filters, createPage, editPage, showPage, table = [] }) {
         this.title = title;
         this.resourceName = resourceName;
         this.filters = filters;
@@ -9,6 +10,7 @@ export class Resource {
         this.editPage = editPage;
         this.showPage = showPage;
         this.table = table;
+        this.model = model;
     }
     getModel() {
         return this.model;

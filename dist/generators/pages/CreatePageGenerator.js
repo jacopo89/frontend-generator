@@ -19,7 +19,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { jsx as _jsx } from "react/jsx-runtime";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetResourceModel } from "../../resource-models/modelsRegistry";
 import { useCreate } from "../../redux/actions/verbs/create";
 import { FormGenerator } from "../forms/FormGenerator";
@@ -27,8 +27,9 @@ import { UpdateListings } from "../../utils/referenceFieldUtils";
 import { Error, Errors } from "../errors/Errors";
 import { FormValue } from "../../resource-models/formvalue/FormValue";
 export const Create = ({ propResourceName: resourceName, propCreatePage, lockedFormValue = new FormValue() }) => {
-    const { model, createPage } = useGetResourceModel(resourceName);
-    const createPageToUse = useMemo(() => propCreatePage ? propCreatePage : createPage, [createPage, propCreatePage]);
+    const { operations } = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel("post");
+    const createPageToUse = propCreatePage;
     const { listings: referencesMap, updateListings: refreshReferencesMap } = UpdateListings();
     const [formValue, setFormValue] = useState(lockedFormValue);
     const { create, errors: responseErrors, loading } = useCreate();
@@ -61,8 +62,9 @@ export const GenericCreate = ({ model, submitHandler, errors = new Errors([]), p
     return genericCreateRender;
 };
 export const CreateResource = ({ propResourceName: resourceName, propCreatePage, lockedFormValue = new FormValue() }) => {
-    const { model, createPage } = useGetResourceModel(resourceName);
-    const createPageToUse = useMemo(() => propCreatePage ? propCreatePage : createPage, [createPage, propCreatePage]);
+    const { operations } = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel("post");
+    const createPageToUse = propCreatePage;
     const { create, errors: responseErrors, loading } = useCreate();
     const [errors, setErrors] = useState(new Errors([]));
     useEffect(() => {
