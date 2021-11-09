@@ -6,7 +6,7 @@ import { replace } from "connected-react-router";
 import { FilterList } from "./FilterList";
 import { useGetResourceModel } from "../../resource-models/modelsRegistry";
 import { routeManipulatorWithFilters } from "../../utils/routeUtils";
-export const useRouteFilters = (resourceNameToUse, presetFilters) => {
+export const useRouteFilters = (resourceNameToUse, operationName, presetFilters) => {
     const location = useLocation();
     const [routeFilters, setRouteFilters] = useState({});
     const [inheritedFilters, setInheritedFilters] = useState({});
@@ -72,18 +72,20 @@ export const useRouteFilters = (resourceNameToUse, presetFilters) => {
         }
     }, [filterObject]);
     const clearFilters = () => setFilterObject({});
-    const { model, filters: modelFilters } = useGetResourceModel(resourceNameToUse);
+    const { operations, filters: modelFilters } = useGetResourceModel(resourceNameToUse);
+    const model = operations.getOperationModel(operationName);
     const modelFi = getFinalFilters(modelFilters, {});
     const propsFiltersList = useMemo(() => { return { model: model, modelFilters: modelFi, filters: filterObject, setFilters: setFilterObject }; }, [model, modelFilters, filterObject]);
     const filterComponents = FilterList(propsFiltersList);
     return { filters: filterObject, components: filterComponents, clearFilters: clearFilters };
 };
-export const useTableFilters = (resourceName, propLockedFilters) => {
+export const useTableFilters = (resourceName, operationName, propLockedFilters) => {
     const [filters, setFilters] = useState(propLockedFilters);
-    const { model, filters: modelFilters } = useGetResourceModel(resourceName);
+    const { filters: modelFilters, operations } = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel(operationName);
     const clearFilters = () => setFilters(propLockedFilters);
     const modelFi = getFinalFilters(modelFilters, propLockedFilters);
-    const propsFiltersList = useMemo(() => { return { model: model, modelFilters: modelFi, filters: filters, setFilters: setFilters }; }, [model, modelFilters, filters, propLockedFilters]);
+    const propsFiltersList = useMemo(() => { return { modelFilters: modelFi, filters: filters, setFilters: setFilters, model }; }, [modelFilters, model, filters, propLockedFilters]);
     const filterComponents = FilterList(propsFiltersList);
     return { filters: filters, components: filterComponents, clearFilters: clearFilters };
 };

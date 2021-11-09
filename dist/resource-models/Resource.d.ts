@@ -10,6 +10,9 @@ export interface PropResource {
     showPage: React.FC;
     table: string[];
 }
+/**
+ * A resource represents
+ */
 export declare class Resource {
     model: Model;
     title: string;
@@ -19,6 +22,6 @@ export declare class Resource {
     editPage: React.FC;
     showPage: React.FC;
     table: string[];
-    constructor({ model, title, resourceName, filters, createPage, editPage, showPage, table }: PropResource);
+    constructor({ title, model, resourceName, filters, createPage, editPage, showPage, table }: PropResource);
     getModel(): Model;
 }

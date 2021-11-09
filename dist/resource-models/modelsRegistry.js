@@ -1,8 +1,8 @@
-import { Resource } from "./Resource";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { updateRegistry } from "../redux/actions/app/actions";
 import _ from 'lodash';
+import { MainResource } from "./MainResource";
 export function useGetResourceModel(resourceName) {
     var _a;
     const state = useSelector(state => state);
@@ -20,22 +20,14 @@ export function useSetResourceModel(overrideRegistry, route = "/resources") {
     const [modelLoaded, setModelLoaded] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        fetch(route).then(response => response.json().then(retrieved => retrieved)).then(retrieved => {
+        fetch(route).then(response => response.json()).then(retrieved => {
             const registry = override(retrieved, overrideRegistry);
-            const arrayRegistry = Object.keys(registry).map(resourceName => { return { name: resourceName, resource: new Resource(registry[resourceName]) }; });
+            const arrayRegistry = Object.keys(registry).map(resourceName => {
+                return { name: resourceName, resource: new MainResource(registry[resourceName]) };
+            });
             dispatch(updateRegistry(arrayRegistry));
             setModelLoaded(true);
         });
-    }, []);
-    return modelLoaded;
-}
-export function useSetRegistry(registry) {
-    const [modelLoaded, setModelLoaded] = useState(false);
-    const arrayRegistry = Object.keys(registry).map(resourceName => { return { name: resourceName, resource: new Resource(registry[resourceName]) }; });
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(updateRegistry(arrayRegistry));
-        setModelLoaded(true);
     }, []);
     return modelLoaded;
 }
