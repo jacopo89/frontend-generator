@@ -114,7 +114,8 @@ function randomArray() {
 }
 export function RouteFilterList({ resourceName, filters: lockedFilters, itemOperations = [], collectionOperations = [] }) {
     var _a;
-    const { model, table, title } = useGetResourceModel(resourceName);
+    const { operations } = useGetResourceModel(resourceName);
+    const { model, table, title } = operations.getOperationModel("get");
     const [cookies, setCookie] = useCookies([`list-${resourceName}`]);
     const [localTable, setLocalTable] = useState((_a = cookies[`list-${resourceName}`]) !== null && _a !== void 0 ? _a : table);
     const [localModel, setLocalModel] = useState(model);
