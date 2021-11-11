@@ -18,8 +18,6 @@ export default function ({label, model, hasError, errorMessage, onClick, value, 
 
 
     const localOnChange = (value:any) => {
-
-        console.log("value", value)
         // @ts-ignore
         onClick([model.id, value]);
     }

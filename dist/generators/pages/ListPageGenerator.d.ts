@@ -11,12 +11,6 @@ export namespace EnhancedTableHead {
         const headCells: PropTypes.Validator<any[]>;
     }
 }
-export function RouteFilterList({ resourceName, filters: lockedFilters, itemOperations, collectionOperations }: {
-    resourceName: any;
-    filters: any;
-    itemOperations?: any[] | undefined;
-    collectionOperations?: any[] | undefined;
-}): JSX.Element;
 export function FilterList({ resourceName, filters: lockedFilters, itemOperations, collectionOperations }: {
     resourceName: any;
     filters: any;
@@ -45,11 +39,4 @@ export function GenericList({ data: rows, totalItems, loading, page, setPage, se
     getDataHandler: any;
     getDataHandlerDebounced: any;
 }): JSX.Element;
-export function getOperationButton({ color, onClick, text, icon, visible }: {
-    color: any;
-    onClick: any;
-    text: any;
-    icon: any;
-    visible?: boolean | undefined;
-}): void;
 import PropTypes from "prop-types";

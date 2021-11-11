@@ -74,7 +74,7 @@ export class Model {
         return this.getProperty(requestedName).getOutputField(newProps, new PropertyFieldConfiguration({ viewElement: viewElement, showLabel: showLabel }));
     }
     getAllPropertiesReadableNames() {
-        return this.properties.filter((propertyModel) => propertyModel.read === true).map((propertyModel) => {
+        return this.properties.filter((propertyModel) => propertyModel).map((propertyModel) => {
             return {
                 id: propertyModel.id,
                 label: propertyModel.label

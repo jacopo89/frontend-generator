@@ -3,7 +3,6 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import MuiPhoneInput from 'material-ui-phone-number';
 export default function ({ label, model, hasError, errorMessage, onClick, value, adornment }) {
     const localOnChange = (value) => {
-        console.log("value", value);
         // @ts-ignore
         onClick([model.id, value]);
     };

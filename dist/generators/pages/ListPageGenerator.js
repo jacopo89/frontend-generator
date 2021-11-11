@@ -27,7 +27,7 @@ import { useGetResourceModel } from "../../resource-models/modelsRegistry";
 import { useList } from "../../redux/actions/verbs/list";
 import { getComparator, stableSort } from "./utils/ListPageGeneratorUtils";
 import ButtonsHorizontalList from "../../rendering/components/buttons/ButtonsHorizontalList";
-import { useRouteFilters, useTableFilters } from "../filters/TableFilters";
+import { useTableFilters } from "../filters/TableFilters";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCookies } from "react-cookie";
@@ -112,55 +112,6 @@ function getRandomInt(min, max) {
 function randomArray() {
     return new Array(getRandomInt(3, 7)).fill(1);
 }
-export function RouteFilterList({ resourceName, filters: lockedFilters, itemOperations = [], collectionOperations = [] }) {
-    var _a;
-    const { operations } = useGetResourceModel(resourceName);
-    const { model, table, title } = operations.getOperationModel("get");
-    const [cookies, setCookie] = useCookies([`list-${resourceName}`]);
-    const [localTable, setLocalTable] = useState((_a = cookies[`list-${resourceName}`]) !== null && _a !== void 0 ? _a : table);
-    const [localModel, setLocalModel] = useState(model);
-    const [rows, setRows] = useState([]);
-    useEffect(() => { setRows([]); }, [resourceName]);
-    useEffect(() => { setLocalModel(model); }, [model]); //Change model
-    useEffect(() => { var _a; setLocalTable((_a = cookies[`list-${resourceName}`]) !== null && _a !== void 0 ? _a : table); }, [table, resourceName, cookies]); //Change tables
-    const propSetLocalTable = (value) => {
-        setCookie(`list-${resourceName}`, value, { path: '/' });
-        setLocalTable(value);
-    };
-    const allProperties = localModel.getAllPropertiesReadableNames();
-    const tableWithStats = allProperties.map(tableElement => {
-        return Object.assign(Object.assign({}, tableElement), { inColumn: localTable.some(localTableElement => localTableElement.id === tableElement.id) });
-    });
-    const headCells = useMemo(() => {
-        const localHeadcells = localTable.map(({ id, label }) => {
-            return { propertyModel: localModel.getProperty(id), tableItemName: { id: id, label: label } };
-        }).map(({ propertyModel, tableItemName: { id, label } }) => {
-            return { id: id, numeric: false, disablePadding: false, label: label };
-        });
-        return localHeadcells;
-    }, [localTable, localModel]);
-    const { filters, components, clearFilters } = useRouteFilters(resourceName, lockedFilters);
-    const { data, get, loading } = useList();
-    const [selected, setSelected] = useState([]);
-    const [page, setPage] = useState(0);
-    const debounced = useDebouncedCallback(() => get(resourceName, page + 1, filters), 1000);
-    useEffect(() => {
-        debounced();
-    }, [resourceName, filters, page]);
-    useEffect(() => {
-        setRows(data.list);
-    }, [data]);
-    const filterBarComponents = components.filter(component => !headCells.some(headCell => headCell.id === component.name));
-    const showClearFilters = !!components.length;
-    const getRowElement = (row, id, label, localModel, viewElement) => {
-        const record = Record.createFromJson(row, localModel);
-        return localModel.getOutputField(id, { record: record, model: localModel }, viewElement, false);
-    };
-    const columns = useCallback((row) => localTable.map(({ id, label, viewElement }) => {
-        return getRowElement(row, id, label, localModel, viewElement);
-    }), [localModel, localTable]);
-    return _jsx(GenericList, { data: rows, totalItems: data.totalItems, getDataHandler: debounced, loading: loading, page: page, setPage: setPage, selected: selected, setSelected: setSelected, title: title, clearFilters: clearFilters, filterBarComponents: filterBarComponents, showClearFilters: showClearFilters, components: components, columns: columns, headCells: headCells, itemOperations: itemOperations, collectionOperations: collectionOperations, allColumns: tableWithStats, setTable: propSetLocalTable }, void 0);
-}
 export function FilterList({ resourceName, filters: lockedFilters, itemOperations = [], collectionOperations = [] }) {
     var _a;
     const { model, table, title } = useGetResourceModel(resourceName);
@@ -215,7 +166,10 @@ export function GenericList({ data: rows, totalItems, loading, page, setPage, se
     headCells = (itemOperations.length !== 0) ? headCells.concat({ numeric: true, disablePadding: false, label: "Actions" }) : headCells;
     //get Data as a first step.
     const [localLoading, setLocalLoading] = useState(false);
-    useEffect(() => { setLocalLoading(loading); }, [loading]);
+    useEffect(() => {
+        console.log("loading");
+        setLocalLoading(loading);
+    }, [loading]);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [dense, setDense] = React.useState(false);
@@ -266,7 +220,4 @@ export function GenericList({ data: rows, totalItems, loading, page, setPage, se
                                                     //onClick={(event) => handleClick(event, row.id)}
                                                     role: "checkbox", "aria-checked": isItemSelected, tabIndex: -1, selected: isItemSelected }, { children: [_jsx(TableCell, Object.assign({ padding: "checkbox", id: labelId }, { children: _jsx(Checkbox, { checked: isItemSelected, onClick: (event) => handleClick(event, row.id), inputProps: { 'aria-labelledby': labelId } }, void 0) }), void 0), columns(row).map((column, localIndex) => _jsx(TableCell, { children: column }, localIndex)), _jsx(TableCell, Object.assign({ align: "right" }, { children: _jsx(ButtonsHorizontalList, { children: itemOperations.map(({ color, icon, onClick, text, visibility, requiresConfirmation }) => _jsx(OperationButton, { color: color, text: text, icon: icon, onClick: () => onClick(row), visible: visibility(row), requiresConfirmation: requiresConfirmation }, void 0)) }, void 0) }), void 0)] }), index));
                                             }) }, void 0)] }), void 0) }, void 0), _jsx(TablePagination, { component: "div", count: totalItems, rowsPerPage: rowsPerPage, rowsPerPageOptions: [30], page: page, onChangePage: handleChangePage }, void 0)] }, void 0) }, void 0) }, void 0));
-}
-export function getOperationButton({ color, onClick, text, icon, visible = true }) {
-    return;
 }

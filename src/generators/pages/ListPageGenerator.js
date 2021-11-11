@@ -27,7 +27,7 @@ import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {useList} from "../../redux/actions/verbs/list";
 import {getComparator, stableSort} from "./utils/ListPageGeneratorUtils";
 import ButtonsHorizontalList from "../../rendering/components/buttons/ButtonsHorizontalList";
-import {useRouteFilters, useTableFilters} from "../filters/TableFilters";
+import {useTableFilters} from "../filters/TableFilters";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import {useCookies} from "react-cookie";
@@ -226,98 +226,6 @@ function randomArray(){
     return new Array(getRandomInt(3,7)).fill(1);
 }
 
-export function RouteFilterList({resourceName, filters:lockedFilters,  itemOperations = [], collectionOperations = []}) {
-    const {operations} = useGetResourceModel(resourceName);
-    const {model, table, title} = operations.getOperationModel("get");
-    const [cookies, setCookie] = useCookies([`list-${resourceName}`]);
-    const [localTable, setLocalTable] = useState(cookies[`list-${resourceName}`] ?? table);
-    const [localModel, setLocalModel] = useState(model);
-    const [rows, setRows] = useState([])
-
-    useEffect(()=>{setRows([])}, [resourceName])
-    useEffect(()=>{setLocalModel(model)},[model]) //Change model
-    useEffect(()=>{setLocalTable(cookies[`list-${resourceName}`] ?? table)},[table, resourceName, cookies]) //Change tables
-
-    const propSetLocalTable = (value) => {
-        setCookie(`list-${resourceName}`, value, {path: '/'});
-        setLocalTable(value);
-    }
-
-    const allProperties = localModel.getAllPropertiesReadableNames();
-    const tableWithStats = allProperties.map(tableElement => {
-        return {
-            ...tableElement,
-            inColumn: localTable.some(localTableElement => localTableElement.id === tableElement.id)
-        }
-    })
-
-
-    const headCells = useMemo(()=>{
-        const localHeadcells = localTable.map(({id, label}) => {
-            return {propertyModel: localModel.getProperty(id), tableItemName: {id: id, label: label}}
-        }).map(({propertyModel, tableItemName: {id, label}}) => {
-            return {id: id, numeric: false, disablePadding: false, label: label};
-        })
-        return localHeadcells;
-    }, [localTable, localModel])
-
-
-    const {filters, components, clearFilters} = useRouteFilters(resourceName, lockedFilters);
-    const {data, get, loading} = useList();
-    const [selected, setSelected] = useState([]);
-    const [page, setPage] = useState(0);
-
-    const debounced = useDebouncedCallback(
-        () => get(resourceName, page + 1, filters),
-        1000
-    );
-
-    useEffect(() => {
-        debounced();
-    }, [resourceName, filters, page])
-
-    useEffect(()=>{
-        setRows(data.list);
-    },[data])
-
-    const filterBarComponents = components.filter(component => !headCells.some(headCell => headCell.id === component.name))
-
-    const showClearFilters = !!components.length;
-
-    const getRowElement = (row, id, label, localModel, viewElement)=> {
-        const record = Record.createFromJson(row, localModel);
-        return localModel.getOutputField(id, {record:record, model:localModel}, viewElement, false);
-    }
-
-    const columns = useCallback((row) => localTable.map( ({id, label, viewElement}) => {
-        return getRowElement(row, id, label, localModel, viewElement)
-        }),[localModel, localTable])
-
-
-    return <GenericList
-        data={rows}
-        totalItems={data.totalItems}
-        getDataHandler={debounced}
-        loading={loading}
-        page={page}
-        setPage={setPage}
-        selected={selected}
-        setSelected={setSelected}
-        title={title}
-        clearFilters={clearFilters}
-        filterBarComponents={filterBarComponents}
-        showClearFilters={showClearFilters}
-        components={components}
-        columns={columns}
-        headCells={headCells}
-        itemOperations={itemOperations}
-        collectionOperations={collectionOperations}
-        allColumns={tableWithStats}
-        setTable={propSetLocalTable}
-    />
-
-}
-
 export function FilterList({resourceName, filters:lockedFilters,  itemOperations = [], collectionOperations = []}) {
     const {model, table, title} = useGetResourceModel(resourceName)
     const [cookies, setCookie] = useCookies([`list-${resourceName}`]);
@@ -353,7 +261,7 @@ export function FilterList({resourceName, filters:lockedFilters,  itemOperations
     }, [localTable, localModel])
 
 
-    const {filters, components, clearFilters} = useTableFilters(resourceName, lockedFilters);
+    const {filters, components, clearFilters} = useTableFilters(resourceName,  lockedFilters);
     const {data, get, loading} = useList();
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
@@ -419,7 +327,9 @@ export function GenericList({data:rows, totalItems, loading, page, setPage, sele
     headCells = (itemOperations.length!==0) ?  headCells.concat({ numeric:true, disablePadding:false, label:"Actions"}) : headCells
     //get Data as a first step.
     const [localLoading, setLocalLoading] = useState(false);
-    useEffect(()=>{setLocalLoading(loading)},[loading])
+    useEffect(()=>{
+        console.log("loading")
+        setLocalLoading(loading)},[loading])
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -564,8 +474,4 @@ export function GenericList({data:rows, totalItems, loading, page, setPage, sele
         </>
 
     );
-}
-
-export function getOperationButton({color, onClick,text, icon, visible = true}){
-    return
 }
