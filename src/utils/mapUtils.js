@@ -40,3 +40,20 @@ export function getFromMap (map) {
     }
 
 }
+
+export function arrayToMap(array){
+    const newMap = new Map();
+    (array??[]).forEach(arrayElement => {
+        newMap.set(arrayElement.fid, arrayElement)
+    })
+    return newMap;
+}
+
+export function MapToArray(map){
+    return Array.from(map.entries()).map(([id, value]) => {
+        return Object.assign({}, value);
+    });
+}
+
+
+

@@ -1,6 +1,6 @@
 import {Operation} from "./actions/Operation";
 import {OperationsList} from "./actions/OperationsList";
-import TableItem from "../configuration/TableItem";
+import TableItem from "./configurations/TableItem";
 
 
 export interface PropMainResource{
@@ -21,7 +21,6 @@ export class MainResource{
     constructor({title, resourceName,operations, filters=[], table=[]}:PropMainResource) {
 
         this.title = title;
-        console.log("title",title);
         this.resourceName = resourceName;
         this.operations = new OperationsList( operations.map((action:any) => new Operation(action)))
         this.filters = filters;

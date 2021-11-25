@@ -5,8 +5,9 @@ declare function appReducer(state: {
         message: undefined;
         severity: string;
     };
-    resourceBuffer: Set<any>;
+    resourceBuffer: Map<any, any>;
     listings: Map<any, any>;
+    listingLoading: boolean;
     registry: never[];
 } | undefined, action: any): {
     resource: any;
@@ -14,8 +15,9 @@ declare function appReducer(state: {
         message: undefined;
         severity: string;
     };
-    resourceBuffer: Set<any>;
+    resourceBuffer: Map<any, any>;
     listings: Map<any, any>;
+    listingLoading: boolean;
     registry: never[];
 } | {
     theme: any;
@@ -24,8 +26,9 @@ declare function appReducer(state: {
         message: undefined;
         severity: string;
     };
-    resourceBuffer: Set<any>;
+    resourceBuffer: Map<any, any>;
     listings: Map<any, any>;
+    listingLoading: boolean;
     registry: never[];
 } | {
     statusBar: {
@@ -33,17 +36,29 @@ declare function appReducer(state: {
         severity: any;
     };
     resource: null;
-    resourceBuffer: Set<any>;
+    resourceBuffer: Map<any, any>;
     listings: Map<any, any>;
+    listingLoading: boolean;
     registry: never[];
 } | {
-    listings: any;
+    resourceBuffer: any;
     resource: null;
     statusBar: {
         message: undefined;
         severity: string;
     };
-    resourceBuffer: Set<any>;
+    listings: Map<any, any>;
+    listingLoading: boolean;
+    registry: never[];
+} | {
+    listings: any;
+    listingLoading: boolean;
+    resource: null;
+    statusBar: {
+        message: undefined;
+        severity: string;
+    };
+    resourceBuffer: Map<any, any>;
     registry: never[];
 } | {
     registry: any;
@@ -52,6 +67,17 @@ declare function appReducer(state: {
         message: undefined;
         severity: string;
     };
-    resourceBuffer: Set<any>;
+    resourceBuffer: Map<any, any>;
     listings: Map<any, any>;
+    listingLoading: boolean;
+} | {
+    listingLoading: any;
+    resource: null;
+    statusBar: {
+        message: undefined;
+        severity: string;
+    };
+    resourceBuffer: Map<any, any>;
+    listings: Map<any, any>;
+    registry: never[];
 };

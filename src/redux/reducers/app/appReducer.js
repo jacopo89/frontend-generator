@@ -1,7 +1,10 @@
 import * as ActionTypes from '../../actions/app/actions';
 import _ from 'lodash';
+import {LISTING_LOADING} from "../../actions/verbs/get_listing";
+import {GET_LOADING, GET_SUCCESS} from "../../actions/verbs/get";
+import {GET_ONE_LOADING, GET_ONE_SUCCESS} from "../../actions/verbs/get_one";
 
-const initialState = {resource:null, statusBar:{message: undefined, severity:"info"}, resourceBuffer:new Set(), listings: new Map(), registry:[]};
+const initialState = {resource:null, statusBar:{message: undefined, severity:"info"}, resourceBuffer:new Map(), listings: new Map(), listingLoading:false, registry:[]};
 
 
 const appReducer = (state = initialState, action) => {
@@ -25,23 +28,22 @@ const appReducer = (state = initialState, action) => {
                 }
             }
             case ActionTypes.CHANGE_RESOURCE_BUFFER:{
-                if(!state.resourceBuffer.has(action.resource)){
-                    const newResourceBufferSet = _.clone(state.resourceBuffer);
-                    newResourceBufferSet.add(action.resource);
-                    return {
-                        ...state,
-                        resourceBuffer: newResourceBufferSet
-                    }
+                const newResouceBufferMap= updateResourceBufferMap(state.resourceBuffer, action.resource, action.dependencies)
+
+                return {
+                    ...state,
+                    resourceBuffer: newResouceBufferMap
                 }
-                return state;
             }
             case ActionTypes.RESET_RESOURCE_BUFFER:{
                 return {...state, resourceBuffer: new Set()};
             }
             case ActionTypes.UPDATE_RESOURCE_LISTINGS:{
+                console.info("GET LISTINGS SUCCESS")
                 return {
                     ...state,
-                    listings: action.listingsMap
+                    listings: action.listingsMap,
+                    listingLoading: false
                 }
             }
             case ActionTypes.SET_REGISTRY:{
@@ -49,6 +51,25 @@ const appReducer = (state = initialState, action) => {
                     ...state,
                     registry: action.registry
                 }
+            }
+            case LISTING_LOADING:{
+                console.info("GET LISTINGS STARTING")
+                return {...state, listingLoading: action.loading}
+            }
+            case GET_SUCCESS:{
+                return state;
+            }
+            case GET_LOADING:{
+
+                return state;
+            }
+            case GET_ONE_SUCCESS:{
+                console.info("GET RESOURCE SUCCESS")
+                return state;
+            }
+            case GET_ONE_LOADING:{
+                console.info("GET RESOURCE LOADING", action.loading)
+                return state;
             }
 
             default: return state;
@@ -61,3 +82,10 @@ const appReducer = (state = initialState, action) => {
 };
 
 export default appReducer;
+
+
+function updateResourceBufferMap(resourceBufferMap, changingResource, changingDependencies){
+        const newResourceBufferMap = _.clone(resourceBufferMap);
+        newResourceBufferMap.set(changingResource,changingDependencies);
+        return newResourceBufferMap;
+}

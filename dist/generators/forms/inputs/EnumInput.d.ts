@@ -8,4 +8,4 @@ export function EnumInput({ model, inheritedValue, onChange }: {
  * @param {array} options
  * @returns {int}
  */
-export function getAutocompleteValuePosition(value: any, options: any): any;
+export function getAutocompleteValuePosition(value: int, options: array): int;

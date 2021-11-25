@@ -14,3 +14,5 @@ export function useGet(): {
     data: undefined;
     get: (route: any) => Promise<any>;
 };
+export const GET_LOADING: "GET_LOADING";
+export const GET_SUCCESS: "GET_SUCCESS";

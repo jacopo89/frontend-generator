@@ -1,14 +1,17 @@
 /// <reference types="react" />
 import { ReferenceModel } from "../../../resource-models/propertyModels/ReferenceModel";
 import { ListingOption } from "../../../resource-models/listings/Listing";
+import { FormValue } from "../../../resource-models/formvalue/FormValue";
 interface ReferenceInput {
     model: ReferenceModel;
+    formValue: FormValue;
     refreshReferencesMap: any;
-    inheritedValue: ListingOption | undefined;
+    value: ListingOption | undefined;
     hasError?: boolean;
     errorMessage?: string;
     createNew?: boolean;
     onChange: any;
+    dependencies: string[];
 }
 declare class ReferenceInputOption {
     id: number;
@@ -18,7 +21,7 @@ declare class ReferenceInputOption {
     static createFromListingOption(listingOption: ListingOption): ReferenceInputOption;
     toMap(): Map<any, any>;
 }
-export default function ({ model, refreshReferencesMap, inheritedValue, createNew, onChange, hasError, errorMessage }: ReferenceInput): JSX.Element;
+export default function ({ model, formValue, refreshReferencesMap, value: listOption, createNew, onChange, hasError, errorMessage, dependencies }: ReferenceInput): JSX.Element;
 /**
  * @param {int} value
  * @param {array} options

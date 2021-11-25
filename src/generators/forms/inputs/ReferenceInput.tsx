@@ -1,23 +1,30 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import {TextValidator} from "react-material-ui-form-validator";
 import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {changeResourceBuffer} from "../../../redux/actions/app/actions";
 import {ReferenceModel} from "../../../resource-models/propertyModels/ReferenceModel";
-import {Listing, ListingOption} from "../../../resource-models/listings/Listing";
+import {ListingOption} from "../../../resource-models/listings/Listing";
 import ReferenceInputModal from "./ReferenceInputModal/ReferenceInputModal";
 import {CustomTextValidator} from "../formHelpers";
+import {FormValue} from "../../../resource-models/formvalue/FormValue";
+import _ from 'lodash';
+import list from "../../../redux/reducers/verbs/list";
 
 interface ReferenceInput{
     model: ReferenceModel,
+    formValue: FormValue,
     refreshReferencesMap: any,
-    inheritedValue:ListingOption|undefined,
+    value:ListingOption|undefined,
     hasError?:boolean,
     errorMessage?:string,
     createNew?:boolean,
-    onChange:any
+    onChange:any,
+    dependencies: string[]
 }
+
+const LISTING_OPTION_UNDEFINED = -1;
+const LISTING_OPTION_NOT_PRESENT = -2;
 
 class ReferenceInputOption{
     id:number
@@ -38,57 +45,113 @@ class ReferenceInputOption{
     }
 }
 
-export default function ({model, refreshReferencesMap, inheritedValue, createNew=true, onChange, hasError, errorMessage}:ReferenceInput){
-
-    const {id, label, resourceName:modalResourceName} = useMemo(()=>{return model},[model]);
+export default function ({model,formValue, refreshReferencesMap, value:listOption, createNew=true, onChange, hasError, errorMessage, dependencies}:ReferenceInput){
+    const inheritedValue = useMemo(()=>{return (listOption) ? (typeof listOption === "number" ? new ListingOption(listOption, "")  : new ListingOption(listOption["id"], "")): undefined},[listOption])
+    const {id, label, resourceName} = useMemo(()=>{return model},[model]);
     const [open, setOpen] = React.useState(false);
-    const [localOptions, setLocalOptions] = useState<ReferenceInputOption[]>( []);
-    // @ts-ignore
-    const [value, setValue] = useState<ReferenceInputOption>(null);
-    const [inputValue, setInputValue] = useState("");
-    // @ts-ignore
-    const {listings} = useSelector(({appReducer})=>appReducer);
 
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        if(modalResourceName){
-            dispatch(changeResourceBuffer(modalResourceName))
-        }
-    },[])
-
-
-
+    //useCounter(inheritedValue, `Inherited value ${id}`)
 
     const handleOpen = (e:any) => {
         e.stopPropagation();
         setOpen(true);
     };
+
     const handleClose = () => {
         setOpen(false);
         refreshReferencesMap()
     };
 
-    useEffect(()=>{
-        const options  = listings.get(model.resourceName)?.options ?? [];
-        const referenceOptions = options.map((option:ListingOption) => ReferenceInputOption.createFromListingOption(option))
-        setLocalOptions((value)=> (createNew)? [new ReferenceInputOption(0,"",<Button style={{width:"100%"}} onClick={handleOpen}>Add a new one</Button>), ...referenceOptions] : [...referenceOptions] )
-    }, [listings])
+    const [localOptions, setLocalOptions] = useState<ReferenceInputOption[]>( createNew? [new ReferenceInputOption(0,"",<Button style={{width:"100%"}} onClick={handleOpen}>Add a new one</Button>)]: []);
+    const expectedIntialOptionsLocations = createNew ? 1 : 0;
+    // @ts-ignore
+    const [value, setValue] = useState<ReferenceInputOption>(null);
+    const [inputValue, setInputValue] = useState("");
+    // @ts-ignore
+    const {listings,listingLoading} = useSelector(({appReducer})=>appReducer);
+
+    const map = new Map(dependencies.map((dependencyName:string)=>{return [dependencyName,undefined]}) );
+
+    const [dependenciesValues, setDependenciesValues] = useState(map);
+    const isDisabled = dependencies.length === 0 ? false : Array.from(dependenciesValues.entries()).some(([id,value]) => value===undefined)
+
+    const updateDependecies = useCallback(()=>{
+        let changes = 0;
+
+        const newDependenciesValues = _.clone(dependenciesValues);
+        dependencies.forEach((dependencyName:string) =>{
+            // @ts-ignore
+            const formValueDependencyValue = formValue[dependencyName]
+            // @ts-ignore
+
+            if(dependenciesValues.get(dependencyName)!==formValueDependencyValue){
+                // @ts-ignore
+                newDependenciesValues.set(dependencyName, formValue[dependencyName]);
+                changes++;
+            }
+        })
+        if(changes > 0){
+            setDependenciesValues(newDependenciesValues)
+        }
+    },[formValue, dependenciesValues,dependenciesValues,dependencies])
+
 
     useEffect(()=>{
+        if(!listingLoading){
+            updateDependecies()
+        }
+    },[formValue,listingLoading])
+
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        if(resourceName){
+            dispatch(changeResourceBuffer(resourceName, dependenciesValues))
+        }
+    },[dependenciesValues])
+
+
+
+    useEffect(()=>{
+        if(!listingLoading && listings.size !== 0){
+            const options  = listings.get(model.resourceName)?.options ?? [];
+            const referenceOptions = options.map((option:ListingOption) => ReferenceInputOption.createFromListingOption(option))
+            setLocalOptions((value)=> (createNew)? [new ReferenceInputOption(0,"",<Button style={{width:"100%"}} onClick={handleOpen}>Add a new one</Button>), ...referenceOptions] : [...referenceOptions] )
+        }
+    }, [listings,listingLoading])
+
+
+    const refreshList = useCallback(()=>{
+
         const valuePositionInOptions = getAutocompleteValuePosition(inheritedValue, localOptions);
-        const localOptionsLengthCondition = (createNew) ? localOptions.length!==1 : localOptions.length!==0;
+        const localOptionsLengthCondition = localOptions.length!==expectedIntialOptionsLocations;
         const truePosition = (createNew) ? valuePositionInOptions : valuePositionInOptions-1;
 
-        if(valuePositionInOptions!==-1 && localOptionsLengthCondition){
+        const isPositionValid = valuePositionInOptions!==LISTING_OPTION_NOT_PRESENT && valuePositionInOptions!==LISTING_OPTION_UNDEFINED;
+
+        if(isPositionValid && localOptionsLengthCondition){
             setValue(localOptions[truePosition]);
+        }else if(valuePositionInOptions===LISTING_OPTION_NOT_PRESENT ){
+            onChange([id, undefined ])
+            setInputValue("")
         }
-        }, [localOptions, inheritedValue, createNew])
+    },[localOptions, inheritedValue])
 
 
-    const autocompleteOnChange = (item:any) => onChange([id, item])
+    useEffect(()=>{
+        if(!listingLoading)refreshList()
+    },[listingLoading, inheritedValue])
+
+    useEffect(()=>refreshList(),[localOptions])
+
+
+    const autocompleteOnChange = (item:any) => {
+        onChange([id, item])
+    }
+
     return <>
         <Autocomplete
             value={value}
+            disabled={isDisabled}
             inputValue={inputValue}
             disableClearable
             options={localOptions}
@@ -110,7 +173,7 @@ export default function ({model, refreshReferencesMap, inheritedValue, createNew
                 />
             }
         />
-        <ReferenceInputModal open={open} handleClose={handleClose} resourceName={modalResourceName} />
+        <ReferenceInputModal open={open} handleClose={handleClose} resourceName={resourceName} />
     </>
 
 }
@@ -129,9 +192,9 @@ export function getAutocompleteValuePosition(value:ListingOption|undefined,optio
     if(value){
         // @ts-ignore
         const correctOption = options.find((option) => option.id === value.id)
-        return (correctOption) ? options.indexOf(correctOption): -1;
+        return (correctOption) ? options.indexOf(correctOption): LISTING_OPTION_NOT_PRESENT;
     }else{
-        return -1
+        return LISTING_OPTION_UNDEFINED
     }
 
 }

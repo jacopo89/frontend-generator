@@ -1,5 +1,3 @@
-
-
 export const CHANGE_RESOURCE = "CHANGE_RESOURCE";
 export const CHANGE_RESOURCE_BUFFER = "CHANGE_RESOURCE_BUFFER";
 export const SWITCH_THEME = "SWITCH_THEME";
@@ -15,10 +13,11 @@ export const changeResource = (resource) =>{
     }
 }
 
-export const changeResourceBuffer = (resource) => {
+export const changeResourceBuffer = (resource, dependencies) => {
     return {
         type: CHANGE_RESOURCE_BUFFER,
-        resource: resource
+        resource: resource,
+        dependencies: dependencies
     }
 }
 

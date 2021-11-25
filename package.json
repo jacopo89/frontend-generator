@@ -74,6 +74,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.3.10",
+    "lodash": "^4.17.21",
     "miragejs": "^0.1.41"
   },
   "peerDependencies": {

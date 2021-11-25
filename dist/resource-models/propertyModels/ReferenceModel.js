@@ -1,6 +1,5 @@
 import { SinglePropertyModel } from "./SinglePropertyModel";
 import ReferenceShow from "../../generators/fields/outputs/ReferenceShow";
-import { ListingOption } from "../listings/Listing";
 import ReferenceInput from "../../generators/forms/inputs/ReferenceInput";
 import { Record } from "../Record";
 import { Resource } from "../Resource";
@@ -14,17 +13,18 @@ export class ReferenceModel extends SinglePropertyModel {
         return this.resource;
         throw new Error(`Accessing inexistent resource for ${this.resourceName}`);
     }
-    setInputField(props) {
-        const { inputHandler, value } = props;
+    setInputField(props, configuration) {
+        var _a;
+        const { inputHandler, value, formValue } = props;
+        const dependencies = (_a = configuration === null || configuration === void 0 ? void 0 : configuration.dependencies) !== null && _a !== void 0 ? _a : [];
         // @ts-ignore
-        const finalValue = (value) ? (typeof value === "number" ? new ListingOption(value, "") : new ListingOption(value["id"], "")) : undefined;
-        const propsWithModel = Object.assign(Object.assign({}, props), { model: this, onChange: inputHandler, inheritedValue: finalValue });
+        const propsWithModel = Object.assign(Object.assign({}, props), { model: this, onChange: inputHandler, value, dependencies, formValue });
         return ReferenceInput(propsWithModel);
     }
     getInputOnChangeHandler({ formValue, setFormValue }) {
         return (vars) => {
             const [name, value] = vars;
-            setFormValue(formValue.updateFormValue(name, value["id"]));
+            setFormValue(formValue.updateFormValue(name, value ? value["id"] : undefined));
         };
     }
     setOutputField(props) {

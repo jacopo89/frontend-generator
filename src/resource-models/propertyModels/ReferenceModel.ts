@@ -3,12 +3,11 @@ import React from "react";
 import {SinglePropertyModel} from "./SinglePropertyModel";
 import ReferenceShow from "../../generators/fields/outputs/ReferenceShow";
 import {InputOnChangeHandler} from "../PropertyModel";
-import {ListingOption} from "../listings/Listing";
 import ReferenceInput from "../../generators/forms/inputs/ReferenceInput";
 import {Record} from "../Record";
-import {SingleInputPropsInterface} from "../models/InputProps";
 import {SingleSetInputFieldProps} from "../models/SetInputFieldProps";
 import {Resource} from "../Resource";
+import {PropertyFieldConfiguration} from "../configurations/PropertyFieldConfiguration";
 
 export class ReferenceModel extends SinglePropertyModel{
     resourceName:string;
@@ -25,18 +24,20 @@ export class ReferenceModel extends SinglePropertyModel{
         this.resource = (other.resource instanceof Resource) ? other.resource : new Resource(other.resource);
     }
 
-    setInputField(props: SingleSetInputFieldProps): React.ReactElement<any, any> | null {
-        const {inputHandler, value} = props;
+    setInputField(props: SingleSetInputFieldProps, configuration?:PropertyFieldConfiguration): React.ReactElement<any, any> | null {
+        const {inputHandler, value, formValue} = props;
+        const dependencies = configuration?.dependencies ?? [];
+
         // @ts-ignore
-        const finalValue = (value) ? (typeof value === "number" ? new ListingOption(value, "")  : new ListingOption(value["id"], "")): undefined
-        const propsWithModel = Object.assign(Object.assign({}, props), {model:this,onChange: inputHandler, inheritedValue:finalValue });
+
+        const propsWithModel = Object.assign(Object.assign({}, props), {model:this,onChange: inputHandler, value, dependencies, formValue });
         return ReferenceInput(propsWithModel)
     }
 
     getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
         return (vars:any)=>{
             const [name, value] = vars;
-            setFormValue( formValue.updateFormValue(name, value["id"]));
+            setFormValue( formValue.updateFormValue(name, value ? value["id"] : undefined));
         }
     }
 

@@ -9,9 +9,10 @@ export function changeResource(resource: any): {
     type: string;
     resource: any;
 };
-export function changeResourceBuffer(resource: any): {
+export function changeResourceBuffer(resource: any, dependencies: any): {
     type: string;
     resource: any;
+    dependencies: any;
 };
 export function resetResourceBuffer(): {
     type: string;

@@ -1,5 +1,5 @@
 import { OperationsList } from "./actions/OperationsList";
-import TableItem from "../configuration/TableItem";
+import TableItem from "./configurations/TableItem";
 export interface PropMainResource {
     title: string;
     resourceName: string;

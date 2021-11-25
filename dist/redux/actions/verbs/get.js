@@ -5,16 +5,19 @@ export function error(error) {
     return { type: 'GET_ERROR', error };
 }
 export function loading(loading) {
-    return { type: 'GET_LOADING', loading };
+    return { type: GET_LOADING, loading };
 }
+export const GET_LOADING = "GET_LOADING";
+export const GET_SUCCESS = "GET_SUCCESS";
 export function success(retrieved) {
-    return { type: 'GET_SUCCESS', retrieved };
+    return { type: GET_SUCCESS, retrieved };
 }
 export function useGet() {
     const [data, setData] = useState();
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
     const get = (route) => {
+        dispatch(loading(true));
         setErrors({});
         return fetch(`${route}`)
             .then(response => response.json())

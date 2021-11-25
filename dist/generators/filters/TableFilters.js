@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import _ from "lodash";
-import { replace } from "connected-react-router";
 import { FilterList } from "./FilterList";
 import { useGetResourceModel } from "../../resource-models/modelsRegistry";
 import { routeManipulatorWithFilters } from "../../utils/routeUtils";
@@ -67,7 +66,7 @@ export const useRouteFilters = (resourceNameToUse, operationName, presetFilters)
                     }
 
                 })*/
-                dispatch(replace(route));
+                window.location.href = route;
             }
         }
     }, [filterObject]);

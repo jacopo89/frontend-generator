@@ -36,13 +36,20 @@ export function GetListingsMap(model){
 export function UpdateListings(){
     const {resourceBuffer, listings} = useSelector(state=>state.appReducer);
     const dispatch = useDispatch();
-    const {getListingGroup} = useGetListingGroup();
+    const {getListingGroup, loading} = useGetListingGroup();
 
     useEffect(()=>{console.log(resourceBuffer)},[resourceBuffer])
 
     const updateListings =useCallback(()=>{
-        const resourceArray = Array.from(resourceBuffer);
-        if(resourceArray.length!==0){
+
+        const finalMap = new Map();
+        Array.from(resourceBuffer.entries()).forEach(([id,value])=>{
+            finalMap.set(id, Object.fromEntries(value.entries()))
+        })
+
+        const resourceArray = Object.fromEntries(finalMap.entries())
+        //const resourceArray = Array.from(resourceBuffer);
+        if(Object.keys(resourceArray).length!==0){
             getListingGroup({resources:resourceArray}).then(result => {
                 const listings = new Listings();
                 Object.keys(result).forEach(key => listings.set(key, Listing.createFromJson(result[key])));

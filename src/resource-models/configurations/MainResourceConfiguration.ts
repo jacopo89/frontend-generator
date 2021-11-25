@@ -1,6 +1,6 @@
 import TableItem from "./TableItem";
 
-export default abstract class PropertyConfiguration{
+export default abstract class MainResourceConfiguration{
     table: TableItem[]
 
     protected constructor() {

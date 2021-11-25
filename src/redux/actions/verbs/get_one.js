@@ -7,12 +7,17 @@ export function error(error) {
 }
 
 export function loading(loading) {
-    return { type: 'GET_ONE_LOADING', loading };
+    return { type: GET_ONE_LOADING, loading };
 }
 
 export function success(retrieved) {
-    return { type: 'GET_ONE_SUCCESS', retrieved };
+    return { type: GET_ONE_SUCCESS, retrieved };
 }
+
+export const GET_ONE_SUCCESS = "GET_ONE_SUCCESS";
+export const GET_ONE_LOADING = "GET_ONE_LOADING";
+
+
 
 export function useGetOne() {
 
@@ -21,11 +26,15 @@ export function useGetOne() {
     const dispatch = useDispatch();
 
     const getOne = (resourceName,id) => {
+
         setErrors({});
+        dispatch(loading(true));
+
         return fetch(`/api/${resourceName}/${id}`)
             .then(response => response.json())
             .then(retrieved => ({ retrieved }))
             .then(({ retrieved, hubURL }) => {
+
                 dispatch(loading(false));
                 dispatch(success(retrieved));
                 setData(retrieved);

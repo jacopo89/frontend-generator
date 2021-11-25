@@ -11,10 +11,11 @@ export const changeResource = (resource) => {
         resource: resource
     };
 };
-export const changeResourceBuffer = (resource) => {
+export const changeResourceBuffer = (resource, dependencies) => {
     return {
         type: CHANGE_RESOURCE_BUFFER,
-        resource: resource
+        resource: resource,
+        dependencies: dependencies
     };
 };
 export const resetResourceBuffer = () => {

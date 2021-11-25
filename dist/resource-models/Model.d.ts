@@ -1,5 +1,6 @@
 import { PropertyModel } from "./PropertyModel";
 import { DetailedReactHTMLElement, ReactElement } from "react";
+import { PropertyFieldConfiguration } from "./configurations/PropertyFieldConfiguration";
 import { ModelInputInterface } from "./interface/ModelInputInterface";
 import { PropertyModelInputProps } from "./models/PropertyModelInputProps";
 export interface Model {
@@ -31,6 +32,8 @@ export declare class Model {
      */
     getInputField(requestedName: string, props: ModelInputInterface, viewElement: DetailedReactHTMLElement<any, any>): ReactElement<any, any> | null;
     getOutputField(requestedName: string, props: ModelInputInterface, viewElement: DetailedReactHTMLElement<any, any>, showLabel?: boolean): ReactElement<any, any> | null;
+    getConfiguredInputField(requestedName: string, props: ModelInputInterface, propertyFieldConfiguration: PropertyFieldConfiguration): ReactElement<any, any> | null;
+    getConfiguredOutputField(requestedName: string, props: ModelInputInterface, propertyFieldConfiguration: PropertyFieldConfiguration): ReactElement<any, any> | null;
     getAllPropertiesReadableNames(): {
         id: string;
         label: string;

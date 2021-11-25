@@ -14,3 +14,5 @@ export function useGetOne(): {
     data: undefined;
     getOne: (resourceName: any, id: any) => Promise<any>;
 };
+export const GET_ONE_SUCCESS: "GET_ONE_SUCCESS";
+export const GET_ONE_LOADING: "GET_ONE_LOADING";

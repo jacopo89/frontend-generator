@@ -73,6 +73,14 @@ export class Model {
         const newProps = this.setFieldProps(requestedName, props);
         return this.getProperty(requestedName).getOutputField(newProps, new PropertyFieldConfiguration({ viewElement: viewElement, showLabel: showLabel }));
     }
+    getConfiguredInputField(requestedName, props, propertyFieldConfiguration) {
+        const newProps = this.setFieldProps(requestedName, props);
+        return this.getProperty(requestedName).getInputField(newProps, propertyFieldConfiguration);
+    }
+    getConfiguredOutputField(requestedName, props, propertyFieldConfiguration) {
+        const newProps = this.setFieldProps(requestedName, props);
+        return this.getProperty(requestedName).getOutputField(newProps, propertyFieldConfiguration);
+    }
     getAllPropertiesReadableNames() {
         return this.properties.filter((propertyModel) => propertyModel).map((propertyModel) => {
             return {
