@@ -7,10 +7,9 @@ import { useList } from "../../../redux/actions/verbs/list";
 import { useDebouncedCallback } from "use-debounce";
 import { Record } from "../../../resource-models/Record";
 import { GenericList } from "../ListPageGenerator";
-const table = [];
 export function RouteFilterList({ resourceName, filters: lockedFilters, itemOperations = [], collectionOperations = [] }) {
     var _a;
-    const { operations } = useGetResourceModel(resourceName);
+    const { operations, table } = useGetResourceModel(resourceName);
     const model = operations.getOperationModel("get");
     const title = model.title;
     const [cookies, setCookie] = useCookies([`list-${resourceName}`]);

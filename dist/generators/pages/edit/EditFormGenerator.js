@@ -91,6 +91,6 @@ export const EditForm = ({ record: recordJson, propId, propResourceName, propEdi
         if (formValue !== initialValue.current) {
             setGenericEditRender(_jsx(FormGenerator, Object.assign({}, editFormProps, { formContent: createEditPageToUse, isEdit: isEdit, errors: errors, text: "Save" }), void 0));
         }
-    }, [formValue, errors]);
+    }, [editFormProps, errors]);
     return genericEditRender;
 };

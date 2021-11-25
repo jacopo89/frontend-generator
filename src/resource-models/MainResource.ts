@@ -1,5 +1,6 @@
 import {Operation} from "./actions/Operation";
 import {OperationsList} from "./actions/OperationsList";
+import TableItem from "../configuration/TableItem";
 
 
 export interface PropMainResource{
@@ -7,6 +8,7 @@ export interface PropMainResource{
     resourceName: string;
     operations: object[];
     filters: object[];
+    table: TableItem[]
 }
 
 export class MainResource{
@@ -14,14 +16,16 @@ export class MainResource{
     title: string;
     resourceName: string;
     filters: object[];
+    table: TableItem[]
 
-    constructor({title, resourceName,operations, filters}:PropMainResource) {
+    constructor({title, resourceName,operations, filters=[], table=[]}:PropMainResource) {
 
         this.title = title;
         console.log("title",title);
         this.resourceName = resourceName;
         this.operations = new OperationsList( operations.map((action:any) => new Operation(action)))
-        this.filters = filters ?? []; //TODO change
+        this.filters = filters;
+        this.table = table
         if(operations === undefined){
             debugger;
         }
