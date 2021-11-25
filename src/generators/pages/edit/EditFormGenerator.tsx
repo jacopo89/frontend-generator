@@ -86,7 +86,7 @@ export const EditForm: React.FC<EditFormGeneratorProps> = ({record:recordJson, p
             setGenericEditRender(
                 <FormGenerator {...editFormProps} formContent={createEditPageToUse} isEdit={isEdit} errors={errors} text="Save"/>)
         }
-    },[formValue, errors])
+    },[editFormProps, errors])
 
 
     return genericEditRender;
