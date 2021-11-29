@@ -1,5 +1,6 @@
 export const BOOLEAN = "boolean";
 export const REFERENCE = "reference";
+export const REFERENCE_MULTIPLE = "reference_multiple";
 export const EMBEDDED_SINGLE = "embedded_single";
 export const EMBEDDED_MULTIPLE = "embedded_multiple";
 export const FILE_SINGLE = "file_single";

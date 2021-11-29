@@ -7,7 +7,7 @@ import {PropertyFieldConfiguration} from "./configurations/PropertyFieldConfigur
 import _ from "lodash";
 import {PropertyModelInputInterface} from "./models/PropertyModelInputProps";
 
-export type InputType ="id"| "boolean" | "reference" | "embedded_single" | "embedded_multiple" | "file_single" | "file_multiple" | "integer" | "date" | "float" | "enum" | "string" | "phone" | "money" | "array" |"textarea" | "enum_single"| "enum_multiple";
+export type InputType ="id"| "boolean" | "reference" | "embedded_single" | "embedded_multiple" | "file_single" | "file_multiple" | "integer" | "date" | "float" | "enum" | "string" | "phone" | "money" | "array" |"textarea" | "enum_single"| "enum_multiple" | "reference_multiple";
 
 export interface PropertyModel{
     id:string;

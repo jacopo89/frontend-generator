@@ -12,7 +12,7 @@ import {
     INTEGER,
     MONEY,
     PHONE,
-    REFERENCE,
+    REFERENCE, REFERENCE_MULTIPLE,
     STRING,
     TEXTAREA
 } from "../generators/forms/inputs/InputTypes";
@@ -33,6 +33,7 @@ import {EnumSingleModel} from "./propertyModels/EnumSingleModel";
 import {EnumMultipleModel} from "./propertyModels/EnumMultipleModel";
 import {IdModel} from "./propertyModels/IdModel";
 import {StringModel} from "./propertyModels/StringModel";
+import {ReferenceMultipleModel} from "./propertyModels/ReferenceMultipleModel";
 
 /**
  * @Property {id} - Name of the property
@@ -55,6 +56,9 @@ export class PropertyModelRegistry{
             }
             case REFERENCE:{
                 return new ReferenceModel(id,others);
+            }
+            case REFERENCE_MULTIPLE:{
+                return new ReferenceMultipleModel(id,others);
             }
             case EMBEDDED_SINGLE:{
                 return new EmbeddedSingleModel(id, others);

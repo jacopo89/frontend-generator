@@ -4,7 +4,7 @@ import { FormValue } from "./formvalue/FormValue";
 import { Record } from "./Record";
 import { PropertyFieldConfiguration } from "./configurations/PropertyFieldConfiguration";
 import { PropertyModelInputInterface } from "./models/PropertyModelInputProps";
-export declare type InputType = "id" | "boolean" | "reference" | "embedded_single" | "embedded_multiple" | "file_single" | "file_multiple" | "integer" | "date" | "float" | "enum" | "string" | "phone" | "money" | "array" | "textarea" | "enum_single" | "enum_multiple";
+export declare type InputType = "id" | "boolean" | "reference" | "embedded_single" | "embedded_multiple" | "file_single" | "file_multiple" | "integer" | "date" | "float" | "enum" | "string" | "phone" | "money" | "array" | "textarea" | "enum_single" | "enum_multiple" | "reference_multiple";
 export interface PropertyModel {
     id: string;
     type: InputType;

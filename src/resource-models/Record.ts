@@ -71,20 +71,5 @@ export class Record extends Object{
 
     toJson(){
         return this;
-        /*const json = {};
-        const entries = Array.from(this.entries())
-        entries.forEach(([key, value], index) =>{
-            if(value instanceof Record){
-                // @ts-ignore
-                json[key] = value.toJson();
-            }else if(value instanceof Map){
-                // @ts-ignore
-                json[key] = Array.from(value.values()).map((item:Record) => item.toJson())
-            }else{
-                // @ts-ignore
-                json[key] = value;
-            }
-        })
-        return json;*/
     }
 }

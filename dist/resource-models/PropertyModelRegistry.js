@@ -1,4 +1,4 @@
-import { BOOLEAN, DATE, EMBEDDED_MULTIPLE, EMBEDDED_SINGLE, ENUM_MULTIPLE, ENUM_SINGLE, FILE_MULTIPLE, FILE_SINGLE, FLOAT, ID, INTEGER, MONEY, PHONE, REFERENCE, STRING, TEXTAREA } from "../generators/forms/inputs/InputTypes";
+import { BOOLEAN, DATE, EMBEDDED_MULTIPLE, EMBEDDED_SINGLE, ENUM_MULTIPLE, ENUM_SINGLE, FILE_MULTIPLE, FILE_SINGLE, FLOAT, ID, INTEGER, MONEY, PHONE, REFERENCE, REFERENCE_MULTIPLE, STRING, TEXTAREA } from "../generators/forms/inputs/InputTypes";
 import { NumberModel } from "./propertyModels/NumberModel";
 import { ReferenceModel } from "./propertyModels/ReferenceModel";
 import { EmbeddedSingleModel } from "./propertyModels/EmbeddedSingleModel";
@@ -15,6 +15,7 @@ import { EnumSingleModel } from "./propertyModels/EnumSingleModel";
 import { EnumMultipleModel } from "./propertyModels/EnumMultipleModel";
 import { IdModel } from "./propertyModels/IdModel";
 import { StringModel } from "./propertyModels/StringModel";
+import { ReferenceMultipleModel } from "./propertyModels/ReferenceMultipleModel";
 /**
  * @Property {id} - Name of the property
  */
@@ -35,6 +36,9 @@ export class PropertyModelRegistry {
             }
             case REFERENCE: {
                 return new ReferenceModel(id, others);
+            }
+            case REFERENCE_MULTIPLE: {
+                return new ReferenceMultipleModel(id, others);
             }
             case EMBEDDED_SINGLE: {
                 return new EmbeddedSingleModel(id, others);
