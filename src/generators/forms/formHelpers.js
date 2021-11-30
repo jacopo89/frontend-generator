@@ -42,32 +42,32 @@ export function getFormValueFromRecord(record, model){
 
 }
 
-
-export function filterOnChangeHandler(type, onChange, formValue, vars){
+export function filterOnChangeHandler(type, setFilterValues, filterValues, vars){
 
 
     const fileOnChange = (vars) => {
 
         const [name, value] = vars;
-        onChange({...formValue, [name]: value});
-        //onChange({...formValue, [name]: value});
+        setFilterValues({...filterValues, [name]: value});
+        //setFilterValues({...filterValues, [name]: value});
     }
     const controlledOnChange = (vars) =>{
+        debugger;
         const [event] = vars;
         const target = event.target;
         let value = target.value;
         const name = target.name;
-        onChange({...formValue, [name]: value});
+        setFilterValues({...filterValues, [name]: value});
     }
     const checkboxOnChange = (vars) =>{
         const [name, value] = vars;
 
-        onChange({...formValue, [name]: value});
+        setFilterValues({...filterValues, [name]: value});
     }
 
     const autoCompleteOnchange = (vars) => {
         const [name, value] = vars;
-        onChange({...formValue,[name]: value});
+        setFilterValues({...filterValues,[name]: value});
     }
 
     const phoneOnChange = (vars) =>{

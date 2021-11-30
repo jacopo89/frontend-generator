@@ -34,6 +34,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
     const [formValue, setFormValue] = useState<FormValue>(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
+    // @ts-ignore
     const {action, errors:responseErrors, loading} = useCollectionOperation(resourceName, operation);
 
 

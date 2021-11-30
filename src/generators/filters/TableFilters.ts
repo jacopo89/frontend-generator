@@ -1,10 +1,12 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import _ from "lodash";
 import {FilterList} from "./FilterList";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {routeManipulatorWithFilters} from "../../utils/routeUtils";
+import {Filter} from "./Filter";
+import {getFilterComponents} from "./FilterGenerator";
 
 
 export const useRouteFilters: (resourceNameToUse:string,operationName:string, presetFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceNameToUse,operationName, presetFilters) => {
@@ -94,16 +96,38 @@ export const useRouteFilters: (resourceNameToUse:string,operationName:string, pr
 
 }
 
-export const useTableFilters: (resourceName:string, operationName: string, propLockedFilters:any) => { components: any; filters: any; clearFilters: () => void } = (resourceName,operationName, propLockedFilters) => {
-    const [filters, setFilters] = useState<any>(propLockedFilters);
-    const {filters:modelFilters, operations} = useGetResourceModel(resourceName);
-    const model = operations.getOperationModel(operationName)
-    const clearFilters = ()=>setFilters(propLockedFilters);
-    const modelFi = getFinalFilters(modelFilters, propLockedFilters);
-    const propsFiltersList = useMemo(()=> {return {modelFilters:modelFi , filters: filters, setFilters: setFilters, model}},[modelFilters, model, filters, propLockedFilters]);
-    const filterComponents = FilterList(propsFiltersList);
-    return {filters:filters, components:filterComponents, clearFilters:clearFilters}
+interface FilterValueInterface {
+    name:string,
+    value: any
+    isOrder?:boolean
 }
+
+export class FilterValue {
+    name:string
+    value: any
+    isOrder:boolean
+
+    constructor({name,value,isOrder=false}:FilterValueInterface) {
+        this.name = name
+        this.value = value
+        this.isOrder = isOrder
+    }
+}
+
+export const useTableFilters: (resourceName:string, operationName:string, propLockedFilters?: FilterValue[]) => { filterValues: FilterValue[]; components: any[]; clearFilters: () => void, setFilterValues: Dispatch<SetStateAction<FilterValue[]>> } = (resourceName, operationName, propLockedFilters=[]) => {
+
+    const [filterValues, setFilterValues] = useState<FilterValue[]>(propLockedFilters);
+    const {filters, operations} = useGetResourceModel(resourceName);
+    const model = operations.getOperationModel(operationName)
+    const clearFilters = ()=>setFilterValues(propLockedFilters);
+
+    const propsFiltersList = useMemo(()=> {return {filters , filterValues, setFilterValues: setFilterValues, model}},[filters, model, filterValues, propLockedFilters]);
+
+    const components = getFilterComponents(propsFiltersList);
+    //const filterComponents = FilterList(propsFiltersList);
+    return {filterValues, components, clearFilters, setFilterValues}
+}
+
 
 function removeLockedFiltersFromModelFilters(filters:any, lockedFilters:any ){
     Object.keys(lockedFilters).forEach(key => delete filters[key]);

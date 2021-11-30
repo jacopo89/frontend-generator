@@ -42,6 +42,11 @@ export type Option = {
     label:string;
 }
 
+interface PropertyModelOutputInterface {
+    model: PropertyModel
+    record: Record | Map<number, Record> | undefined
+}
+
 /**
  * @Property {id} - Name of the property
  */
@@ -85,9 +90,9 @@ export abstract class PropertyModel {
 
     abstract getInputField(props:PropertyModelInputInterface, configuration?:PropertyFieldConfiguration): ReactElement<any,any>|null;
 
-    abstract getOutputField(props:PropertyModelInputInterface, configuration?:PropertyFieldConfiguration): ReactElement<any, any> |null;
+    abstract getOutputField(props:PropertyModelOutputInterface, configuration?:PropertyFieldConfiguration): ReactElement<any, any> |null;
 
-    abstract setOutputField(props:PropertyModelInputInterface, configuration?:PropertyFieldConfiguration): ReactElement<any, any> |null;
+    abstract setOutputField(props:PropertyModelOutputInterface, configuration?:PropertyFieldConfiguration): ReactElement<any, any> |null;
 
     abstract getInputOnChangeHandler(props: InputOnChangeHandler): (vars:any) => void;
 
