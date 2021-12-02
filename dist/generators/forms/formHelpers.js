@@ -38,26 +38,27 @@ export function getFormValueFromRecord(record, model) {
     });
     return formattedFormValue;
 }
-export function filterOnChangeHandler(type, onChange, formValue, vars) {
+export function filterOnChangeHandler(type, setFilterValues, filterValues, vars) {
     const fileOnChange = (vars) => {
         const [name, value] = vars;
-        onChange(Object.assign(Object.assign({}, formValue), { [name]: value }));
-        //onChange({...formValue, [name]: value});
+        setFilterValues(Object.assign(Object.assign({}, filterValues), { [name]: value }));
+        //setFilterValues({...filterValues, [name]: value});
     };
     const controlledOnChange = (vars) => {
+        debugger;
         const [event] = vars;
         const target = event.target;
         let value = target.value;
         const name = target.name;
-        onChange(Object.assign(Object.assign({}, formValue), { [name]: value }));
+        setFilterValues(Object.assign(Object.assign({}, filterValues), { [name]: value }));
     };
     const checkboxOnChange = (vars) => {
         const [name, value] = vars;
-        onChange(Object.assign(Object.assign({}, formValue), { [name]: value }));
+        setFilterValues(Object.assign(Object.assign({}, filterValues), { [name]: value }));
     };
     const autoCompleteOnchange = (vars) => {
         const [name, value] = vars;
-        onChange(Object.assign(Object.assign({}, formValue), { [name]: value }));
+        setFilterValues(Object.assign(Object.assign({}, filterValues), { [name]: value }));
     };
     const phoneOnChange = (vars) => {
     };

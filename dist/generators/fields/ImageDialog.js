@@ -46,11 +46,11 @@ const DialogActions = withStyles((theme) => ({
         padding: theme.spacing(1),
     },
 }))(MuiDialogActions);
-export default function ImageDialog({ open, setOpen, selectedImage, images }) {
+export default function ImageDialog({ open, setOpen, selectedImageIndex, images }) {
     const handleClose = () => {
         setOpen(false);
     };
-    return (_jsx("div", { children: _jsxs(Dialog, Object.assign({ onClose: handleClose, "aria-labelledby": "customized-dialog-title", open: open }, { children: [_jsx(DialogTitle, Object.assign({ id: "customized-dialog-title", onClose: handleClose }, { children: selectedImage !== undefined && images[selectedImage]["url"] }), void 0), _jsx(DialogContent, Object.assign({ dividers: true }, { children: _jsx(Carousel, Object.assign({ index: selectedImage }, { children: images.map((item, i) => {
+    return (_jsx("div", { children: _jsxs(Dialog, Object.assign({ onClose: handleClose, "aria-labelledby": "customized-dialog-title", open: open }, { children: [_jsx(DialogTitle, Object.assign({ id: "customized-dialog-title", onClose: handleClose }, { children: selectedImageIndex !== undefined && images[selectedImageIndex]["url"] }), void 0), _jsx(DialogContent, Object.assign({ dividers: true }, { children: _jsx(Carousel, Object.assign({ index: selectedImageIndex }, { children: images.map((item, i) => {
                             const { url } = item;
                             return _jsx("img", { width: "100%", alt: url, src: url }, i);
                         }) }), void 0) }), void 0), _jsx(DialogActions, {}, void 0)] }), void 0) }, void 0));

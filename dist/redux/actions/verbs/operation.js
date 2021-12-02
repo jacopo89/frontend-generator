@@ -64,43 +64,51 @@ export function useItemOperation(resourceName, operation) {
     });
     return { data, action, errors, loading };
 }
+class CollectionResponse {
+    constructor({ totalItems, list }) {
+        this.totalItems = totalItems;
+        this.list = list;
+    }
+}
 export function useCollectionOperation(resourceName, operation) {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(new CollectionResponse({ totalItems: 0, list: [] }));
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     // @ts-ignore
     const operationsRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}/`;
     const sendDispatch = (operation.method !== "GET");
-    const action = (values) => __awaiter(this, void 0, void 0, function* () {
+    const action = (...values) => __awaiter(this, void 0, void 0, function* () {
         setErrors({});
         setLoading(true);
-        return fetch(operationsRoute(), { method: operation.method, body: JSON.stringify(values) })
-            .then(response => {
-            if (sendDispatch)
-                dispatch(loadingMessage(resourceName, false));
-            setLoading(false);
-            return response.json();
-        })
-            .then(retrieved => {
-            setData(retrieved);
-            if (sendDispatch)
-                dispatch(genericSuccess());
-            return retrieved;
-        })
-            .catch(e => {
-            setLoading(false);
-            if (e instanceof SubmissionError) {
-                if (sendDispatch)
-                    dispatch(genericError(e.message));
-                setErrors(e.errors);
-            }
-            else {
-                if (sendDispatch)
-                    dispatch(genericError(e.message));
-            }
-            throw new Error(e.message);
-        });
+        if (operation.method === "GET") {
+            const [page, filters] = values;
+            return fetch(operationsRoute(), { method: operation.method })
+                .then(response => response.json())
+                .then(retrieved => { return ({ data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"] }); })
+                .then(({ data, totalItems }) => {
+                setData(new CollectionResponse({ list: data, totalItems: totalItems }));
+                setLoading(false);
+                return { data, totalItems };
+            })
+                .catch(e => {
+                setLoading(false);
+                if (e instanceof SubmissionError) {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                    setErrors(e.errors);
+                }
+                else {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                }
+                throw new Error(e.message);
+            });
+        }
+        else if (operation.method === "PATCH" || operation.method === "PUT") {
+        }
+        else if (operation.method === "POST") {
+        }
     });
     return { data, action, errors, loading };
 }

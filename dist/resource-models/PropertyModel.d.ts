@@ -36,6 +36,10 @@ export declare type Option = {
     id: string;
     label: string;
 };
+interface PropertyModelOutputInterface {
+    model: PropertyModel;
+    record: Record | Map<number, Record> | undefined;
+}
 /**
  * @Property {id} - Name of the property
  */
@@ -58,8 +62,8 @@ export declare abstract class PropertyModel {
     abstract manipulateErrors(errors: Errors): any;
     abstract setInputField(props: PropertyModelInputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
     abstract getInputField(props: PropertyModelInputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
-    abstract getOutputField(props: PropertyModelInputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
-    abstract setOutputField(props: PropertyModelInputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
+    abstract getOutputField(props: PropertyModelOutputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
+    abstract setOutputField(props: PropertyModelOutputInterface, configuration?: PropertyFieldConfiguration): ReactElement<any, any> | null;
     abstract getInputOnChangeHandler(props: InputOnChangeHandler): (vars: any) => void;
     abstract getRecord(jsonValue: any): any;
     abstract getFormValue(value: any): any;
@@ -84,3 +88,4 @@ export interface InputFields {
     inputElement?: DetailedReactHTMLElement<any, any>;
     refresh?: () => void;
 }
+export {};

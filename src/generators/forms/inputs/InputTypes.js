@@ -5,6 +5,7 @@ export const EMBEDDED_SINGLE = "embedded_single";
 export const EMBEDDED_MULTIPLE = "embedded_multiple";
 export const FILE_SINGLE = "file_single";
 export const FILE_MULTIPLE = "file_multiple";
+export const IMAGE_MULTIPLE = "image_multiple";
 export const INTEGER = "integer";
 export const DATE = "date";
 export const FLOAT = "float";

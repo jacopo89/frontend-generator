@@ -1,14 +1,14 @@
 import { SinglePropertyModel } from "./SinglePropertyModel";
 import MultipleFileShow from "../../generators/fields/outputs/MultipleFileShow";
 import { Record } from "../Record";
-import { FilesList } from "../../generators/forms/inputs/Files/FilesList";
-export class MultipleFileModel extends SinglePropertyModel {
+import { ImagesGrid } from "../../generators/forms/inputs/Files/ImagesGrid";
+export class MultipleImageModel extends SinglePropertyModel {
     setInputField(props) {
         const { formValue, setFormValue, errors } = props;
         // @ts-ignore
         const propsWithModel = Object.assign(Object.assign({}, props), { model: this, resourceId: formValue.id, modelResourceName: this.modelResourceName, onChange: this.getInputOnChangeHandler({ formValue, setFormValue }), files: formValue[this.id] });
         // @ts-ignore
-        return FilesList(propsWithModel);
+        return ImagesGrid(propsWithModel);
     }
     getInputOnChangeHandler({ formValue, setFormValue }) {
         return (vars) => {

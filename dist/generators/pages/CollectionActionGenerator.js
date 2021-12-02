@@ -44,6 +44,7 @@ export const CollectionActionGenerator = ({ propActionName, propResourceName, pr
     const [formValue, setFormValue] = useState(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const { listings: referencesMap, updateListings: refreshReferencesMap } = UpdateListings();
+    // @ts-ignore
     const { action, errors: responseErrors, loading } = useCollectionOperation(resourceName, operation);
     useEffect(() => {
         // @ts-ignore

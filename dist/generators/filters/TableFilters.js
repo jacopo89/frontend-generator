@@ -5,6 +5,7 @@ import _ from "lodash";
 import { FilterList } from "./FilterList";
 import { useGetResourceModel } from "../../resource-models/modelsRegistry";
 import { routeManipulatorWithFilters } from "../../utils/routeUtils";
+import { getFilterComponents } from "./FilterGenerator";
 export const useRouteFilters = (resourceNameToUse, operationName, presetFilters) => {
     const location = useLocation();
     const [routeFilters, setRouteFilters] = useState({});
@@ -78,15 +79,22 @@ export const useRouteFilters = (resourceNameToUse, operationName, presetFilters)
     const filterComponents = FilterList(propsFiltersList);
     return { filters: filterObject, components: filterComponents, clearFilters: clearFilters };
 };
-export const useTableFilters = (resourceName, operationName, propLockedFilters) => {
-    const [filters, setFilters] = useState(propLockedFilters);
-    const { filters: modelFilters, operations } = useGetResourceModel(resourceName);
+export class FilterValue {
+    constructor({ name, value, isOrder = false }) {
+        this.name = name;
+        this.value = value;
+        this.isOrder = isOrder;
+    }
+}
+export const useTableFilters = (resourceName, operationName, propLockedFilters = []) => {
+    const [filterValues, setFilterValues] = useState(propLockedFilters);
+    const { filters, operations } = useGetResourceModel(resourceName);
     const model = operations.getOperationModel(operationName);
-    const clearFilters = () => setFilters(propLockedFilters);
-    const modelFi = getFinalFilters(modelFilters, propLockedFilters);
-    const propsFiltersList = useMemo(() => { return { modelFilters: modelFi, filters: filters, setFilters: setFilters, model }; }, [modelFilters, model, filters, propLockedFilters]);
-    const filterComponents = FilterList(propsFiltersList);
-    return { filters: filters, components: filterComponents, clearFilters: clearFilters };
+    const clearFilters = () => setFilterValues(propLockedFilters);
+    const propsFiltersList = useMemo(() => { return { filters, filterValues, setFilterValues: setFilterValues, model }; }, [filters, model, filterValues, propLockedFilters]);
+    const components = getFilterComponents(propsFiltersList);
+    //const filterComponents = FilterList(propsFiltersList);
+    return { filterValues, components, clearFilters, setFilterValues };
 };
 function removeLockedFiltersFromModelFilters(filters, lockedFilters) {
     Object.keys(lockedFilters).forEach(key => delete filters[key]);

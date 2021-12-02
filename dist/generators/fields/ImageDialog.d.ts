@@ -1,6 +1,6 @@
-export default function ImageDialog({ open, setOpen, selectedImage, images }: {
+export default function ImageDialog({ open, setOpen, selectedImageIndex, images }: {
     open: any;
     setOpen: any;
-    selectedImage: any;
+    selectedImageIndex: any;
     images: any;
 }): JSX.Element;

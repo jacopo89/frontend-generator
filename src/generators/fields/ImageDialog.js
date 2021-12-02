@@ -51,7 +51,7 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
-export default function ImageDialog({open,setOpen, selectedImage, images}) {
+export default function ImageDialog({open,setOpen, selectedImageIndex, images}) {
 
     const handleClose = () => {
         setOpen(false);
@@ -62,10 +62,10 @@ export default function ImageDialog({open,setOpen, selectedImage, images}) {
         <div>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {selectedImage!==undefined && images[selectedImage]["url"]}
+                    {selectedImageIndex!==undefined && images[selectedImageIndex]["url"]}
                 </DialogTitle>
                 <DialogContent dividers>
-                    <Carousel index={selectedImage}>
+                    <Carousel index={selectedImageIndex}>
                         {
                             images.map( (item, i) => {
                                 const {url} = item;

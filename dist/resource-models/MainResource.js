@@ -7,8 +7,5 @@ export class MainResource {
         this.operations = new OperationsList(operations.map((action) => new Operation(action)));
         this.filters = filters;
         this.table = table;
-        if (operations === undefined) {
-            debugger;
-        }
     }
 }

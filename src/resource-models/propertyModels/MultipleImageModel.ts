@@ -6,16 +6,15 @@ import {InputOnChangeHandler} from "../PropertyModel";
 import {Record} from "../Record";
 import {SingleSetInputFieldProps} from "../models/SetInputFieldProps";
 import {ImagesGrid} from "../../generators/forms/inputs/Files/ImagesGrid";
-import {FilesList} from "../../generators/forms/inputs/Files/FilesList";
 
-export class MultipleFileModel extends SinglePropertyModel{
+export class MultipleImageModel extends SinglePropertyModel{
     setInputField(props: SingleSetInputFieldProps): React.ReactElement<any, any> | null {
         const {formValue, setFormValue, errors} = props;
         // @ts-ignore
         const propsWithModel = {...props, model:this, resourceId:formValue.id, modelResourceName: this.modelResourceName, onChange:this.getInputOnChangeHandler({formValue, setFormValue}), files:formValue[this.id]}
 
         // @ts-ignore
-        return FilesList(propsWithModel);
+        return ImagesGrid(propsWithModel);
     }
 
     getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): (vars:any)=>void {

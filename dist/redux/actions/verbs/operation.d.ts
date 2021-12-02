@@ -25,9 +25,22 @@ export declare function useItemOperation(resourceName: string, operation: Operat
     errors: {};
     loading: boolean;
 };
+interface CollectionResponseInterface {
+    totalItems: number;
+    list: any[];
+}
+declare class CollectionResponse {
+    totalItems: number;
+    list: any[];
+    constructor({ totalItems, list }: CollectionResponseInterface);
+}
 export declare function useCollectionOperation(resourceName: string, operation: Operation): {
-    data: never[];
-    action: (values: any) => Promise<any>;
+    data: CollectionResponse;
+    action: (...values: any[]) => Promise<{
+        data: any;
+        totalItems: any;
+    } | undefined>;
     errors: {};
     loading: boolean;
 };
+export {};

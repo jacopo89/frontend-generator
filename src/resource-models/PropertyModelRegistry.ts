@@ -8,7 +8,7 @@ import {
     FILE_MULTIPLE,
     FILE_SINGLE,
     FLOAT,
-    ID,
+    ID, IMAGE_MULTIPLE,
     INTEGER,
     MONEY,
     PHONE,
@@ -24,7 +24,7 @@ import {EmbeddedMultipleModel} from "./propertyModels/EmbeddedMultipleModel";
 import {BooleanModel} from "./propertyModels/BooleanModel";
 import {DateModel} from "./propertyModels/DateModel";
 import {SingleFileModel} from "./propertyModels/SingleFileModel";
-import {MultipleFileModel} from "./propertyModels/MultipleFileModel";
+import {MultipleImageModel} from "./propertyModels/MultipleImageModel";
 import {FloatModel} from "./propertyModels/FloatModel";
 import {TextareaModel} from "./propertyModels/TextareaModel";
 import {PhoneModel} from "./propertyModels/PhoneModel";
@@ -34,6 +34,7 @@ import {EnumMultipleModel} from "./propertyModels/EnumMultipleModel";
 import {IdModel} from "./propertyModels/IdModel";
 import {StringModel} from "./propertyModels/StringModel";
 import {ReferenceMultipleModel} from "./propertyModels/ReferenceMultipleModel";
+import {MultipleFileModel} from "./propertyModels/MultipleFileModel";
 
 /**
  * @Property {id} - Name of the property
@@ -68,6 +69,9 @@ export class PropertyModelRegistry{
             }
             case FILE_SINGLE:{
                 return new SingleFileModel(id, others);
+            }
+            case IMAGE_MULTIPLE: {
+                return new MultipleImageModel(id, others);
             }
             case FILE_MULTIPLE: {
                 return new MultipleFileModel(id, others);
