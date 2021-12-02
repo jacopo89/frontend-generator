@@ -1,3 +1,4 @@
+import { Model } from "./Model";
 /**
  * A resource represents
  */
@@ -10,7 +11,7 @@ export class Resource {
         this.editPage = editPage;
         this.showPage = showPage;
         this.table = table;
-        this.model = model;
+        this.model = Model.createFromJson(model, resourceName);
     }
     getModel() {
         return this.model;

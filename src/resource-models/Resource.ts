@@ -33,7 +33,7 @@ export class Resource{
         this.editPage = editPage;
         this.showPage = showPage;
         this.table = table;
-        this.model =model;
+        this.model =Model.createFromJson(model, resourceName);
     }
 
     getModel(){
