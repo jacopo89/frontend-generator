@@ -89,7 +89,7 @@ export function useCollectionOperation(resourceName:string, operation:Operation)
 
 
     // @ts-ignore
-    const operationsRoute: () => string = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}/`;
+    const operationsRoute: () => string = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
 
     const sendDispatch = (operation.method !== "GET");
 

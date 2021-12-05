@@ -76,7 +76,7 @@ export function useCollectionOperation(resourceName, operation) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     // @ts-ignore
-    const operationsRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}/`;
+    const operationsRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
     const sendDispatch = (operation.method !== "GET");
     const action = (...values) => __awaiter(this, void 0, void 0, function* () {
         setErrors({});
