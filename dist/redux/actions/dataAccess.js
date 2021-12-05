@@ -2,12 +2,12 @@ import { SubmissionError } from 'redux-form';
 const MIME_TYPE = 'application/json';
 const LD_MIME_TYPE = 'application/ld+json';
 const PATCH_MIME_TYPE = 'application/merge-patch+json';
-export function fetch(id, options = {}) {
+export function fetch(id, options = {}, type = LD_MIME_TYPE) {
     const ENTRYPOINT = process.env.REACT_APP_API_ENDPOINT;
     if ('undefined' === typeof options.headers)
         options.headers = new Headers();
     if (null === options.headers.get('Accept'))
-        options.headers.set('Accept', MIME_TYPE);
+        options.headers.set('Accept', type);
     if (null === options.headers.get('Authorization') && localStorage.getItem('token'))
         options.headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('token')));
     if ('undefined' !== options.body &&

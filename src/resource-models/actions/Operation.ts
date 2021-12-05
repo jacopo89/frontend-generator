@@ -10,6 +10,7 @@ export interface PropAction{
     method: Method;
     contentType: string;
     operationType: OperationType;
+    responseType?: OperationType;
     path: string | null;
 }
 
@@ -20,12 +21,14 @@ export class Operation{
     method: Method;
     contentType: string;
     operationType: OperationType
+    responseType: OperationType
     path: Path | null;
 
-    constructor({model, name, resourceName, method, contentType, operationType, path}:PropAction) {
+    constructor({model, name, resourceName, method, contentType, operationType, path, responseType}:PropAction) {
         this.model = Model.createFromJson(model, resourceName)
         this.name = name;
         this.method = method;
+        this.responseType = responseType ?? operationType;
         this.resourceName = resourceName;
         this.contentType = contentType;
         this.operationType = operationType

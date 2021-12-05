@@ -87,7 +87,6 @@ export function useCollectionOperation(resourceName:string, operation:Operation)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-
     // @ts-ignore
     const operationsRoute: () => string = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
 
@@ -126,4 +125,58 @@ export function useCollectionOperation(resourceName:string, operation:Operation)
 
     }
     return {data, action, errors, loading};
+}
+
+export function useOperation(resourceName:string,operation:Operation){
+    const [data, setData] = useState<CollectionResponse>(new CollectionResponse({totalItems:0, list:[]}));
+    const dispatch = useDispatch();
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    let operationRoute:any;
+    if(operation.operationType ==="item"){
+        // @ts-ignore
+        operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+    }else{
+        // @ts-ignore
+        operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
+    }
+
+    const sendDispatch = (operation.method !== "GET");
+
+    const action = async (...values:any[]) => {
+        setErrors({});
+        setLoading(true);
+        if(operation.method === "GET"){
+            const [page, filters] = values
+            // @ts-ignore
+            return ldfetch(operationRoute(), { method: operation.method})
+                .then(response => response.json())
+                .then(retrieved =>{return ({data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"]})})
+                .then(({ data, totalItems }) => {
+                    setData(new CollectionResponse({list:data, totalItems:totalItems}));
+                    setLoading(false);
+                    return {data, totalItems}
+                })
+                .catch(e => {
+                    setLoading(false);
+                    if(e instanceof SubmissionError){
+                        if(sendDispatch)dispatch(genericError(e.message))
+                        setErrors(e.errors);
+
+                    }else{
+                        if(sendDispatch)dispatch(genericError(e.message))
+                    }
+                    throw new Error(e.message);
+                });
+        }else if(operation.method === "PATCH" || operation.method === "PUT"){
+
+        }else if(operation.method === "POST"){
+
+        }
+
+
+    }
+    return {data, action, errors, loading};
+
 }

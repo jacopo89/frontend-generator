@@ -1,9 +1,10 @@
 import { Model } from "../Model";
 export class Operation {
-    constructor({ model, name, resourceName, method, contentType, operationType, path }) {
+    constructor({ model, name, resourceName, method, contentType, operationType, path, responseType }) {
         this.model = Model.createFromJson(model, resourceName);
         this.name = name;
         this.method = method;
+        this.responseType = responseType !== null && responseType !== void 0 ? responseType : operationType;
         this.resourceName = resourceName;
         this.contentType = contentType;
         this.operationType = operationType;

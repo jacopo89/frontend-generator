@@ -43,4 +43,13 @@ export declare function useCollectionOperation(resourceName: string, operation: 
     errors: {};
     loading: boolean;
 };
+export declare function useOperation(resourceName: string, operation: Operation): {
+    data: CollectionResponse;
+    action: (...values: any[]) => Promise<{
+        data: any;
+        totalItems: any;
+    } | undefined>;
+    errors: {};
+    loading: boolean;
+};
 export {};

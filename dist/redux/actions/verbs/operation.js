@@ -112,3 +112,53 @@ export function useCollectionOperation(resourceName, operation) {
     });
     return { data, action, errors, loading };
 }
+export function useOperation(resourceName, operation) {
+    const [data, setData] = useState(new CollectionResponse({ totalItems: 0, list: [] }));
+    const dispatch = useDispatch();
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    let operationRoute;
+    if (operation.operationType === "item") {
+        // @ts-ignore
+        operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+    }
+    else {
+        // @ts-ignore
+        operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
+    }
+    const sendDispatch = (operation.method !== "GET");
+    const action = (...values) => __awaiter(this, void 0, void 0, function* () {
+        setErrors({});
+        setLoading(true);
+        if (operation.method === "GET") {
+            const [page, filters] = values;
+            // @ts-ignore
+            return ldfetch(operationRoute(), { method: operation.method })
+                .then(response => response.json())
+                .then(retrieved => { return ({ data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"] }); })
+                .then(({ data, totalItems }) => {
+                setData(new CollectionResponse({ list: data, totalItems: totalItems }));
+                setLoading(false);
+                return { data, totalItems };
+            })
+                .catch(e => {
+                setLoading(false);
+                if (e instanceof SubmissionError) {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                    setErrors(e.errors);
+                }
+                else {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                }
+                throw new Error(e.message);
+            });
+        }
+        else if (operation.method === "PATCH" || operation.method === "PUT") {
+        }
+        else if (operation.method === "POST") {
+        }
+    });
+    return { data, action, errors, loading };
+}
