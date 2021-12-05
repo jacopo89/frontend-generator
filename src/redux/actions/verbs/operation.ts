@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form';
-import { fetch } from '../dataAccess';
+import {fetch, ldfetch} from '../dataAccess';
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {FEEDBACK_MESSAGE} from "../app/actions";
@@ -98,7 +98,7 @@ export function useCollectionOperation(resourceName:string, operation:Operation)
         setLoading(true);
         if(operation.method === "GET"){
             const [page, filters] = values
-            return fetch(operationsRoute(), { method: operation.method})
+            return ldfetch(operationsRoute(), { method: operation.method})
                 .then(response => response.json())
                 .then(retrieved =>{return ({data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"]})})
                 .then(({ data, totalItems }) => {
