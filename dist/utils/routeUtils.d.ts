@@ -1,1 +1,2 @@
-export function routeManipulatorWithFilters(route: any, filters: any): any;
+import { FilterValue } from "../generators/filters/TableFilters";
+export declare function routeManipulatorWithFilters(route: string, filters: FilterValue[]): string;

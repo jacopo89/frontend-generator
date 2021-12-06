@@ -1,16 +1,19 @@
 export function routeManipulatorWithFilters(route, filters) {
-    Object.keys(filters).forEach((key, index) => {
+    filters.forEach((filter, index) => {
         let suffix = (index === 0) ? "" : "&";
-        if (Array.isArray(filters[key])) {
-            filters[key].forEach(filterValue => {
-                route = route.concat(`${suffix}${key}[]=${filterValue}`);
-                if (suffix === "") {
-                    suffix = "&";
-                }
-            });
+        if (filter.isOrder) {
+            route.concat(`${suffix}order[${filter.name}]=${filter.value}`);
         }
         else {
-            route = route.concat(`${suffix}${key}=${filters[key]}`);
+            if (Array.isArray(filter.value)) {
+                route.concat(`${suffix}${filter.name}[]=${filter.value}`);
+            }
+            else {
+                route.concat(`${suffix}${filter.name}=${filter.value}`);
+            }
+        }
+        if (suffix === "") {
+            suffix = "&";
         }
     });
     return route;

@@ -4,9 +4,9 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {FEEDBACK_MESSAGE} from "../app/actions";
 import {Operation} from "../../../resource-models/actions/Operation";
-import {routeManipulatorWithFilters} from "../../../utils/routeUtils";
 import {CollectionResponse} from "./CollectionResponse";
 import {ItemResponse} from "./ItemResponse";
+import {routeManipulatorWithFilters} from "../../../utils/routeUtils";
 
 export function genericError(message:string) {
     return { type: FEEDBACK_MESSAGE, message:message, severity:"error"};
@@ -133,16 +133,16 @@ export function useOperation(resourceName:string,operation:Operation){
                 let operationRoute = (operation.path) ? (id) => `/api${operation.path.path(id)}` : (id) => `/api/${resourceName}/${id}`;
 
                 const [id, page, filters] = values
-                console.log("filters",filters)
+
 
                 route = operationRoute(id);
-                /*route = routeManipulatorWithFilters(route, filters);
+                route = routeManipulatorWithFilters(route, filters);
                 //add page
                 if(filters.length===0){
                     route = route.concat(`page=${page}`)
                 }else{
                     route = route.concat(`&page=${page}`)
-                }*/
+                }
             }else{
                 // @ts-ignore
                 let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
