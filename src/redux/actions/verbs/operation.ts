@@ -121,15 +121,6 @@ export function useOperation(resourceName:string,operation:Operation){
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    let operationRoute:any;
-    if(operation.operationType ==="item"){
-        // @ts-ignore
-        operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
-    }else{
-        // @ts-ignore
-        operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
-    }
-
     const sendDispatch = (operation.method !== "GET");
 
     const action = async (...values:any[]) => {
@@ -138,8 +129,12 @@ export function useOperation(resourceName:string,operation:Operation){
         let route;
         if(operation.method === "GET"){
             if(operation.operationType === "item"){
+                // @ts-ignore
+                let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+
                 const [id, page, filters] = values
                 console.log("filters",filters)
+
                 route = operationRoute(id);
                 route = routeManipulatorWithFilters(route, filters);
                 //add page
@@ -149,6 +144,8 @@ export function useOperation(resourceName:string,operation:Operation){
                     route = route.concat(`&page=${page}`)
                 }
             }else{
+                // @ts-ignore
+                let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
                 route = operationRoute()
             }
             // @ts-ignore
@@ -178,7 +175,10 @@ export function useOperation(resourceName:string,operation:Operation){
                     throw new Error(e.message);
                 });
         }else if(operation.method === "PATCH" || operation.method === "PUT"){
-            return ldfetch(operationRoute(), { method: operation.method})
+            const [id] = values
+            // @ts-ignore
+            let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+            return ldfetch(operationRoute(id), { method: operation.method})
                 .then(response => response.json())
                 .then((response) => {
                     setData(new ItemResponse(response))
@@ -198,7 +198,10 @@ export function useOperation(resourceName:string,operation:Operation){
                 });
 
         }else if(operation.method === "POST"){
-            return ldfetch(operationRoute(), { method: operation.method})
+            const [id] = values
+            // @ts-ignore
+            let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+            return ldfetch(operationRoute(id), { method: operation.method})
                 .then(response => response.json())
                 .then((response) => {
                     if(operation.responseType==="collection"){

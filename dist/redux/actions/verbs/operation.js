@@ -115,15 +115,6 @@ export function useOperation(resourceName, operation) {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
-    let operationRoute;
-    if (operation.operationType === "item") {
-        // @ts-ignore
-        operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
-    }
-    else {
-        // @ts-ignore
-        operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
-    }
     const sendDispatch = (operation.method !== "GET");
     const action = (...values) => __awaiter(this, void 0, void 0, function* () {
         setErrors({});
@@ -131,6 +122,8 @@ export function useOperation(resourceName, operation) {
         let route;
         if (operation.method === "GET") {
             if (operation.operationType === "item") {
+                // @ts-ignore
+                let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
                 const [id, page, filters] = values;
                 console.log("filters", filters);
                 route = operationRoute(id);
@@ -144,6 +137,8 @@ export function useOperation(resourceName, operation) {
                 }
             }
             else {
+                // @ts-ignore
+                let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
                 route = operationRoute();
             }
             // @ts-ignore
@@ -176,7 +171,10 @@ export function useOperation(resourceName, operation) {
             });
         }
         else if (operation.method === "PATCH" || operation.method === "PUT") {
-            return ldfetch(operationRoute(), { method: operation.method })
+            const [id] = values;
+            // @ts-ignore
+            let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+            return ldfetch(operationRoute(id), { method: operation.method })
                 .then(response => response.json())
                 .then((response) => {
                 setData(new ItemResponse(response));
@@ -198,7 +196,10 @@ export function useOperation(resourceName, operation) {
             });
         }
         else if (operation.method === "POST") {
-            return ldfetch(operationRoute(), { method: operation.method })
+            const [id] = values;
+            // @ts-ignore
+            let operationRoute = (operation.path) ? (id) => operation.path.path(id) : (id) => `/api/${resourceName}/${id}`;
+            return ldfetch(operationRoute(id), { method: operation.method })
                 .then(response => response.json())
                 .then((response) => {
                 if (operation.responseType === "collection") {
