@@ -12,7 +12,7 @@ import { CollectionResponse } from "../../redux/actions/verbs/CollectionResponse
 export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [], table = [] }) => {
     const { operations, title } = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
-    const model = operations.getListOperationModel(actionName);
+    const model = operations.getListOperationModel(actionName, operation.resource);
     const [rows, setRows] = useState([]);
     const headCells = useMemo(() => {
         return table.map(({ id, label }) => {

@@ -8,7 +8,7 @@ export declare class OperationsList {
     findListOperationByName(name: string): Operation;
     getItemOperationModel(name: string): Model;
     getCollectionOperationModel(name: string): Model;
-    getListOperationModel(name: string): Model;
+    getListOperationModel(name: string, subresource?: string | null): Model;
     getActionByName(name: string): Operation;
     getOperationModel(name: string): Model;
 }

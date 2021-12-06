@@ -10,6 +10,7 @@ export interface PropAction {
     operationType: OperationType;
     responseType?: OperationType;
     path: string | null;
+    resource?: string | null;
 }
 export declare class Operation {
     model: Model;
@@ -20,7 +21,8 @@ export declare class Operation {
     operationType: OperationType;
     responseType: OperationType;
     path: Path | null;
-    constructor({ model, name, resourceName, method, contentType, operationType, path, responseType }: PropAction);
+    resource?: string | null;
+    constructor({ model, name, resourceName, method, contentType, operationType, path, responseType, resource }: PropAction);
     getModel(): Model;
 }
 declare class Path {

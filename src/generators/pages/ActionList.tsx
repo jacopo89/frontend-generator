@@ -25,7 +25,7 @@ interface ListInterface {
 export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = [],table = []})=>{
     const {operations,title} = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
-    const model = operations.getListOperationModel(actionName);
+    const model = operations.getListOperationModel(actionName, operation.resource);
     const [rows, setRows]= useState<Row[]>([]);
 
     const headCells: HeadCell[] = useMemo(()=>{

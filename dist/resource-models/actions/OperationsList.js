@@ -28,9 +28,15 @@ export class OperationsList {
         const { model } = this.findCollectionOperationByName(name);
         return model;
     }
-    getListOperationModel(name) {
+    getListOperationModel(name, subresource) {
         const { model } = this.findListOperationByName(name);
-        return model;
+        if (subresource !== null) {
+            // @ts-ignore
+            return model.getProperty(subresource).getResource().getModel(subresource);
+        }
+        else {
+            return model;
+        }
     }
     getActionByName(name) {
         const action = this.operations.find(operation => operation.name === name);

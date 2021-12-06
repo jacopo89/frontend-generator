@@ -35,9 +35,15 @@ export class OperationsList{
         return model;
     }
 
-    getListOperationModel(name:string):Model{
+    getListOperationModel(name:string, subresource ?:string|null):Model{
         const {model} = this.findListOperationByName(name)
-        return model;
+        if(subresource !== null){
+            // @ts-ignore
+            return model.getProperty(subresource).getResource().getModel(subresource);
+        }
+        else{
+            return model;
+        }
     }
 
     getActionByName(name:string):Operation{
