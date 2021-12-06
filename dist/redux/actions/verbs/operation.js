@@ -80,15 +80,6 @@ export function useCollectionOperation(resourceName, operation) {
         setLoading(true);
         if (operation.method === "GET") {
             let route = operationsRoute();
-            const [page, filters] = values;
-            route = routeManipulatorWithFilters(route, filters);
-            //add page
-            if (filters.length === 0) {
-                route = route.concat(`page=${page}`);
-            }
-            else {
-                route = route.concat(`&page=${page}`);
-            }
             return ldfetch(route, { method: operation.method })
                 .then(response => response.json())
                 .then(retrieved => { return ({ data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"] }); })
@@ -137,10 +128,26 @@ export function useOperation(resourceName, operation) {
     const action = (...values) => __awaiter(this, void 0, void 0, function* () {
         setErrors({});
         setLoading(true);
+        let route;
         if (operation.method === "GET") {
-            const [page, filters] = values;
+            if (operation.operationType === "item") {
+                const [id, page, filters] = values;
+                console.log("filters", filters);
+                route = operationRoute(id);
+                route = routeManipulatorWithFilters(route, filters);
+                //add page
+                if (filters.length === 0) {
+                    route = route.concat(`page=${page}`);
+                }
+                else {
+                    route = route.concat(`&page=${page}`);
+                }
+            }
+            else {
+                route = operationRoute();
+            }
             // @ts-ignore
-            return ldfetch(operationRoute(), { method: operation.method })
+            return ldfetch(route, { method: operation.method })
                 .then(response => response.json())
                 .then((response) => {
                 if (operation.responseType === "collection") {
