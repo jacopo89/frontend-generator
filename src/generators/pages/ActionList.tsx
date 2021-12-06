@@ -27,7 +27,7 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
     const {operations,title} = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
 
-    if(operation.resource!==undefined && id===undefined){
+    if((operation.resource !== undefined && operation.resource!==null) && id===undefined){
         throw Error("Subresource without id")
     }
 

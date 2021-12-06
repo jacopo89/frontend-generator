@@ -12,7 +12,7 @@ import { CollectionResponse } from "../../redux/actions/verbs/CollectionResponse
 export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [], table = [], id }) => {
     const { operations, title } = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
-    if (operation.resource !== undefined && id === undefined) {
+    if ((operation.resource !== undefined && operation.resource !== null) && id === undefined) {
         throw Error("Subresource without id");
     }
     const model = operations.getListOperationModel(actionName, operation.resource);
