@@ -136,13 +136,13 @@ export function useOperation(resourceName:string,operation:Operation){
                 console.log("filters",filters)
 
                 route = operationRoute(id);
-                route = routeManipulatorWithFilters(route, filters);
+                /*route = routeManipulatorWithFilters(route, filters);
                 //add page
                 if(filters.length===0){
                     route = route.concat(`page=${page}`)
                 }else{
                     route = route.concat(`&page=${page}`)
-                }
+                }*/
             }else{
                 // @ts-ignore
                 let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;

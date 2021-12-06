@@ -12,7 +12,6 @@ import { fetch, ldfetch } from '../dataAccess';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FEEDBACK_MESSAGE } from "../app/actions";
-import { routeManipulatorWithFilters } from "../../../utils/routeUtils";
 import { CollectionResponse } from "./CollectionResponse";
 import { ItemResponse } from "./ItemResponse";
 export function genericError(message) {
@@ -127,14 +126,13 @@ export function useOperation(resourceName, operation) {
                 const [id, page, filters] = values;
                 console.log("filters", filters);
                 route = operationRoute(id);
-                route = routeManipulatorWithFilters(route, filters);
+                /*route = routeManipulatorWithFilters(route, filters);
                 //add page
-                if (filters.length === 0) {
-                    route = route.concat(`page=${page}`);
-                }
-                else {
-                    route = route.concat(`&page=${page}`);
-                }
+                if(filters.length===0){
+                    route = route.concat(`page=${page}`)
+                }else{
+                    route = route.concat(`&page=${page}`)
+                }*/
             }
             else {
                 // @ts-ignore
