@@ -146,7 +146,18 @@ export function useOperation(resourceName:string,operation:Operation){
             }else{
                 // @ts-ignore
                 let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
+
+                const [page, filters] = values
+
                 route = operationRoute()
+                // @ts-ignore
+                route = routeManipulatorWithFilters(route, filters);
+                //add page
+                if(filters.length===0){
+                    route = route.concat(`page=${page}`)
+                }else{
+                    route = route.concat(`&page=${page}`)
+                }
             }
             // @ts-ignore
             return ldfetch(route, { method: operation.method})
