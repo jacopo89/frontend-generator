@@ -4,12 +4,13 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {Row} from "./table/Row";
 import {HeadCell} from "./table/HeadCell";
-import {useCollectionOperation} from "../../redux/actions/verbs/operation";
+import {useCollectionOperation, useOperation} from "../../redux/actions/verbs/operation";
 import {useDebouncedCallback} from "use-debounce";
 import {Model} from "../../resource-models/Model";
 import {Record} from "../../resource-models/Record";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 import {Table} from "./Table";
+import {CollectionResponse} from "../../redux/actions/verbs/CollectionResponse";
 
 interface ListInterface {
     resourceName: string;
@@ -21,8 +22,8 @@ interface ListInterface {
 
 export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = []})=>{
     const {operations,title, table} = useGetResourceModel(resourceName);
-    const operation = operations.findCollectionOperationByName(actionName);
-    const model = operations.getCollectionOperationModel(actionName);
+    const operation = operations.findListOperationByName(actionName);
+    const model = operations.getListOperationModel(actionName);
     const [rows, setRows]= useState<Row[]>([]);
 
     const headCells: HeadCell[] = useMemo(()=>{
@@ -35,14 +36,14 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
     }, [ model])
 
 
-    // @ts-ignore
-    const {data, action,loading} = useCollectionOperation(resourceName, operation);
+    const {data, action,loading} = useOperation(resourceName, operation);
+
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const {filterValues, components, clearFilters, setFilterValues} = useTableFilters(resourceName,actionName,  lockedFilters);
 
 
-    useEffect(()=>{console.log("filtervalues", filterValues)},[filterValues])
+
     const debounced = useDebouncedCallback(
         () => action(page + 1, filterValues),
         1000
@@ -53,7 +54,9 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
     }, [resourceName, filterValues, page])
 
     useEffect(()=>{
-        setRows(data.list);
+        if (data instanceof CollectionResponse) {
+            setRows(data.list);
+        }
     },[data])
 
     useEffect(()=>{setRows([])}, [resourceName])
@@ -71,5 +74,5 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
         return getRowElement(row, id, label, model)
     }),[model, table])
 
-    return <Table filterValues={filterValues} setFilterValues={setFilterValues}  filterComponents={components} rows={rows} totalItems={data.totalItems} headCells={headCells} page={page} setPage={setPage} title={title} clearFilters={clearFilters} getDataHandler={debounced} loading={loading} columns={columns} order={"asc"} orderBy={"id"}></Table>
+    return <Table filterValues={filterValues} setFilterValues={setFilterValues}  filterComponents={components} rows={rows} totalItems={data instanceof CollectionResponse ? data.totalItems :0} headCells={headCells} page={page} setPage={setPage} title={title} clearFilters={clearFilters} getDataHandler={debounced} loading={loading} columns={columns} order={"asc"} orderBy={"id"}></Table>
 }

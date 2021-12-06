@@ -1,4 +1,6 @@
 import { Operation } from "../../../resource-models/actions/Operation";
+import { CollectionResponse } from "./CollectionResponse";
+import { ItemResponse } from "./ItemResponse";
 export declare function genericError(message: string): {
     type: string;
     message: string;
@@ -25,15 +27,6 @@ export declare function useItemOperation(resourceName: string, operation: Operat
     errors: {};
     loading: boolean;
 };
-interface CollectionResponseInterface {
-    totalItems: number;
-    list: any[];
-}
-declare class CollectionResponse {
-    totalItems: number;
-    list: any[];
-    constructor({ totalItems, list }: CollectionResponseInterface);
-}
 export declare function useCollectionOperation(resourceName: string, operation: Operation): {
     data: CollectionResponse;
     action: (...values: any[]) => Promise<{
@@ -44,12 +37,8 @@ export declare function useCollectionOperation(resourceName: string, operation: 
     loading: boolean;
 };
 export declare function useOperation(resourceName: string, operation: Operation): {
-    data: CollectionResponse;
-    action: (...values: any[]) => Promise<{
-        data: any;
-        totalItems: any;
-    } | undefined>;
+    data: CollectionResponse | ItemResponse;
+    action: (...values: any[]) => Promise<CollectionResponse | ItemResponse | undefined>;
     errors: {};
     loading: boolean;
 };
-export {};

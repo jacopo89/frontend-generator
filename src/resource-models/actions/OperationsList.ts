@@ -19,6 +19,12 @@ export class OperationsList{
         return action;
     }
 
+    findListOperationByName(name:string):Operation{
+        const action = this.operations.find(operation => operation.name === name && operation.responseType==="collection")
+        if(action === undefined) throw new Error("Unexisting action")
+        return action;
+    }
+
     getItemOperationModel(name:string):Model{
         const {model} = this.findItemOperationByName(name)
         return model;
@@ -26,6 +32,11 @@ export class OperationsList{
 
     getCollectionOperationModel(name:string):Model{
         const {model} = this.findCollectionOperationByName(name)
+        return model;
+    }
+
+    getListOperationModel(name:string):Model{
+        const {model} = this.findListOperationByName(name)
         return model;
     }
 

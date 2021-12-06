@@ -12,6 +12,9 @@ import { fetch, ldfetch } from '../dataAccess';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FEEDBACK_MESSAGE } from "../app/actions";
+import { routeManipulatorWithFilters } from "../../../utils/routeUtils";
+import { CollectionResponse } from "./CollectionResponse";
+import { ItemResponse } from "./ItemResponse";
 export function genericError(message) {
     return { type: FEEDBACK_MESSAGE, message: message, severity: "error" };
 }
@@ -64,12 +67,6 @@ export function useItemOperation(resourceName, operation) {
     });
     return { data, action, errors, loading };
 }
-class CollectionResponse {
-    constructor({ totalItems, list }) {
-        this.totalItems = totalItems;
-        this.list = list;
-    }
-}
 export function useCollectionOperation(resourceName, operation) {
     const [data, setData] = useState(new CollectionResponse({ totalItems: 0, list: [] }));
     const dispatch = useDispatch();
@@ -82,8 +79,17 @@ export function useCollectionOperation(resourceName, operation) {
         setErrors({});
         setLoading(true);
         if (operation.method === "GET") {
+            let route = operationsRoute();
             const [page, filters] = values;
-            return ldfetch(operationsRoute(), { method: operation.method })
+            route = routeManipulatorWithFilters(route, filters);
+            //add page
+            if (filters.length === 0) {
+                route = route.concat(`page=${page}`);
+            }
+            else {
+                route = route.concat(`&page=${page}`);
+            }
+            return ldfetch(route, { method: operation.method })
                 .then(response => response.json())
                 .then(retrieved => { return ({ data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"] }); })
                 .then(({ data, totalItems }) => {
@@ -113,7 +119,8 @@ export function useCollectionOperation(resourceName, operation) {
     return { data, action, errors, loading };
 }
 export function useOperation(resourceName, operation) {
-    const [data, setData] = useState(new CollectionResponse({ totalItems: 0, list: [] }));
+    const initializedResponse = operation.responseType === "item" ? new ItemResponse({}) : new CollectionResponse({ totalItems: 0, list: [] });
+    const [data, setData] = useState(initializedResponse);
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -135,11 +142,17 @@ export function useOperation(resourceName, operation) {
             // @ts-ignore
             return ldfetch(operationRoute(), { method: operation.method })
                 .then(response => response.json())
-                .then(retrieved => { return ({ data: retrieved["hydra:member"], totalItems: retrieved["hydra:totalItems"] }); })
-                .then(({ data, totalItems }) => {
-                setData(new CollectionResponse({ list: data, totalItems: totalItems }));
+                .then((response) => {
+                if (operation.responseType === "collection") {
+                    const list = response["hydra:member"];
+                    const totalItems = response["hydra:totalItems"];
+                    setData(new CollectionResponse({ list: list, totalItems: totalItems }));
+                }
+                else {
+                    setData(new ItemResponse(response));
+                }
                 setLoading(false);
-                return { data, totalItems };
+                return data;
             })
                 .catch(e => {
                 setLoading(false);
@@ -156,8 +169,55 @@ export function useOperation(resourceName, operation) {
             });
         }
         else if (operation.method === "PATCH" || operation.method === "PUT") {
+            return ldfetch(operationRoute(), { method: operation.method })
+                .then(response => response.json())
+                .then((response) => {
+                setData(new ItemResponse(response));
+                setLoading(false);
+                return data;
+            })
+                .catch(e => {
+                setLoading(false);
+                if (e instanceof SubmissionError) {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                    setErrors(e.errors);
+                }
+                else {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                }
+                throw new Error(e.message);
+            });
         }
         else if (operation.method === "POST") {
+            return ldfetch(operationRoute(), { method: operation.method })
+                .then(response => response.json())
+                .then((response) => {
+                if (operation.responseType === "collection") {
+                    const list = response["hydra:member"];
+                    const totalItems = response["hydra:totalItems"];
+                    setData(new CollectionResponse({ list: list, totalItems: totalItems }));
+                }
+                else {
+                    setData(new ItemResponse(response));
+                }
+                setLoading(false);
+                return data;
+            })
+                .catch(e => {
+                setLoading(false);
+                if (e instanceof SubmissionError) {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                    setErrors(e.errors);
+                }
+                else {
+                    if (sendDispatch)
+                        dispatch(genericError(e.message));
+                }
+                throw new Error(e.message);
+            });
         }
     });
     return { data, action, errors, loading };

@@ -14,12 +14,22 @@ export class OperationsList {
             throw new Error("Unexisting action");
         return action;
     }
+    findListOperationByName(name) {
+        const action = this.operations.find(operation => operation.name === name && operation.responseType === "collection");
+        if (action === undefined)
+            throw new Error("Unexisting action");
+        return action;
+    }
     getItemOperationModel(name) {
         const { model } = this.findItemOperationByName(name);
         return model;
     }
     getCollectionOperationModel(name) {
         const { model } = this.findCollectionOperationByName(name);
+        return model;
+    }
+    getListOperationModel(name) {
+        const { model } = this.findListOperationByName(name);
         return model;
     }
     getActionByName(name) {
