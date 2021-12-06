@@ -9,9 +9,12 @@ import { Record } from "../../resource-models/Record";
 import { PropertyFieldConfiguration } from "../../resource-models/configurations/PropertyFieldConfiguration";
 import { Table } from "./Table";
 import { CollectionResponse } from "../../redux/actions/verbs/CollectionResponse";
-export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [], table = [] }) => {
+export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [], table = [], id }) => {
     const { operations, title } = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
+    if (operation.resource !== undefined && id === undefined) {
+        throw Error("Subresource without id");
+    }
     const model = operations.getListOperationModel(actionName, operation.resource);
     const [rows, setRows] = useState([]);
     const headCells = useMemo(() => {
@@ -22,10 +25,10 @@ export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemO
         });
     }, [model]);
     const { data, action, loading } = useOperation(resourceName, operation);
-    const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const { filterValues, components, clearFilters, setFilterValues } = useTableFilters(resourceName, actionName, lockedFilters);
-    const debounced = useDebouncedCallback(() => action(page + 1, filterValues), 1000);
+    const actionArgument = (operation.resource) ? [id, page + 1, filterValues] : [page + 1, filterValues];
+    const debounced = useDebouncedCallback(() => action(...actionArgument), 1000);
     useEffect(() => {
         debounced();
     }, [resourceName, filterValues, page]);

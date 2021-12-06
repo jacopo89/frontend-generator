@@ -19,12 +19,18 @@ interface ListInterface {
     lockedFilters?: FilterValue[];
     itemOperations?: ItemOperation[],
     collectionOperations?: ItemOperation[],
-    table?: TableItem[]
+    table?: TableItem[],
+    id?:number
 }
 
-export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = [],table = []})=>{
+export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = [],table = [],id})=>{
     const {operations,title} = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
+
+    if(operation.resource!==undefined && id===undefined){
+        throw Error("Subresource without id")
+    }
+
     const model = operations.getListOperationModel(actionName, operation.resource);
     const [rows, setRows]= useState<Row[]>([]);
 
@@ -35,19 +41,17 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
         }).map(({propertyModel, tableItemName: {id, label}}) => {
             return new HeadCell({id, label});
         });
-    }, [ model])
+    }, [model])
 
 
     const {data, action,loading} = useOperation(resourceName, operation);
 
-    const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const {filterValues, components, clearFilters, setFilterValues} = useTableFilters(resourceName,actionName,  lockedFilters);
 
-
-
+    const actionArgument = (operation.resource) ? [id,page+1, filterValues] : [page+1, filterValues]
     const debounced = useDebouncedCallback(
-        () => action(page + 1, filterValues),
+        () => action(...actionArgument),
         1000
     );
 
@@ -76,5 +80,19 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
         return getRowElement(row, id, label, model)
     }),[model, table])
 
-    return <Table filterValues={filterValues} setFilterValues={setFilterValues} filterComponents={components} rows={rows} totalItems={data instanceof CollectionResponse ? data.totalItems : 0} headCells={headCells} page={page} setPage={setPage} title={title} clearFilters={clearFilters} getDataHandler={debounced} loading={loading} columns={columns} order={"asc"}/>
+    return <Table
+        filterValues={filterValues}
+        setFilterValues={setFilterValues}
+        filterComponents={components}
+        rows={rows}
+        totalItems={data instanceof CollectionResponse ? data.totalItems : 0}
+        headCells={headCells}
+        page={page}
+        setPage={setPage}
+        title={title}
+        clearFilters={clearFilters}
+        getDataHandler={debounced}
+        loading={loading}
+        columns={columns}
+        order={"asc"}/>
 }

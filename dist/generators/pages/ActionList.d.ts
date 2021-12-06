@@ -9,6 +9,7 @@ interface ListInterface {
     itemOperations?: ItemOperation[];
     collectionOperations?: ItemOperation[];
     table?: TableItem[];
+    id?: number;
 }
 export declare const ActionList: React.FC<ListInterface>;
 export {};
