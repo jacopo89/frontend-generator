@@ -4,13 +4,14 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {Row} from "./table/Row";
 import {HeadCell} from "./table/HeadCell";
-import {useCollectionOperation, useOperation} from "../../redux/actions/verbs/operation";
+import {useOperation} from "../../redux/actions/verbs/operation";
 import {useDebouncedCallback} from "use-debounce";
 import {Model} from "../../resource-models/Model";
 import {Record} from "../../resource-models/Record";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 import {Table} from "./Table";
 import {CollectionResponse} from "../../redux/actions/verbs/CollectionResponse";
+import TableItem from "../../resource-models/configurations/TableItem";
 
 interface ListInterface {
     resourceName: string;
@@ -18,10 +19,11 @@ interface ListInterface {
     lockedFilters?: FilterValue[];
     itemOperations?: ItemOperation[],
     collectionOperations?: ItemOperation[],
+    table?: TableItem[]
 }
 
-export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = []})=>{
-    const {operations,title, table} = useGetResourceModel(resourceName);
+export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,lockedFilters=[],  itemOperations = [], collectionOperations = [],table = []})=>{
+    const {operations,title} = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
     const model = operations.getListOperationModel(actionName);
     const [rows, setRows]= useState<Row[]>([]);
@@ -74,5 +76,5 @@ export const ActionList: React.FC<ListInterface> = ({resourceName,actionName,loc
         return getRowElement(row, id, label, model)
     }),[model, table])
 
-    return <Table filterValues={filterValues} setFilterValues={setFilterValues}  filterComponents={components} rows={rows} totalItems={data instanceof CollectionResponse ? data.totalItems :0} headCells={headCells} page={page} setPage={setPage} title={title} clearFilters={clearFilters} getDataHandler={debounced} loading={loading} columns={columns} order={"asc"} orderBy={"id"}></Table>
+    return <Table filterValues={filterValues} setFilterValues={setFilterValues} filterComponents={components} rows={rows} totalItems={data instanceof CollectionResponse ? data.totalItems : 0} headCells={headCells} page={page} setPage={setPage} title={title} clearFilters={clearFilters} getDataHandler={debounced} loading={loading} columns={columns} order={"asc"}/>
 }

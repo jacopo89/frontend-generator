@@ -31,7 +31,6 @@ interface TableInterface {
     loading: boolean,
     columns: (row:Row) => any,
     order: OrderType,
-    orderBy: string,
     filterValues:FilterValue[],
     setFilterValues:  Dispatch<SetStateAction<FilterValue[]>>
 

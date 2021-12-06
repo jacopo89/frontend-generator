@@ -9,8 +9,8 @@ import { Record } from "../../resource-models/Record";
 import { PropertyFieldConfiguration } from "../../resource-models/configurations/PropertyFieldConfiguration";
 import { Table } from "./Table";
 import { CollectionResponse } from "../../redux/actions/verbs/CollectionResponse";
-export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [] }) => {
-    const { operations, title, table } = useGetResourceModel(resourceName);
+export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemOperations = [], collectionOperations = [], table = [] }) => {
+    const { operations, title } = useGetResourceModel(resourceName);
     const operation = operations.findListOperationByName(actionName);
     const model = operations.getListOperationModel(actionName);
     const [rows, setRows] = useState([]);
@@ -45,5 +45,5 @@ export const ActionList = ({ resourceName, actionName, lockedFilters = [], itemO
     const columns = useCallback((row) => table.map(({ id, label }) => {
         return getRowElement(row, id, label, model);
     }), [model, table]);
-    return _jsx(Table, { filterValues: filterValues, setFilterValues: setFilterValues, filterComponents: components, rows: rows, totalItems: data instanceof CollectionResponse ? data.totalItems : 0, headCells: headCells, page: page, setPage: setPage, title: title, clearFilters: clearFilters, getDataHandler: debounced, loading: loading, columns: columns, order: "asc", orderBy: "id" }, void 0);
+    return _jsx(Table, { filterValues: filterValues, setFilterValues: setFilterValues, filterComponents: components, rows: rows, totalItems: data instanceof CollectionResponse ? data.totalItems : 0, headCells: headCells, page: page, setPage: setPage, title: title, clearFilters: clearFilters, getDataHandler: debounced, loading: loading, columns: columns, order: "asc" }, void 0);
 };
