@@ -14,7 +14,6 @@ import { useDispatch } from "react-redux";
 import { FEEDBACK_MESSAGE } from "../app/actions";
 import { CollectionResponse } from "./CollectionResponse";
 import { ItemResponse } from "./ItemResponse";
-import { routeManipulatorWithFilters } from "../../../utils/routeUtils";
 export function genericError(message) {
     return { type: FEEDBACK_MESSAGE, message: message, severity: "error" };
 }
@@ -126,29 +125,18 @@ export function useOperation(resourceName, operation) {
                 let operationRoute = (operation.path) ? (id) => `/api${operation.path.path(id)}` : (id) => `/api/${resourceName}/${id}`;
                 const [id, page, filters] = values;
                 route = operationRoute(id);
-                route = routeManipulatorWithFilters(route, filters);
-                //add page
-                if (filters.length === 0) {
-                    route = route.concat(`page=${page}`);
-                }
-                else {
-                    route = route.concat(`&page=${page}`);
-                }
+                const urlSearchParams = filterManipulator(filters);
+                urlSearchParams.append("page", page);
+                route = route + "?" + urlSearchParams.toString();
             }
             else {
                 // @ts-ignore
                 let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
                 const [page, filters] = values;
                 route = operationRoute();
-                // @ts-ignore
-                route = routeManipulatorWithFilters(route, filters);
-                //add page
-                if (filters.length === 0) {
-                    route = route.concat(`page=${page}`);
-                }
-                else {
-                    route = route.concat(`&page=${page}`);
-                }
+                const urlSearchParams = filterManipulator(filters);
+                urlSearchParams.append("page", page);
+                route = route + "?" + urlSearchParams.toString();
             }
             // @ts-ignore
             return ldfetch(route, { method: operation.method })
@@ -238,4 +226,21 @@ export function useOperation(resourceName, operation) {
         }
     });
     return { data, action, errors, loading };
+}
+function filterManipulator(filters) {
+    const urlSearchParams = new URLSearchParams();
+    filters.forEach((filter, index) => {
+        if (filter.isOrder) {
+            urlSearchParams.append(`order[${filter.name}]`, filter.value);
+        }
+        else {
+            if (Array.isArray(filter.value)) {
+                filter.value.forEach(value => urlSearchParams.append(`${filter.name}[]`, value));
+            }
+            else {
+                urlSearchParams.append(filter.name, filter.value);
+            }
+        }
+    });
+    return urlSearchParams;
 }

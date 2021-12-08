@@ -6,7 +6,8 @@ import {FEEDBACK_MESSAGE} from "../app/actions";
 import {Operation} from "../../../resource-models/actions/Operation";
 import {CollectionResponse} from "./CollectionResponse";
 import {ItemResponse} from "./ItemResponse";
-import {routeManipulatorWithFilters} from "../../../utils/routeUtils";
+import {FilterValue} from "../../../generators/filters/TableFilters";
+
 
 export function genericError(message:string) {
     return { type: FEEDBACK_MESSAGE, message:message, severity:"error"};
@@ -136,13 +137,10 @@ export function useOperation(resourceName:string,operation:Operation){
 
 
                 route = operationRoute(id);
-                route = routeManipulatorWithFilters(route, filters);
-                //add page
-                if(filters.length===0){
-                    route = route.concat(`page=${page}`)
-                }else{
-                    route = route.concat(`&page=${page}`)
-                }
+                const urlSearchParams = filterManipulator(filters);
+                urlSearchParams.append("page", page)
+
+                route = route +"?"+ urlSearchParams.toString();
             }else{
                 // @ts-ignore
                 let operationRoute = (operation.path) ? () => operation.path.path() : () => `/api/${resourceName}`;
@@ -150,14 +148,10 @@ export function useOperation(resourceName:string,operation:Operation){
                 const [page, filters] = values
 
                 route = operationRoute()
-                // @ts-ignore
-                route = routeManipulatorWithFilters(route, filters);
-                //add page
-                if(filters.length===0){
-                    route = route.concat(`page=${page}`)
-                }else{
-                    route = route.concat(`&page=${page}`)
-                }
+                const urlSearchParams = filterManipulator(filters);
+                urlSearchParams.append("page", page)
+
+                route = route +"?"+ urlSearchParams.toString();
             }
             // @ts-ignore
             return ldfetch(route, { method: operation.method})
@@ -243,4 +237,21 @@ export function useOperation(resourceName:string,operation:Operation){
     }
     return {data, action, errors, loading};
 
+}
+function filterManipulator (filters:FilterValue[]) {
+    const urlSearchParams = new URLSearchParams();
+
+    filters.forEach((filter:FilterValue, index:number) => {
+        if(filter.isOrder){
+            urlSearchParams.append(`order[${filter.name}]`,filter.value)
+        }else{
+            if(Array.isArray(filter.value)){
+                filter.value.forEach(value => urlSearchParams.append(`${filter.name}[]`,value) )
+            }else{
+                urlSearchParams.append(filter.name,filter.value)
+            }
+        }
+    })
+
+    return urlSearchParams;
 }

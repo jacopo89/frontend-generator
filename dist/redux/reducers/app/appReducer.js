@@ -1,7 +1,6 @@
 import * as ActionTypes from '../../actions/app/actions';
 import _ from 'lodash';
 import { LISTING_LOADING } from "../../actions/verbs/get_listing";
-import { GET_LOADING, GET_SUCCESS } from "../../actions/verbs/get";
 import { GET_ONE_LOADING, GET_ONE_SUCCESS } from "../../actions/verbs/get_one";
 const initialState = { resource: null, statusBar: { message: undefined, severity: "info" }, resourceBuffer: new Map(), listings: new Map(), listingLoading: false, registry: [] };
 const appReducer = (state = initialState, action) => {
@@ -33,12 +32,6 @@ const appReducer = (state = initialState, action) => {
             case LISTING_LOADING: {
                 console.info("GET LISTINGS STARTING");
                 return Object.assign(Object.assign({}, state), { listingLoading: action.loading });
-            }
-            case GET_SUCCESS: {
-                return state;
-            }
-            case GET_LOADING: {
-                return state;
             }
             case GET_ONE_SUCCESS: {
                 console.info("GET RESOURCE SUCCESS");

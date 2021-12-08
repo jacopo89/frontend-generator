@@ -1,20 +1,18 @@
-export function routeManipulatorWithFilters(route, filters) {
+export const routeManipulatorWithFilters = (route, filters) => {
+    const urlSearchParams = new URLSearchParams();
     filters.forEach((filter, index) => {
-        let suffix = (index === 0) ? "" : "&";
+        debugger;
         if (filter.isOrder) {
-            route.concat(`${suffix}order[${filter.name}]=${filter.value}`);
+            urlSearchParams.append(`order[${filter.name}]`, filter.value);
         }
         else {
             if (Array.isArray(filter.value)) {
-                route.concat(`${suffix}${filter.name}[]=${filter.value}`);
+                filter.value.forEach(value => urlSearchParams.append(`${filter.name}[]`, value));
             }
             else {
-                route.concat(`${suffix}${filter.name}=${filter.value}`);
+                urlSearchParams.append(filter.name, filter.value);
             }
         }
-        if (suffix === "") {
-            suffix = "&";
-        }
     });
-    return route;
-}
+    return urlSearchParams;
+};

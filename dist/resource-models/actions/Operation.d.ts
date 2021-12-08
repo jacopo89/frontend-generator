@@ -26,10 +26,10 @@ export declare class Operation {
     getModel(): Model;
 }
 declare class Path {
-    path: () => {};
+    path: () => string;
     parameters: string[];
     constructor(path: string);
-    static extractFunction(path: string): () => {};
+    static extractFunction(path: string): () => string;
     static extractParameters(path: string): string[];
 }
 export {};

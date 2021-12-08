@@ -58,7 +58,7 @@ export const useRouteFilters = (resourceNameToUse, operationName, presetFilters)
         if (!isEmbeddedTable) {
             if (!checkIfFiltersEqualToRouteFilters()) {
                 let route = location.pathname + "?";
-                route = routeManipulatorWithFilters(route, filterObject);
+                const urlSearchParams = routeManipulatorWithFilters(route, filterObject);
                 /*Object.keys(filterObject).forEach((key,index)=> {
                     if(index===0){
                         route = route.concat(`${key}=${filterObject[key]}`);
@@ -67,7 +67,7 @@ export const useRouteFilters = (resourceNameToUse, operationName, presetFilters)
                     }
 
                 })*/
-                window.location.href = route;
+                window.location.href = route + urlSearchParams.toString();
             }
         }
     }, [filterObject]);

@@ -53,7 +53,7 @@ class Path{
         this.parameters = Path.extractParameters(path)
     }
 
-    static extractFunction(path:string):()=>{}{
+    static extractFunction(path:string):()=>string{
 
         const regexpDollar = new RegExp("{",'g');
         const regexpBracket = new RegExp("}",'g');
