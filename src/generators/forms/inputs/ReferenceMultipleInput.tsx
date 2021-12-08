@@ -23,9 +23,6 @@ interface ReferenceInput{
     dependencies: string[]
 }
 
-const LISTING_OPTION_UNDEFINED = -1;
-const LISTING_OPTION_NOT_PRESENT = -2;
-
 class ReferenceInputOption{
     id:number
     label:string
@@ -147,7 +144,6 @@ export default function ({model,formValue, refreshReferencesMap, value:values, c
 
 
     const autocompleteOnChange = (items:ReferenceInputOption[]) => {
-        debugger;
         onChange([id, items.map(item => item.id)])
     }
 

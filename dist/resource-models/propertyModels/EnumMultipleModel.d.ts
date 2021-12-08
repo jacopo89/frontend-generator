@@ -1,12 +1,16 @@
 import { SinglePropertyModel } from "./SinglePropertyModel";
 import React from "react";
-import { InputOnChangeHandler } from "../PropertyModel";
+import { InputOnChangeHandler, Option } from "../PropertyModel";
 import { SingleSetInputFieldProps } from "../models/SetInputFieldProps";
+export interface JsonEnumOption {
+    id: number | string;
+    label: string;
+}
 interface EnumMultipleInputFields extends SingleSetInputFieldProps {
-    options: any;
+    options: Option[];
 }
 export declare class EnumMultipleModel extends SinglePropertyModel {
-    options: any;
+    options: Option[];
     colorMap: any;
     constructor(id: string, others: any);
     setInputField(props: EnumMultipleInputFields): React.ReactElement<any, any> | null;

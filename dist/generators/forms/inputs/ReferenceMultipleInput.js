@@ -19,8 +19,6 @@ import { ListingOption } from "../../../resource-models/listings/Listing";
 import ReferenceInputModal from "./ReferenceInputModal/ReferenceInputModal";
 import { CustomTextValidator } from "../formHelpers";
 import _ from 'lodash';
-const LISTING_OPTION_UNDEFINED = -1;
-const LISTING_OPTION_NOT_PRESENT = -2;
 class ReferenceInputOption {
     constructor(id, label, button) {
         this.id = id;
@@ -113,7 +111,6 @@ export default function ({ model, formValue, refreshReferencesMap, value: values
     }, [listingLoading, listOptions]);
     useEffect(() => refreshList(), [localOptions]);
     const autocompleteOnChange = (items) => {
-        debugger;
         onChange([id, items.map(item => item.id)]);
     };
     return _jsxs(_Fragment, { children: [_jsx(Autocomplete, { value: value, disabled: isDisabled, multiple: true, inputValue: inputValue, disableClearable: true, options: localOptions, onInputChange: (event, newInputValue) => setInputValue(newInputValue), onChange: (event, newInputvalue) => autocompleteOnChange(newInputvalue), getOptionLabel: (option) => option.label, renderOption: (option) => (option.button) ? option.button : _jsx("div", { children: option.label }, void 0), style: { width: "100%" }, renderInput: (_a) => {

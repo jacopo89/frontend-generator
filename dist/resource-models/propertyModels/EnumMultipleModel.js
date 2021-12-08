@@ -1,9 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { SinglePropertyModel } from "./SinglePropertyModel";
-import { EnumInput, getAutocompleteValuePosition } from "../../generators/forms/inputs/EnumInput";
 import ChipGenerator from "../../generators/fields/outputs/chips/chipGenerator";
 import { Record } from "../Record";
 import ButtonsHorizontalList from "../../rendering/components/buttons/ButtonsHorizontalList";
+import EnumMultipleInput from "../../generators/forms/inputs/EnumMultipleInput";
 export class EnumMultipleModel extends SinglePropertyModel {
     constructor(id, others) {
         super(id, others);
@@ -11,10 +11,9 @@ export class EnumMultipleModel extends SinglePropertyModel {
         this.colorMap = others.colorMap;
     }
     setInputField(props) {
-        const { formValue, setFormValue, errors, options, value } = props;
-        const valuePositionInOptions = getAutocompleteValuePosition(value, this.options);
-        const propsWithModel = Object.assign(Object.assign({}, props), { model: this, inheritedValue: valuePositionInOptions, onChange: this.getInputOnChangeHandler({ formValue, setFormValue }) });
-        return EnumInput(propsWithModel);
+        const { formValue, setFormValue, value } = props;
+        const propsWithModel = Object.assign(Object.assign({}, props), { model: this, value: value !== null && value !== void 0 ? value : [], onChange: this.getInputOnChangeHandler({ formValue, setFormValue }) });
+        return EnumMultipleInput(propsWithModel);
     }
     getInputOnChangeHandler({ formValue, setFormValue }) {
         return (vars) => {
