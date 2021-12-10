@@ -22,15 +22,13 @@ export interface IterableShowContentProps{
     submitHandler: (e:any) => Promise<any>;
     partialSubmitHandler: (e: any) => Promise<any>;
     loading:boolean
-    modifyOnlyLastElement?:boolean;
-    modifyRule?: (formvalue:any)=> boolean,
     inputElement?: DetailedReactHTMLElement<any, any>,
     refresh: () => void
     showElement?: React.DetailedReactHTMLElement<any, any>;
 
 }
 
-export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, modifyOnlyLastElement=false, modifyRule=(formvalue:any) => true, inputElement, refresh,showElement, loading}) => {
+export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, inputElement, refresh,showElement, loading}) => {
 
     const recordsList = record;
     if(recordsList.size===0){
@@ -57,7 +55,7 @@ export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, 
                 <Grid item xs={12} md={12}>
                     <Grid container spacing={2}>
                         {
-                            model.properties.filter((propertyModel)=> propertyModel.read ===true).map((propertyModel, index) => {
+                            model.properties.map((propertyModel, index) => {
                                 const {xs, md, id} = propertyModel;
 
                                 // @ts-ignore

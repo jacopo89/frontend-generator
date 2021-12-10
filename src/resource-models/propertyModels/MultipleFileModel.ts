@@ -1,11 +1,9 @@
 import {SinglePropertyModel} from "./SinglePropertyModel";
-import FileListInput from "../../generators/forms/inputs/FileListInput";
 import MultipleFileShow from "../../generators/fields/outputs/MultipleFileShow";
 import React from "react";
 import {InputOnChangeHandler} from "../PropertyModel";
 import {Record} from "../Record";
 import {SingleSetInputFieldProps} from "../models/SetInputFieldProps";
-import {ImagesGrid} from "../../generators/forms/inputs/Files/ImagesGrid";
 import {FilesList} from "../../generators/forms/inputs/Files/FilesList";
 
 export class MultipleFileModel extends SinglePropertyModel{

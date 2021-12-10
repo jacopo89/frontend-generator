@@ -17,8 +17,6 @@ export interface IterableShowContentProps {
     submitHandler: (e: any) => Promise<any>;
     partialSubmitHandler: (e: any) => Promise<any>;
     loading: boolean;
-    modifyOnlyLastElement?: boolean;
-    modifyRule?: (formvalue: any) => boolean;
     inputElement?: DetailedReactHTMLElement<any, any>;
     refresh: () => void;
     showElement?: React.DetailedReactHTMLElement<any, any>;

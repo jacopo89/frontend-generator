@@ -15,7 +15,6 @@ export const FormContent = (props) => {
         return React.cloneElement(configuration.viewElement, props);
     }
     return _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: model.properties
-            //.filter((propertyModel:PropertyModel) => propertyModel.write === true)
             .map((propertyModel, index) => {
             const { xs, md } = propertyModel;
             const props = new InputProps({ showLabel: true, model: propertyModel, partialSubmitHandler, submitHandler, loading, referencesMap, refreshReferencesMap, formValue, record: record === null || record === void 0 ? void 0 : record.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh });

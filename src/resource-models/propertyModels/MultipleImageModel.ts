@@ -1,5 +1,4 @@
 import {SinglePropertyModel} from "./SinglePropertyModel";
-import FileListInput from "../../generators/forms/inputs/FileListInput";
 import MultipleFileShow from "../../generators/fields/outputs/MultipleFileShow";
 import React from "react";
 import {InputOnChangeHandler} from "../PropertyModel";

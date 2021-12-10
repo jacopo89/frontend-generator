@@ -14,8 +14,6 @@ export interface PropertyModel {
     errorMessages?: string[];
     resourceName: string;
     optionText: string;
-    write?: boolean;
-    read?: boolean;
     single?: boolean;
     form: React.DetailedReactHTMLElement<any, any>;
     options?: Option[];
@@ -25,9 +23,6 @@ export interface PropertyModel {
     showElement?: React.DetailedReactHTMLElement<any, any>;
     modifyOnlyLastElement?: boolean;
     editabilityRule?: () => any;
-    listValue?: any;
-    listDataTransformer?: any;
-    areImages?: boolean;
     colorMap?: object;
 }
 export declare type GridRange = boolean | 'auto' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined;
@@ -54,8 +49,6 @@ export declare abstract class PropertyModel {
     form: React.DetailedReactHTMLElement<any, any>;
     xs?: GridRange;
     md?: GridRange;
-    write?: boolean;
-    read?: boolean;
     colorMap?: object;
     modelResourceName: string;
     constructor(id: string, rest: any);

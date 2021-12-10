@@ -18,10 +18,6 @@ export interface PropertyModelCore {
     showElement?: React.DetailedReactHTMLElement<any, any>;
     modifyOnlyLastElement?: boolean;
     editabilityRule?: () => void;
-    write?: boolean;
-    read?: boolean;
-    listValue?: any;
-    listDataTransformer?: any;
 }
 export interface EmbeddedPropertyModelCore extends PropertyModelCore {
     resource: Resource;
@@ -46,10 +42,5 @@ export declare class PropertyModelCore {
     showElement?: React.DetailedReactHTMLElement<any, any>;
     modifyOnlyLastElement?: boolean;
     editabilityRule?: () => void;
-    write?: boolean;
-    read?: boolean;
-    listValue?: any;
-    listDataTransformer?: any;
-    areImages?: boolean;
-    constructor({ type, label, validators, errorMessages, resourceName, optionText, single, resource, form, options, xs, md, adornment, showElement, modifyOnlyLastElement, editabilityRule, write, read, listValue, listDataTransformer, areImages }: any);
+    constructor({ type, label, validators, errorMessages, resourceName, optionText, single, resource, form, options, xs, md, adornment, showElement, modifyOnlyLastElement, editabilityRule }: any);
 }

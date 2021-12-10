@@ -134,9 +134,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
             label: this.label,
             resourceName: this.resourceName,
             optionText: this.optionText,
-            form: this.form,
-            write: this.write,
-            read:this.read
+            form: this.form
         }));
     }
 }

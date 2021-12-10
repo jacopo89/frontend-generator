@@ -5,7 +5,7 @@ import { Divider, List, ListItem } from "@material-ui/core";
 import { Record } from "../../resource-models/Record";
 import { FormValue } from "../../resource-models/formvalue/FormValue";
 import { ShowContent } from "./ShowContent";
-export const IterableShowContent = ({ model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, modifyOnlyLastElement = false, modifyRule = (formvalue) => true, inputElement, refresh, showElement, loading }) => {
+export const IterableShowContent = ({ model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, inputElement, refresh, showElement, loading }) => {
     const recordsList = record;
     if (recordsList.size === 0) {
         return _jsx("div", { children: "No elements found" }, void 0);
@@ -16,7 +16,7 @@ export const IterableShowContent = ({ model, record, resourceName, setParentForm
             }) }), void 0);
     }
     else {
-        return _jsx(Grid, Object.assign({ container: true }, { children: Array.from(recordsList.values()).map((singleRecord) => _jsx(Grid, Object.assign({ item: true, xs: 12, md: 12 }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: model.properties.filter((propertyModel) => propertyModel.read === true).map((propertyModel, index) => {
+        return _jsx(Grid, Object.assign({ container: true }, { children: Array.from(recordsList.values()).map((singleRecord) => _jsx(Grid, Object.assign({ item: true, xs: 12, md: 12 }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: model.properties.map((propertyModel, index) => {
                         var _a;
                         const { xs, md, id } = propertyModel;
                         // @ts-ignore

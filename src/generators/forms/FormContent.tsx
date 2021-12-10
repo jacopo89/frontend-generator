@@ -40,7 +40,6 @@ export const FormContent: React.FC<FormContentProps> = (props) => {
 
     return <Grid container spacing={2}>
         {model.properties
-            //.filter((propertyModel:PropertyModel) => propertyModel.write === true)
             .map((propertyModel:PropertyModel, index:number) => {
                 const {xs,md} = propertyModel;
                 const props = new InputProps({showLabel:true, model:propertyModel,partialSubmitHandler, submitHandler, loading, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh})
