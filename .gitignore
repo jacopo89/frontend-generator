@@ -14,6 +14,7 @@
 /.idea
 /dist/mock
 /src/mock
+/src/frontend-tests
 /yarn.lock
 
 # mock

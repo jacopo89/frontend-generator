@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {ConnectedRouter, connectRouter, routerMiddleware} from 'connected-react-router';
 import {reducer as form} from 'redux-form';
@@ -12,6 +11,7 @@ import verbsReducer from './redux/reducers/verbs/index';
 import {createBrowserHistory} from "history";
 import {Provider, useSelector} from "react-redux";
 import ErrorBar from "./rendering/errors/ErrorBar";
+import Test from "./frontend-tests/Test";
 
 const history = createBrowserHistory();
 
@@ -34,7 +34,7 @@ const store = createStore(
 function ThemedApp(){
     const {appReducer} = useSelector(state=>state);
     return  <>
-        <App />
+        <Test/>
         <ErrorBar/>
         </>
 }
