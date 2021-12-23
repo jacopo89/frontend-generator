@@ -1,10 +1,4 @@
-import {
-    EmbeddedMultipleInputProps,
-    EmbeddedSingleInputProps,
-    InputPropsInterface,
-    SingleInputProps,
-    SingleInputPropsInterface
-} from "./InputProps";
+import {InputPropsInterface, SingleInputPropsInterface} from "./InputProps";
 import {Record} from "../Record";
 import {FormValue} from "../formvalue/FormValue";
 import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
@@ -38,13 +32,14 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     submitHandler: (e:any) => Promise<any>
     loading: boolean;
     record: Record | Map<number, Record> | undefined;
+    recordValue: Record | Map<number, Record> | undefined;
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
     refresh: () => void
     setFormValue: React.Dispatch<React.SetStateAction<FormValue>>
 
     constructor(props: SingleSetInputFieldPropsInterface) {
-        const {hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
+        const {hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
         this.hasError = hasError;
         this.errorMessage = errorMessage;
         this.loading = loading;
@@ -60,6 +55,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue
         this.refresh = refresh
         this.propertyRecord = propertyRecord;
@@ -85,6 +81,7 @@ interface EmbeddedSingleInputPropsInterface extends InputPropsInterface{
 
 export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputPropsInterface{
     record: Record | undefined
+    recordValue:Record | Map<number, Record> | undefined
     formValue: FormValue
     model: EmbeddedSingleModel
     errors: Errors;
@@ -98,7 +95,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
     refresh: ()=>void
 
     constructor(props: EmbeddedSingleSetInputFieldPropsInterface) {
-        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, setFormValue, refresh} = props
+        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setFormValue, refresh} = props
         this.formValue = formValue;
         this.model = model;
         this.loading = loading;
@@ -111,6 +108,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue
         this.refresh = refresh
     }
@@ -125,6 +123,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
 interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterface{
     formValue: FormValue,
     record: Map<number, Record>
+    recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
     errors: Errors;
     lockedFormValue: FormValue;
@@ -139,6 +138,7 @@ interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterfac
 export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetInputFieldPropsInterface{
     formValue: FormValue
     record: Map<number, Record>
+    recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
     errors: Errors;
     lockedFormValue: FormValue;
@@ -152,7 +152,7 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
     inputElement: any
 
     constructor(props: EmbeddedMultipleSetInputFieldPropsInterface) {
-        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, setFormValue, refresh, inputElement} = props
+        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh, inputElement} = props
         this.formValue = formValue;
         this.model = model;
         this.errors = errors;
@@ -165,6 +165,7 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue
         this.refresh = refresh
         this.inputElement = inputElement;

@@ -30,6 +30,7 @@ export declare class SingleSetInputFieldProps implements SingleInputPropsInterfa
     submitHandler: (e: any) => Promise<any>;
     loading: boolean;
     record: Record | Map<number, Record> | undefined;
+    recordValue: Record | Map<number, Record> | undefined;
     referencesMap: Map<string, any>;
     refreshReferencesMap: () => void;
     refresh: () => void;
@@ -49,6 +50,7 @@ interface EmbeddedSingleInputPropsInterface extends InputPropsInterface {
 }
 export declare class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputPropsInterface {
     record: Record | undefined;
+    recordValue: Record | Map<number, Record> | undefined;
     formValue: FormValue;
     model: EmbeddedSingleModel;
     errors: Errors;
@@ -68,6 +70,7 @@ export declare class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleI
 interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterface {
     formValue: FormValue;
     record: Map<number, Record>;
+    recordValue: Record | Map<number, Record> | undefined;
     model: EmbeddedMultipleModel;
     errors: Errors;
     lockedFormValue: FormValue;
@@ -81,6 +84,7 @@ interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterfac
 export declare class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetInputFieldPropsInterface {
     formValue: FormValue;
     record: Map<number, Record>;
+    recordValue: Record | Map<number, Record> | undefined;
     model: EmbeddedMultipleModel;
     errors: Errors;
     lockedFormValue: FormValue;

@@ -17,7 +17,7 @@ export const FormContent = (props) => {
     return _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: model.properties
             .map((propertyModel, index) => {
             const { xs, md } = propertyModel;
-            const props = new InputProps({ showLabel: true, model: propertyModel, partialSubmitHandler, submitHandler, loading, referencesMap, refreshReferencesMap, formValue, record: record === null || record === void 0 ? void 0 : record.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh });
+            const props = new InputProps({ showLabel: true, model: propertyModel, partialSubmitHandler, submitHandler, loading, referencesMap, refreshReferencesMap, formValue, record: record === null || record === void 0 ? void 0 : record.getPropertyRecord(propertyModel.id), recordValue: record === null || record === void 0 ? void 0 : record.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh });
             return _jsx(Grid, Object.assign({ item: true, xs: xs, md: md }, { children: !lockedFormValue.has(propertyModel.id) && propertyModel.getPropertyField(props, configuration.isEdit) }), index);
         }) }), void 0);
 };

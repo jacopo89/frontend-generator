@@ -1,8 +1,9 @@
 import _ from "lodash";
 export class PropertyModelInputProps {
-    constructor({ model, record, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler, loading, referencesMap, refreshReferencesMap, showLabel = true, refresh }) {
+    constructor({ model, record, recordValue, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler, loading, referencesMap, refreshReferencesMap, showLabel = true, refresh }) {
         this.model = model;
         this.record = record;
+        this.recordValue = recordValue;
         this.formValue = formValue;
         this.setFormValue = setFormValue;
         this.lockedFormValue = lockedFormValue;
@@ -24,7 +25,7 @@ export class PropertyModelInputProps {
             const newFormValue = split.length === 0 ? formvalue : formValue.updateFormValue(reqName, formvalue);
             setFormValue(newFormValue);
         };
-        const propertyProps = new PropertyModelInputProps(Object.assign(Object.assign({}, props), { model: model.getProperty(requestedName) }));
+        const propertyProps = new PropertyModelInputProps(Object.assign(Object.assign({}, props), { model: model.getProperty(requestedName), recordValue: record ? record.getPropertyRecord(requestedName) : undefined }));
         propertyProps.formValue = (formValue) ? formValue.getPropertyFormValue(requestedName) : undefined;
         propertyProps.record = record ? record.getPropertyRecord(requestedName) : undefined;
         propertyProps.setFormValue = localFormValue;

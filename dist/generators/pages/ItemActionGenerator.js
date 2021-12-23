@@ -38,7 +38,7 @@ import { useItemOperation } from "../../redux/actions/verbs/operation";
  * @param refresh
  * @constructor
  *
- * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
+ * This function returns a react component with the item action form. This component is not responsible for fetching previous data.
  */
 export const ItemActionGenerator = ({ propId, propActionName, propResourceName, record, propEditPage, setRecord, refresh }) => {
     const { operations, resourceName } = useGetResourceModel(propResourceName);

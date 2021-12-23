@@ -20,7 +20,7 @@ interface EditFormGeneratorProps {
  * @param refresh
  * @constructor
  *
- * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
+ * This function returns a react component with the item action form. This component is not responsible for fetching previous data.
  */
 export declare const ItemActionGenerator: React.FC<EditFormGeneratorProps>;
 export {};

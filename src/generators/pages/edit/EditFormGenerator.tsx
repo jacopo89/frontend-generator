@@ -32,5 +32,13 @@ interface EditFormGeneratorProps {
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
 export const EditForm: React.FC<EditFormGeneratorProps> = ({record, setRecord, propId, propResourceName, propEditPage, refresh}) => {
-    return <ItemActionGenerator setRecord={setRecord} propResourceName={propResourceName} propId={propId} propActionName={"patch"} record={record} refresh={refresh} propEditPage={propEditPage}/>
+    return <ItemActionGenerator
+        record={record}
+        setRecord={setRecord}
+        propResourceName={propResourceName}
+        propId={propId}
+        propActionName={"patch"}
+        refresh={refresh}
+        propEditPage={propEditPage}
+    />
 }

@@ -14,5 +14,5 @@ import { ItemActionGenerator } from "../ItemActionGenerator";
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
 export const EditForm = ({ record, setRecord, propId, propResourceName, propEditPage, refresh }) => {
-    return _jsx(ItemActionGenerator, { setRecord: setRecord, propResourceName: propResourceName, propId: propId, propActionName: "patch", record: record, refresh: refresh, propEditPage: propEditPage }, void 0);
+    return _jsx(ItemActionGenerator, { record: record, setRecord: setRecord, propResourceName: propResourceName, propId: propId, propActionName: "patch", refresh: refresh, propEditPage: propEditPage }, void 0);
 };

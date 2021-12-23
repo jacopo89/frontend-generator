@@ -13,7 +13,9 @@ import { PropertyModelCore } from "../PropertyModelCore";
 import { EMBEDDED_SINGLE } from "../../generators/forms/inputs/InputTypes";
 export class EmbeddedMultipleModel extends EmbeddedPropertyModel {
     setInputField(props, configuration) {
-        const { formValue, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh } = props;
+        const { formValue, recordValue, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh } = props;
+        console.log("record value", recordValue);
+        console.log("record", record);
         const setParentFormValue = (values) => {
             setFormValue(formValue.updateFormValue(props.model.id, values));
         };
@@ -31,11 +33,13 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel {
             refreshReferencesMap: refreshReferencesMap,
             errors: newErrors,
             formValueArray: formValueArray,
+            formValue: formValue,
             label: this.label,
             partialSubmitHandler: partialSubmitHandler,
             submitHandler: submitHandler,
             inputElement: configuration === null || configuration === void 0 ? void 0 : configuration.viewElement,
             record: recordMap,
+            recordValue: recordMap,
             refresh: refresh,
             loading: loading
         });

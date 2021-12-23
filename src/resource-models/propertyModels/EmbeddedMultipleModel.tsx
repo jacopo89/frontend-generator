@@ -18,7 +18,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
 
     setInputField(props: EmbeddedMultipleSetInputFieldProps, configuration?: PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
-        const {formValue, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
+        const {formValue, recordValue, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
         const setParentFormValue = (values:any) => {
             setFormValue( formValue.updateFormValue(props.model.id, values));
         }
@@ -38,11 +38,13 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
             refreshReferencesMap:refreshReferencesMap,
             errors:newErrors,
             formValueArray: formValueArray,
+            formValue: formValue,
             label:this.label,
             partialSubmitHandler:partialSubmitHandler,
             submitHandler:submitHandler,
             inputElement:configuration?.viewElement,
             record: recordMap,
+            recordValue: recordMap,
             refresh:refresh,
             loading:loading
         })

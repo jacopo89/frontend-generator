@@ -1,6 +1,6 @@
 export class SingleSetInputFieldProps {
     constructor(props) {
-        const { hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading } = props;
+        const { hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading } = props;
         this.hasError = hasError;
         this.errorMessage = errorMessage;
         this.loading = loading;
@@ -16,6 +16,7 @@ export class SingleSetInputFieldProps {
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue;
         this.refresh = refresh;
         this.propertyRecord = propertyRecord;
@@ -23,7 +24,7 @@ export class SingleSetInputFieldProps {
 }
 export class EmbeddedSingleSetInputFieldProps {
     constructor(props) {
-        const { formValue, model, errors, lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, setFormValue, refresh } = props;
+        const { formValue, model, errors, lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setFormValue, refresh } = props;
         this.formValue = formValue;
         this.model = model;
         this.loading = loading;
@@ -36,13 +37,14 @@ export class EmbeddedSingleSetInputFieldProps {
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue;
         this.refresh = refresh;
     }
 }
 export class EmbeddedMultipleSetInputFieldProps {
     constructor(props) {
-        const { formValue, model, errors, lockedFormValue, partialSubmitHandler, loading, referencesMap, refreshReferencesMap, submitHandler, record, setFormValue, refresh, inputElement } = props;
+        const { formValue, model, errors, lockedFormValue, partialSubmitHandler, loading, referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh, inputElement } = props;
         this.formValue = formValue;
         this.model = model;
         this.errors = errors;
@@ -55,6 +57,7 @@ export class EmbeddedMultipleSetInputFieldProps {
         this.referencesMap = referencesMap;
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
+        this.recordValue = recordValue;
         this.setFormValue = setFormValue;
         this.refresh = refresh;
         this.inputElement = inputElement;

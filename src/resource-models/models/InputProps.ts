@@ -30,6 +30,7 @@ export class InputProps extends PropertyModelInputProps{
     refresh: () => void
 
     constructor(props:InputPropsInterface) {
+        debugger;
         super(props);
         this.refresh = props.refresh;
     }
@@ -51,6 +52,7 @@ export class SingleInputProps extends InputProps{
     model: SinglePropertyModel;
 
     constructor(props:SingleInputPropsInterface) {
+        console.log("constructing input props");
         super(props);
         const {formValue, model}= props
         this.formValue = formValue
@@ -121,10 +123,11 @@ export class EmbeddedMultipleInputProps extends InputProps{
 
     constructor(props:EmbeddedMultipleInputPropsInterface) {
         super(props);
-        const {formValue, model, record}= props
+        const {formValue, model, record, recordValue}= props
         this.formValue = formValue
         this.model = model;
         this.record = record
+        this.recordValue= recordValue
     }
 
     handleForSet(){

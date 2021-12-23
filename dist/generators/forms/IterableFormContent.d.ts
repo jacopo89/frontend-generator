@@ -6,12 +6,14 @@ import { Record } from "../../resource-models/Record";
 interface IterableFormContentProps {
     model: Model;
     record: Map<number, Record>;
+    recordValue: Map<number, Record>;
     resourceName: string;
     setParentFormValue: (values: any) => void;
     formContent?: React.DetailedReactHTMLElement<any, any>;
     referencesMap: Map<string, any>;
     refreshReferencesMap: () => void;
     formValueArray: Map<string, FormValue>;
+    formValue: FormValue;
     errors: Errors;
     label: string;
     submitHandler: (e: any) => Promise<any>;
