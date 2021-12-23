@@ -1,14 +1,11 @@
 import React from "react";
 import {EditForm} from "./edit/EditFormGenerator";
-import {useResource} from "../hooks/resourceUtils";
-import {Record} from "../../resource-models/Record";
+import {useGetResourceContext} from "./utils/useGetResourceContext";
 
 interface Props{
     propResourceName:string,
     propId:number,
     propEditPage?:any,
-    isEdit?: boolean,
-
 }
 
 /**
@@ -19,9 +16,8 @@ interface Props{
  * @param isEdit
  * @constructor
  */
-export const EditPage: React.FC<Props> = ({propResourceName:resourceName, propId, propEditPage, isEdit=true}) => {
-
-    const {record, getNewResource} = useResource(resourceName, propId);
-    return <EditForm isEdit={isEdit} propResourceName={resourceName} propId={propId} record={record} refresh={getNewResource} propEditPage={propEditPage}/>
+export const EditPage: React.FC<Props> = ({propResourceName, propId, propEditPage}) => {
+    const {record, setRecord, getResource} = useGetResourceContext({propResourceName, propId});
+    // @ts-ignore
+    return <EditForm propResourceName={propResourceName} propId={propId} record={record} setRecord={setRecord} refresh={getResource} propEditPage={propEditPage}/>
 }
-

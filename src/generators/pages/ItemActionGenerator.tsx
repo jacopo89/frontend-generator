@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
 import {UpdateListings} from "../../utils/referenceFieldUtils";
 import {FormGenerator} from "../forms/FormGenerator";
 import {Error as CustomError, Errors} from "../errors/Errors";
@@ -11,23 +11,26 @@ interface EditFormGeneratorProps {
     propResourceName: string,
     propId: number,
     propActionName: string;
-    record: object,
+    record: Record,
+    setRecord:  Dispatch<SetStateAction<Record>>,
     propEditPage?: any,
-    refresh: ()=>void,
-    isEdit?: boolean
+    refresh: ()=>void
 }
 
 /**
  *
  * @param record
  * @param propId
+ * @param propActionName
  * @param propResourceName
  * @param propEditPage
+ * @param setRecord
+ * @param refresh
  * @constructor
  *
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
-export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, propActionName, propResourceName, record:recordJson, propEditPage, refresh , isEdit=true}) => {
+export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, propActionName, propResourceName, record, propEditPage, setRecord, refresh}) => {
     const {operations, resourceName} = useGetResourceModel(propResourceName);
     const operation = operations.findItemOperationByName(propActionName);
     const {model} = operations.findItemOperationByName(propActionName);
@@ -35,9 +38,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     const createEditPageToUse:any = propEditPage
     const initialValue = useRef(new FormValue());
-    const initialValueRecord = useRef(new Record());
     const [formValue, setFormValue] = useState<FormValue>(initialValue.current);
-    const [record, setRecord] = useState<Record>(initialValueRecord.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     const {action, errors:responseErrors, loading} = useItemOperation(resourceName, operation);
@@ -51,10 +52,8 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     useEffect(()=>{ setGenericEditRender(<div/>)},[resourceName])
     useEffect(()=>{
-        const record = Record.createFromJson(recordJson, model)
-        setRecord(record)
         setFormValue(FormValue.createFromRecord(record, model))
-    }, [recordJson])
+    }, [record])
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
@@ -87,7 +86,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
     useEffect(()=>{
         if(formValue!==initialValue.current){
             setGenericEditRender(
-                <FormGenerator {...editFormProps} formContent={createEditPageToUse} isEdit={isEdit} errors={errors} text="Save"/>)
+                <FormGenerator {...editFormProps} formContent={createEditPageToUse} errors={errors} text="Save"/>)
         }
     },[formValue, errors])
 

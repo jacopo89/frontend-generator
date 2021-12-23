@@ -3,7 +3,6 @@ interface Props {
     propResourceName: string;
     propId: number;
     propEditPage?: any;
-    isEdit?: boolean;
 }
 /**
  * This component is entitled to create a form and populate it with data

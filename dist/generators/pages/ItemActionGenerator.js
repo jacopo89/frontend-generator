@@ -31,21 +31,22 @@ import { useItemOperation } from "../../redux/actions/verbs/operation";
  *
  * @param record
  * @param propId
+ * @param propActionName
  * @param propResourceName
  * @param propEditPage
+ * @param setRecord
+ * @param refresh
  * @constructor
  *
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
-export const ItemActionGenerator = ({ propId, propActionName, propResourceName, record: recordJson, propEditPage, refresh, isEdit = true }) => {
+export const ItemActionGenerator = ({ propId, propActionName, propResourceName, record, propEditPage, setRecord, refresh }) => {
     const { operations, resourceName } = useGetResourceModel(propResourceName);
     const operation = operations.findItemOperationByName(propActionName);
     const { model } = operations.findItemOperationByName(propActionName);
     const createEditPageToUse = propEditPage;
     const initialValue = useRef(new FormValue());
-    const initialValueRecord = useRef(new Record());
     const [formValue, setFormValue] = useState(initialValue.current);
-    const [record, setRecord] = useState(initialValueRecord.current);
     const [errors, setErrors] = useState(new Errors([]));
     const { listings: referencesMap, updateListings: refreshReferencesMap } = UpdateListings();
     const { action, errors: responseErrors, loading } = useItemOperation(resourceName, operation);
@@ -58,10 +59,8 @@ export const ItemActionGenerator = ({ propId, propActionName, propResourceName, 
     }, [responseErrors]);
     useEffect(() => { setGenericEditRender(_jsx("div", {}, void 0)); }, [resourceName]);
     useEffect(() => {
-        const record = Record.createFromJson(recordJson, model);
-        setRecord(record);
         setFormValue(FormValue.createFromRecord(record, model));
-    }, [recordJson]);
+    }, [record]);
     const [genericEditRender, setGenericEditRender] = useState(_jsx("div", {}, void 0));
     const submitHandler = (formValue) => __awaiter(void 0, void 0, void 0, function* () {
         return action(propId, FormValue.toJson(formValue)).then((response) => {
@@ -90,7 +89,7 @@ export const ItemActionGenerator = ({ propId, propActionName, propResourceName, 
     }, [model, loading, referencesMap, formValue, record, resourceName, propId, refresh]);
     useEffect(() => {
         if (formValue !== initialValue.current) {
-            setGenericEditRender(_jsx(FormGenerator, Object.assign({}, editFormProps, { formContent: createEditPageToUse, isEdit: isEdit, errors: errors, text: "Save" }), void 0));
+            setGenericEditRender(_jsx(FormGenerator, Object.assign({}, editFormProps, { formContent: createEditPageToUse, errors: errors, text: "Save" }), void 0));
         }
     }, [formValue, errors]);
     return genericEditRender;

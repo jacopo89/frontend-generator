@@ -20,6 +20,5 @@ export interface Props {
     showButton?: boolean;
     formContent?: any;
     refresh: () => void;
-    isEdit?: boolean;
 }
 export declare const FormGenerator: React.FC<Props>;

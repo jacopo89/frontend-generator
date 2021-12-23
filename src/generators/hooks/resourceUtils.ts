@@ -1,32 +1,33 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import {useGetOne} from "../../redux/actions/verbs/get_one";
 import {useList} from "../../redux/actions/verbs/list";
+import {useOperation} from "../../redux/actions/verbs/operation";
+import {Operation} from "../../resource-models/actions/Operation";
+import {Record} from "../../resource-models/Record";
 
-export function useResource(resourceName:string, propId:number){
-    const initialValue = useRef({});
-    const [record, setRecord] = useState(initialValue.current);
-    const {data:downloadedRecord, getOne} = useGetOne();
-    const getNewResource = useCallback(()=>getOne(resourceName,propId),[resourceName,propId]);
+export function useResource(resourceName:string, propId:number, operation: Operation){
+    const {data:responseRecord, action} = useOperation(resourceName, operation);
+    // @ts-ignore
+    const [record, setRecord] = useState<Record>(Record.createFromJsonNoModel(responseRecord?.object));
+
+    const getResource = useCallback(()=>action(propId),[resourceName,propId]);
     useEffect(()=> {
-        getNewResource()
-    },[resourceName, getNewResource])
+        getResource()
+    },[resourceName, getResource])
 
     useEffect(()=>{
-        if(downloadedRecord!==undefined){
-            // @ts-ignore
-            setRecord(downloadedRecord)
-        }
-    },[downloadedRecord])
-    return {record, setRecord, getNewResource};
+        // @ts-ignore
+        setRecord(Record.createFromJson(responseRecord?.object, operation.model))
+    },[responseRecord])
+    return {record, setRecord, getResource};
 }
 
 export function useResources(resourceName:string){
     const initialValue = useRef({});
     const [record, setRecord] = useState(initialValue.current);
     const {data:downloadedRecord, get} = useList();
-    const getNewResource = useCallback(()=>get(resourceName),[resourceName]);
+    const getResource = useCallback(()=>get(resourceName),[resourceName]);
     useEffect(()=> {
-        getNewResource()
+        getResource()
     },[])
 
     useEffect(()=>{

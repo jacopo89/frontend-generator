@@ -123,11 +123,8 @@ export function useOperation(resourceName, operation) {
             if (operation.operationType === "item") {
                 // @ts-ignore
                 let operationRoute = (operation.path) ? (id) => `/api${operation.path.path(id)}` : (id) => `/api/${resourceName}/${id}`;
-                const [id, page, filters] = values;
+                const [id] = values;
                 route = operationRoute(id);
-                const urlSearchParams = filterManipulator(filters);
-                urlSearchParams.append("page", page);
-                route = route + "?" + urlSearchParams.toString();
             }
             else {
                 // @ts-ignore

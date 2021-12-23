@@ -4,7 +4,6 @@ interface EditFormGeneratorProps {
     propActionName: string;
     propEditPage?: any;
     refresh: () => void;
-    isEdit?: boolean;
 }
 /**
  *

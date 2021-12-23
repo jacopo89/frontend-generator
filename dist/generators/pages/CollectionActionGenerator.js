@@ -35,7 +35,7 @@ import { useCollectionOperation } from "../../redux/actions/verbs/operation";
  *
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
-export const CollectionActionGenerator = ({ propActionName, propResourceName, propEditPage, refresh, isEdit = true }) => {
+export const CollectionActionGenerator = ({ propActionName, propResourceName, propEditPage, refresh }) => {
     const { operations, resourceName } = useGetResourceModel(propResourceName);
     const operation = operations.findCollectionOperationByName(propActionName);
     const model = operations.getCollectionOperationModel(propActionName);
@@ -78,7 +78,7 @@ export const CollectionActionGenerator = ({ propActionName, propResourceName, pr
         };
     }, [model, loading, referencesMap, formValue, resourceName, refresh]);
     useEffect(() => {
-        setGenericEditRender(_jsx(FormGenerator, Object.assign({}, editFormProps, { formContent: createEditPageToUse, isEdit: isEdit, errors: errors, text: "Save" }), void 0));
+        setGenericEditRender(_jsx(FormGenerator, Object.assign({}, editFormProps, { formContent: createEditPageToUse, errors: errors, text: "Save" }), void 0));
     }, [formValue, errors]);
     return genericEditRender;
 };

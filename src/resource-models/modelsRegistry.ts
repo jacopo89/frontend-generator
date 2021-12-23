@@ -29,6 +29,7 @@ export function useSetResourceModel(overrideRegistry:any, route ="/resources"){
             const registry = override(retrieved,overrideRegistry);
             const arrayRegistry = Object.keys(registry).map(resourceName => {
                 return{name: resourceName, resource: new MainResource(registry[resourceName]) } });
+            console.log("array registry", arrayRegistry)
             dispatch(updateRegistry(arrayRegistry))
             setModelLoaded(true);
         })

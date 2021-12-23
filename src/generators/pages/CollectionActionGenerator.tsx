@@ -11,8 +11,7 @@ interface EditFormGeneratorProps {
     propResourceName: string,
     propActionName:string,
     propEditPage?: any,
-    refresh: ()=>void,
-    isEdit?: boolean
+    refresh: ()=>void
 }
 
 /**
@@ -23,7 +22,7 @@ interface EditFormGeneratorProps {
  *
  * This function returns a react component with the edit form. This component is not responsible for fetching previous data.
  */
-export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ propActionName, propResourceName,  propEditPage, refresh , isEdit=true}) => {
+export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ propActionName, propResourceName,  propEditPage, refresh}) => {
     const {operations, resourceName} = useGetResourceModel(propResourceName);
     const operation = operations.findCollectionOperationByName(propActionName);
 
@@ -75,7 +74,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
     useEffect(()=>{
 
             setGenericEditRender(
-                <FormGenerator {...editFormProps} formContent={createEditPageToUse} isEdit={isEdit} errors={errors} text="Save"/>)
+                <FormGenerator {...editFormProps} formContent={createEditPageToUse} errors={errors} text="Save"/>)
 
     },[formValue, errors])
 

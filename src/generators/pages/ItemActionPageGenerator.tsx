@@ -1,16 +1,13 @@
 import React from "react";
-import {EditForm} from "./edit/EditFormGenerator";
 import {useResource} from "../hooks/resourceUtils";
-import {Record} from "../../resource-models/Record";
 import {ItemActionGenerator} from "./ItemActionGenerator";
+import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 
 interface Props{
     propResourceName:string,
     propActionName:string,
     propId:number,
-    propEditPage?:any,
-    isEdit?: boolean,
-
+    propEditPage?:any
 }
 
 /**
@@ -21,9 +18,12 @@ interface Props{
  * @param isEdit
  * @constructor
  */
-export const ItemActionPage: React.FC<Props> = ({propResourceName:resourceName,propActionName, propId, propEditPage, isEdit=true}) => {
+export const ItemActionPage: React.FC<Props> = ({propResourceName:resourceName,propActionName, propId, propEditPage}) => {
 
-    const {record, getNewResource} = useResource(resourceName, propId);
-    return <ItemActionGenerator isEdit={isEdit}  propResourceName={resourceName} propId={propId} record={record} refresh={getNewResource} propEditPage={propEditPage} propActionName={propActionName}/>
+    const {operations} = useGetResourceModel(resourceName);
+    const operation = operations.findItemOperationByName("get");
+    const {record, setRecord, getResource} = useResource(resourceName, propId, operation);
+
+    return <ItemActionGenerator propResourceName={resourceName} propId={propId} record={record} setRecord={setRecord} refresh={getResource} propEditPage={propEditPage} propActionName={propActionName}/>
 }
 

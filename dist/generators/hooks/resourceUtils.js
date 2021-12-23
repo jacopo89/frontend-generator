@@ -1,29 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGetOne } from "../../redux/actions/verbs/get_one";
 import { useList } from "../../redux/actions/verbs/list";
-export function useResource(resourceName, propId) {
-    const initialValue = useRef({});
-    const [record, setRecord] = useState(initialValue.current);
-    const { data: downloadedRecord, getOne } = useGetOne();
-    const getNewResource = useCallback(() => getOne(resourceName, propId), [resourceName, propId]);
+import { useOperation } from "../../redux/actions/verbs/operation";
+import { Record } from "../../resource-models/Record";
+export function useResource(resourceName, propId, operation) {
+    const { data: responseRecord, action } = useOperation(resourceName, operation);
+    // @ts-ignore
+    const [record, setRecord] = useState(Record.createFromJsonNoModel(responseRecord === null || responseRecord === void 0 ? void 0 : responseRecord.object));
+    const getResource = useCallback(() => action(propId), [resourceName, propId]);
     useEffect(() => {
-        getNewResource();
-    }, [resourceName, getNewResource]);
+        getResource();
+    }, [resourceName, getResource]);
     useEffect(() => {
-        if (downloadedRecord !== undefined) {
-            // @ts-ignore
-            setRecord(downloadedRecord);
-        }
-    }, [downloadedRecord]);
-    return { record, setRecord, getNewResource };
+        // @ts-ignore
+        setRecord(Record.createFromJson(responseRecord === null || responseRecord === void 0 ? void 0 : responseRecord.object, operation.model));
+    }, [responseRecord]);
+    return { record, setRecord, getResource };
 }
 export function useResources(resourceName) {
     const initialValue = useRef({});
     const [record, setRecord] = useState(initialValue.current);
     const { data: downloadedRecord, get } = useList();
-    const getNewResource = useCallback(() => get(resourceName), [resourceName]);
+    const getResource = useCallback(() => get(resourceName), [resourceName]);
     useEffect(() => {
-        getNewResource();
+        getResource();
     }, []);
     useEffect(() => {
         if (downloadedRecord !== undefined) {
