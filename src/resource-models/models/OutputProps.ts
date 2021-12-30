@@ -1,4 +1,4 @@
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import {Record} from "../Record";
 import React, {DetailedReactHTMLElement} from "react";
 import {Errors} from "../../generators/errors/Errors";

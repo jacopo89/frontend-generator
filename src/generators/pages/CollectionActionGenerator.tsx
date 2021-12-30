@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from "react";
 import {UpdateListings} from "../../utils/referenceFieldUtils";
 import {FormGenerator} from "../forms/FormGenerator";
 import {Error as CustomError, Errors} from "../errors/Errors";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {useCollectionOperation} from "../../redux/actions/verbs/operation";
@@ -29,8 +29,8 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
 
     const model = operations.getCollectionOperationModel(propActionName);
     const createEditPageToUse:any = propEditPage;
-    const initialValue = useRef(new FormValue());
-    const [formValue, setFormValue] = useState<FormValue>(initialValue.current);
+    const initialValue = useRef(new Form());
+    const [formValue, setFormValue] = useState<Form>(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     // @ts-ignore
@@ -48,9 +48,9 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
-    const submitHandler = async (formValue:FormValue)=> action(FormValue.toJson(formValue)).then((response:any) => {
+    const submitHandler = async (formValue:Form)=> action(Form.toJson(formValue)).then((response:any) => {
         const record = Record.createFromJson(response, model)
-        setFormValue(FormValue.createFromRecord(record, model))
+        setFormValue(Form.createFromRecord(record, model))
         return response;
     })
 
@@ -61,7 +61,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
             refreshReferencesMap: refreshReferencesMap,
             formValue: formValue,
             refresh:refresh,
-            lockedFormValue: new FormValue(),
+            lockedFormValue: new Form(),
             loading:loading,
             setFormValue: setFormValue,
             submitHandler:()=>submitHandler(formValue),

@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} f
 import {UpdateListings} from "../../utils/referenceFieldUtils";
 import {FormGenerator} from "../forms/FormGenerator";
 import {Error as CustomError, Errors} from "../errors/Errors";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {useGetResourceModel} from "../../resource-models/modelsRegistry";
 import {useItemOperation} from "../../redux/actions/verbs/operation";
@@ -36,8 +36,8 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
     const {model} = operations.findItemOperationByName(propActionName);
 
     const createEditPageToUse:any = propEditPage
-    const initialValue = useRef(new FormValue());
-    const [formValue, setFormValue] = useState<FormValue>(initialValue.current);
+    const initialValue = useRef(new Form());
+    const [formValue, setFormValue] = useState<Form>(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     const {action, errors:responseErrors, loading} = useItemOperation(resourceName, operation);
@@ -51,15 +51,15 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     useEffect(()=>{ setGenericEditRender(<div/>)},[resourceName])
     useEffect(()=>{
-        setFormValue(FormValue.createFromRecord(record, model))
+        setFormValue(Form.createFromRecord(record, model))
     }, [record])
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
-    const submitHandler = async (formValue:FormValue)=> action(propId,FormValue.toJson(formValue)).then((response:any) => {
+    const submitHandler = async (formValue:Form)=> action(propId,Form.toJson(formValue)).then((response:any) => {
         const record = Record.createFromJson(response, model)
         setRecord(record)
-        setFormValue(FormValue.createFromRecord(record, model))
+        setFormValue(Form.createFromRecord(record, model))
         return response;
     })
 
@@ -71,7 +71,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
             formValue: formValue,
             record:record,
             refresh:refresh,
-            lockedFormValue: new FormValue(),
+            lockedFormValue: new Form(),
             loading:loading,
             setFormValue: setFormValue,
             submitHandler:()=>submitHandler(formValue),

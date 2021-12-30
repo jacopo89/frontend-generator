@@ -4,7 +4,7 @@ import {UpdateListings} from "../../../utils/referenceFieldUtils";
 import {useEdit} from "../../../redux/actions/verbs/edit";
 import {FormGenerator} from "../../forms/FormGenerator";
 import {Error as CustomError, Errors} from "../../errors/Errors";
-import {FormValue} from "../../../resource-models/formvalue/FormValue";
+import {Form} from "../../../resource-models/formvalue/Form";
 import {Record} from "../../../resource-models/Record";
 import {ItemActionGenerator} from "../ItemActionGenerator";
 import {ItemResponse} from "../../../redux/actions/verbs/ItemResponse";

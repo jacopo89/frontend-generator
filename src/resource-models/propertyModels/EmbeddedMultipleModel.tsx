@@ -3,7 +3,7 @@ import {EmbeddedPropertyModel} from "./NestedPropertyModel";
 import {IterableFormContent} from "../../generators/forms/IterableFormContent";
 import {IterableShowContent} from "../../generators/fields/IterableShowContent";
 import {Record} from "../Record";
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import {EmbeddedMultipleInputProps, EmbeddedMultipleInputPropsInterface} from "../models/InputProps";
 import {EmbeddedMultipleSetInputFieldProps} from "../models/SetInputFieldProps";
 import {PropertyFieldConfigurationInterface} from "../configurations/PropertyFieldConfiguration";
@@ -121,7 +121,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
         const nestedEntries = Array.from(value.entries());
         nestedEntries.forEach(([nestedKey, nestedValue], nestedIndex) =>{
             if(typeof nestedValue === "object"){
-                map.set(nestedKey, FormValue.createFromRecord(nestedValue, this.getResource().getModel()))
+                map.set(nestedKey, Form.createFromRecord(nestedValue, this.getResource().getModel()))
             }else{
                 map.set(nestedKey, nestedValue)
             }

@@ -1,5 +1,5 @@
 import React, {DetailedReactHTMLElement} from "react";
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import {SinglePropertyModel} from "../propertyModels/SinglePropertyModel";
 import _ from "lodash";
 import {
@@ -44,11 +44,11 @@ export interface SingleInputPropsInterface extends InputPropsInterface{
     inputHandler: (vars:any) => void,
     value: any,
     label:string
-    formValue: FormValue
+    formValue: Form
 }
 
 export class SingleInputProps extends InputProps{
-    formValue: FormValue;
+    formValue: Form;
     model: SinglePropertyModel;
 
     constructor(props:SingleInputPropsInterface) {
@@ -80,12 +80,12 @@ export class SingleInputProps extends InputProps{
  * EMBEDDED SINGLE INPUT PROPS
  */
 export interface EmbeddedSingleInputPropsInterface extends InputPropsInterface{
-    formValue: FormValue,
+    formValue: Form,
     model: EmbeddedSingleModel;
 }
 
 export class EmbeddedSingleInputProps extends InputProps{
-    formValue: FormValue;
+    formValue: Form;
     record: Record|undefined;
     model: EmbeddedSingleModel;
 
@@ -111,13 +111,13 @@ export class EmbeddedSingleInputProps extends InputProps{
  * */
 
 export interface EmbeddedMultipleInputPropsInterface extends InputPropsInterface{
-    formValue: FormValue
+    formValue: Form
     record: Map<number, Record>
     model: EmbeddedMultipleModel
 }
 
 export class EmbeddedMultipleInputProps extends InputProps{
-    formValue: FormValue
+    formValue: Form
     record: Map<number, Record>;
     model: EmbeddedMultipleModel;
 

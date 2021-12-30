@@ -4,13 +4,13 @@ import {useCreate} from "../../redux/actions/verbs/create";
 import {FormGenerator} from "../forms/FormGenerator";
 import {UpdateListings} from "../../utils/referenceFieldUtils";
 import {Error, Errors} from "../errors/Errors";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Model} from "../../resource-models/Model";
 
 interface Props{
     propResourceName:string,
     propCreatePage?:any,
-    lockedFormValue?:FormValue
+    lockedFormValue?:Form
 }
 
 
@@ -18,17 +18,17 @@ interface GenericProps{
     model:Model,
     errors?: Errors,
     propCreatePage?:any,
-    submitHandler: (formValue:FormValue)=>Promise<any>,
+    submitHandler: (formValue:Form)=>Promise<any>,
     loading: boolean,
-    lockedFormValue?:FormValue
+    lockedFormValue?:Form
 }
 
-export const Create: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new FormValue()}) => {
+export const Create: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new Form()}) => {
     const {operations} = useGetResourceModel(resourceName);
     const model = operations.getOperationModel("post");
     const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
-    const [formValue, setFormValue] = useState<FormValue>(lockedFormValue);
+    const [formValue, setFormValue] = useState<Form>(lockedFormValue);
     const {create, errors:responseErrors, loading} = useCreate();
     const [errors, setErrors] = useState(new Errors([]));
 
@@ -44,7 +44,7 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
     const [genericCreateRender, setGenericCreateRender] = useState(<div/>)
     useEffect(()=>{ setGenericCreateRender(<div/>)},[resourceName])
 
-    const submitHandler = ()=>create(resourceName, FormValue.toJson(formValue));
+    const submitHandler = ()=>create(resourceName, Form.toJson(formValue));
 
     useEffect(()=>{
         const newFormGenerator = <FormGenerator
@@ -69,10 +69,10 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
 
 }
 
-export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, errors = new Errors([]), propCreatePage, lockedFormValue=new FormValue(), loading}) => {
+export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, errors = new Errors([]), propCreatePage, lockedFormValue=new Form(), loading}) => {
     const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
-    const [formValue, setFormValue] = useState<FormValue>(lockedFormValue);
+    const [formValue, setFormValue] = useState<Form>(lockedFormValue);
     const [genericCreateRender, setGenericCreateRender] = useState(<div/>)
     useEffect(()=>{ setGenericCreateRender(<div/>)},[model])
 
@@ -99,7 +99,7 @@ export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, err
 
 }
 
-export const CreateResource: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new FormValue()}) => {
+export const CreateResource: React.FC<Props> = ({propResourceName:resourceName, propCreatePage, lockedFormValue=new Form()}) => {
     const {operations} = useGetResourceModel(resourceName);
     const model = operations.getOperationModel("post")
     const createPageToUse:any = propCreatePage
@@ -114,7 +114,7 @@ export const CreateResource: React.FC<Props> = ({propResourceName:resourceName, 
         const newErrors: Errors =  new Errors(Object.keys(errorFields).map((field) => new Error(field,errorFields[field])))
         setErrors(newErrors)},[responseErrors])
 
-    const submitHandler = async (formValue:FormValue)=>create(resourceName, FormValue.toJson(formValue));
+    const submitHandler = async (formValue:Form)=>create(resourceName, Form.toJson(formValue));
 
     return GenericCreate({model:model, propCreatePage:createPageToUse, lockedFormValue, errors, submitHandler, loading})
 }

@@ -3,7 +3,7 @@ import { fetch } from '../dataAccess';
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {FEEDBACK_MESSAGE} from "../app/actions";
-import {FormValue} from "../../../resource-models/formvalue/FormValue";
+import {Form} from "../../../resource-models/formvalue/Form";
 
 export function genericError(message:string) {
     return { type: FEEDBACK_MESSAGE, message:message, severity:"error"};

@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import {Model} from "../../resource-models/Model";
 import {Record} from "../../resource-models/Record";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Errors} from "../errors/Errors";
 import {InputProps} from "../../resource-models/models/InputProps";
 
@@ -15,10 +15,10 @@ export interface ShowContent{
     record?: Record;
     referencesMap: any;
     refreshReferencesMap: () => void;
-    formValue: FormValue;
-    lockedFormValue:FormValue;
+    formValue: Form;
+    lockedFormValue:Form;
     errors: Errors;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
     formContent?:React.DetailedReactHTMLElement<any, any>;
     refresh:()=>void
 }

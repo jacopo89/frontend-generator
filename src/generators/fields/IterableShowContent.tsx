@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import {Divider, List, ListItem} from "@material-ui/core";
 import {Model} from "../../resource-models/Model";
 import {Record} from "../../resource-models/Record";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Errors} from "../errors/Errors";
 import {ShowContent} from "./ShowContent";
 import {FormContent} from "../forms/FormContent";
@@ -16,7 +16,7 @@ export interface IterableShowContentProps{
     formContent?:  React.DetailedReactHTMLElement<any, any>
     referencesMap: Map<string, any>
     refreshReferencesMap:()=>void
-    formValueArray: Map<string,FormValue>,
+    formValueArray: Map<string,Form>,
     errors: Errors,
     label:string,
     submitHandler: (e:any) => Promise<any>;
@@ -62,7 +62,7 @@ export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, 
                                 const formValue = formValueArray[index]
 
                                 return <Grid item xs={xs} md={md}>
-                                    <ShowContent setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new FormValue()} formContent={inputElement} referencesMap={referencesMap}  model={model}  refreshReferencesMap={refreshReferencesMap}  partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
+                                    <ShowContent setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
                                 </Grid>
                             })
                         }

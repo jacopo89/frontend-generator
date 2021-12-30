@@ -3,7 +3,7 @@ import {Grid} from "@material-ui/core";
 import {PropertyModel} from "../../resource-models/PropertyModel";
 import {Model} from "../../resource-models/Model";
 import {Errors} from "../errors/Errors";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {InputProps} from "../../resource-models/models/InputProps";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
@@ -16,10 +16,10 @@ interface FormContentProps {
     record?: Record;
     referencesMap: any;
     refreshReferencesMap: () => void;
-    formValue: FormValue;
-    lockedFormValue:FormValue;
+    formValue: Form;
+    lockedFormValue:Form;
     errors: Errors;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
     refresh:()=>void,
     configuration: PropertyFieldConfiguration
 }

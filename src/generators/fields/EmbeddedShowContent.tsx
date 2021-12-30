@@ -2,7 +2,7 @@ import React, {DetailedReactHTMLElement} from "react";
 import {Model} from "../../resource-models/Model";
 import {ShowContent} from "./ShowContent";
 import {Record} from "../../resource-models/Record";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Errors} from "../errors/Errors";
 
 interface EmbeddedShowContentProps{
@@ -13,10 +13,10 @@ interface EmbeddedShowContentProps{
     record?: Record;
     referencesMap: any;
     refreshReferencesMap: () => void;
-    formValue: FormValue;
-    lockedFormValue:FormValue;
+    formValue: Form;
+    lockedFormValue:Form;
     errors: Errors;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
     formContent?:React.DetailedReactHTMLElement<any, any>;
     refresh:()=>void;
     showElement?: React.DetailedReactHTMLElement<any, any>

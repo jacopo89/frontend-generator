@@ -1,13 +1,13 @@
 import React, {useMemo, useState} from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {CustomTextValidator} from "../formHelpers";
-import {FormValue} from "../../../resource-models/formvalue/FormValue";
+import {Form} from "../../../resource-models/formvalue/Form";
 import {EnumMultipleModel, JsonEnumOption} from "../../../resource-models/propertyModels/EnumMultipleModel";
 import {Option} from "../../../resource-models/PropertyModel";
 
 interface EnumMultipleInput{
     model: EnumMultipleModel,
-    formValue: FormValue,
+    formValue: Form,
     options: Option[],
     value:string[],
     hasError?:boolean,

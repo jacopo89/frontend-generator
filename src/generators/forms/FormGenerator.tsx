@@ -8,7 +8,7 @@ import ButtonsHorizontalList from "../../rendering/components/buttons/ButtonsHor
 import {genericError} from "../../redux/actions/verbs/edit";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 import {Model} from "../../resource-models/Model";
-import {FormValue} from "../../resource-models/formvalue/FormValue";
+import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {Errors} from "../errors/Errors";
 
@@ -20,10 +20,10 @@ export interface Props{
     model:Model;
     referencesMap: Map<string, any>;
     refreshReferencesMap:()=>void;
-    formValue: FormValue;
+    formValue: Form;
     record?: Record;
-    lockedFormValue:FormValue;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
+    lockedFormValue:Form;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
     text?:string;
     errors: Errors;
     showButton?:boolean;

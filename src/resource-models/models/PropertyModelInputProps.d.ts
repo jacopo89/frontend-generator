@@ -1,5 +1,5 @@
 import { Record } from "../Record";
-import { FormValue } from "../formvalue/FormValue";
+import { Form } from "../formvalue/Form";
 import React from "react";
 import { Errors } from "../../generators/errors/Errors";
 import { PropertyModel } from "../PropertyModel";
@@ -7,9 +7,9 @@ import { ModelInputInterface } from "../interface/ModelInputInterface";
 export interface PropertyPropsInterface {
     model: PropertyModel;
     record: any;
-    formValue: FormValue | Map<number, FormValue>;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
-    lockedFormValue: FormValue;
+    formValue: Form | Map<number, Form>;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    lockedFormValue: Form;
     errors: Errors;
     submitHandler: (e: any) => Promise<any>;
     partialSubmitHandler: (e: any) => Promise<any>;
@@ -21,9 +21,9 @@ export interface PropertyPropsInterface {
 export declare class PropertyModelInputProps {
     model: PropertyModel;
     record: Record | Map<number, Record> | undefined;
-    formValue: FormValue | Map<number, FormValue>;
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>;
-    lockedFormValue: FormValue;
+    formValue: Form | Map<number, Form>;
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    lockedFormValue: Form;
     errors: Errors;
     submitHandler: (e: any) => Promise<any>;
     partialSubmitHandler: (e: any) => Promise<any>;

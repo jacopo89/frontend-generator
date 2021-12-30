@@ -7,13 +7,13 @@ import {ReferenceModel} from "../../../resource-models/propertyModels/ReferenceM
 import {ListingOption} from "../../../resource-models/listings/Listing";
 import ReferenceInputModal from "./ReferenceInputModal/ReferenceInputModal";
 import {CustomTextValidator} from "../formHelpers";
-import {FormValue} from "../../../resource-models/formvalue/FormValue";
+import {Form} from "../../../resource-models/formvalue/Form";
 import _ from 'lodash';
 import list from "../../../redux/reducers/verbs/list";
 
 interface ReferenceInput{
     model: ReferenceModel,
-    formValue: FormValue,
+    formValue: Form,
     refreshReferencesMap: any,
     value:ListingOption|undefined,
     hasError?:boolean,

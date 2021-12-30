@@ -1,6 +1,6 @@
 import {InputPropsInterface, SingleInputPropsInterface} from "./InputProps";
 import {Record} from "../Record";
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
 import {EmbeddedMultipleModel} from "../propertyModels/EmbeddedMultipleModel";
 import {Errors} from "../../generators/errors/Errors";
@@ -24,9 +24,9 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     propertyRecord: any
     inputHandler: (vars:any)=>void
     errors: Errors;
-    formValue: FormValue;
+    formValue: Form;
     label: string;
-    lockedFormValue: FormValue;
+    lockedFormValue: Form;
     model: PropertyModel;
     partialSubmitHandler: (e:any) => Promise<any>
     submitHandler: (e:any) => Promise<any>
@@ -36,7 +36,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
     refresh: () => void
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>
 
     constructor(props: SingleSetInputFieldPropsInterface) {
         const {hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
@@ -69,7 +69,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
  *  PARAMETER FOR SET INPUT FIELD - EMBEDDED SINGLE
  */
 interface EmbeddedSingleSetInputFieldPropsInterface extends EmbeddedSingleInputPropsInterface{
-    formValue: FormValue,
+    formValue: Form,
     record: Record | undefined,
     model: EmbeddedSingleModel
 }
@@ -82,16 +82,16 @@ interface EmbeddedSingleInputPropsInterface extends InputPropsInterface{
 export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputPropsInterface{
     record: Record | undefined
     recordValue:Record | Map<number, Record> | undefined
-    formValue: FormValue
+    formValue: Form
     model: EmbeddedSingleModel
     errors: Errors;
-    lockedFormValue: FormValue;
+    lockedFormValue: Form;
     partialSubmitHandler: (e:any) => Promise<any>
     submitHandler: (e:any) => Promise<any>
     loading: boolean
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
 
     constructor(props: EmbeddedSingleSetInputFieldPropsInterface) {
@@ -121,33 +121,33 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
  */
 
 interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterface{
-    formValue: FormValue,
+    formValue: Form,
     record: Map<number, Record>
     recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
     errors: Errors;
-    lockedFormValue: FormValue;
+    lockedFormValue: Form;
     partialSubmitHandler: (e:any) => Promise<any>
     submitHandler: (e:any) => Promise<any>
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
 }
 
 export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetInputFieldPropsInterface{
-    formValue: FormValue
+    formValue: Form
     record: Map<number, Record>
     recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
     errors: Errors;
-    lockedFormValue: FormValue;
+    lockedFormValue: Form;
     partialSubmitHandler: (e:any) => Promise<any>
     loading: boolean
     submitHandler: (e:any) => Promise<any>
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<FormValue>>
+    setFormValue: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
     inputElement: any
 

@@ -1,14 +1,14 @@
 import {PropertyModel} from "../PropertyModel";
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import React from "react";
 import {Errors} from "../../generators/errors/Errors";
 
 export interface InputInterface{
     model: PropertyModel,
     record:any,
-    formValue: FormValue | Map<number, FormValue>,
-    setFormValue:  React.Dispatch<React.SetStateAction<FormValue>>,
-    lockedFormValue: FormValue,
+    formValue: Form | Map<number, Form>,
+    setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
+    lockedFormValue: Form,
     errors: Errors,
     refresh:()=>void,
     submitHandler: (e: any) => Promise<any>;

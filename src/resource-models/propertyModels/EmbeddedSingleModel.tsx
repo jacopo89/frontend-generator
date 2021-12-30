@@ -3,7 +3,7 @@ import {EmbeddedPropertyModel} from "./NestedPropertyModel";
 import {EmbeddedFormContent} from "../../generators/forms/EmbeddedFormContent";
 import {Record} from "../Record";
 import {EmbeddedShowContent} from "../../generators/fields/EmbeddedShowContent";
-import {FormValue} from "../formvalue/FormValue";
+import {Form} from "../formvalue/Form";
 import {EmbeddedSingleSetInputFieldProps} from "../models/SetInputFieldProps";
 import {EmbeddedSingleInputProps, EmbeddedSingleInputPropsInterface} from "../models/InputProps";
 import {Typography} from "@material-ui/core";
@@ -16,7 +16,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
         const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
 
         // @ts-ignore
-        const finalFormValue = (formValue) ? formValue[this.id] : new FormValue()
+        const finalFormValue = (formValue) ? formValue[this.id] : new Form()
 
         return EmbeddedFormContent({
             model:this.getResource().getModel(),
@@ -54,7 +54,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
         const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
 
         // @ts-ignore
-        const finalFormValue = (formValue) ? formValue[this.id] : new FormValue()
+        const finalFormValue = (formValue) ? formValue[this.id] : new Form()
 
         return<>
            {/* {(configuration?.showLabel?? true)  && <Typography>{_.startCase(this.label)}</Typography>}*/}
@@ -87,6 +87,6 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
     }
 
     getFormValue(value: Record): any {
-        return FormValue.createFromRecord(value, this.getResource().getModel());
+        return Form.createFromRecord(value, this.getResource().getModel());
     }
 }

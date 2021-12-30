@@ -3,15 +3,15 @@ import {Record} from "../Record";
 import {Model} from "../Model";
 import {REFERENCE} from "../../generators/forms/inputs/InputTypes";
 
-export class FormValue extends Object{
+export class Form extends Object{
 
     /**
      * Create a FormValue from a valid Record.
      * @param record
      * @param model
      */
-    static createFromRecord(record:Record, model: Model): FormValue{
-        const formValue = new FormValue();
+    static createFromRecord(record:Record, model: Model): Form{
+        const formValue = new Form();
 
         Object.entries(record).forEach(([key, value]) =>{
 
@@ -42,18 +42,18 @@ export class FormValue extends Object{
     }
 
     static createFromRecordNoModel(record:Record){
-        const formValue = new FormValue();
+        const formValue = new Form();
         Object.keys(record).forEach(key => {
             // @ts-ignore
             const value = record[key];
             if (value instanceof Record) {
                 // @ts-ignore
-                formValue[key] = FormValue.createFromRecordNoModel(value);
+                formValue[key] = Form.createFromRecordNoModel(value);
             } else if (value instanceof Map) {
                 const map = new Map();
                 const nestedEntries = Array.from(value.entries());
                 nestedEntries.forEach(([nestedKey, nestedValue], nestedIndex) => {
-                    map.set(nestedKey, FormValue.createFromRecordNoModel(nestedValue))
+                    map.set(nestedKey, Form.createFromRecordNoModel(nestedValue))
                 })
                 // @ts-ignore
                 formValue[key] = map;
@@ -65,7 +65,7 @@ export class FormValue extends Object{
         return formValue;
     }
 
-    updateFormValue(name:string, value:any):FormValue{
+    updateFormValue(name:string, value:any):Form{
         const split = _.split(name, ".");
         const current = split.shift();
             if (split.length!==0) {
@@ -90,9 +90,9 @@ export class FormValue extends Object{
         const split = _.split(name, ".");
         split.pop();
         const reducerModel = (accumulator:any, value:string):any |undefined => {
-            if(accumulator instanceof FormValue) {
+            if(accumulator instanceof Form) {
                 // @ts-ignore
-                const accumulatorElement :FormValue = accumulator[value];
+                const accumulatorElement :Form = accumulator[value];
                 return accumulatorElement
             }else if(accumulator instanceof Map){
             }else
@@ -105,13 +105,13 @@ export class FormValue extends Object{
     static toJson(formValue: any): object{
         const json = {}
         Object.entries(formValue).forEach(([key, value])=>{
-            if(value instanceof FormValue){
+            if(value instanceof Form){
                 // @ts-ignore
-                json[key] = FormValue.toJson(value)
+                json[key] = Form.toJson(value)
             }else if(value instanceof Map){
                 const nestedEntries = Array.from(value.values());
                 // @ts-ignore
-                json[key] = nestedEntries.map((nestedValue, nestedIndex) => FormValue.toJson(nestedValue))
+                json[key] = nestedEntries.map((nestedValue, nestedIndex) => Form.toJson(nestedValue))
             }else {
                 // @ts-ignore
                 json[key] = value;
@@ -121,8 +121,8 @@ export class FormValue extends Object{
 
     }
 
-    set(name:string, value:any):FormValue{
-        FormValue.defineProperty(this, name, {
+    set(name:string, value:any):Form{
+        Form.defineProperty(this, name, {
             value: value,
             writable: true,
             enumerable:true
@@ -132,7 +132,7 @@ export class FormValue extends Object{
     }
 
     has(name:string):boolean{
-        return FormValue.keys(this).includes(name);
+        return Form.keys(this).includes(name);
     }
 
 }
