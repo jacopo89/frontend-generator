@@ -60,6 +60,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
             referencesMap:referencesMap,
             refreshReferencesMap: refreshReferencesMap,
             formValue: formValue,
+            form: formValue,
             refresh:refresh,
             lockedFormValue: new Form(),
             loading:loading,

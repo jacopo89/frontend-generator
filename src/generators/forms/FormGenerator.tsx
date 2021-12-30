@@ -21,6 +21,7 @@ export interface Props{
     referencesMap: Map<string, any>;
     refreshReferencesMap:()=>void;
     formValue: Form;
+    form: Form;
     record?: Record;
     lockedFormValue:Form;
     setFormValue: React.Dispatch<React.SetStateAction<Form>>;

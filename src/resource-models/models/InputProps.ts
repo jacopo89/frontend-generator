@@ -18,14 +18,12 @@ import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
  */
 
 export interface InputPropsInterface extends PropertyModelInputInterface{
-    form?:React.DetailedReactHTMLElement<any, any>
     inputElement?: DetailedReactHTMLElement<any, any>
     refresh: () => void,
     showLabel?: boolean
 }
 
 export class InputProps extends PropertyModelInputProps{
-    form?: React.DetailedReactHTMLElement<any, any>
     inputElement?: DetailedReactHTMLElement<any, any>
     refresh: () => void
 
