@@ -30,7 +30,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
     const model = operations.getCollectionOperationModel(propActionName);
     const createEditPageToUse:any = propEditPage;
     const initialValue = useRef(new Form());
-    const [formValue, setFormValue] = useState<Form>(initialValue.current);
+    const [form, setForm] = useState<Form>(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     // @ts-ignore
@@ -48,9 +48,9 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
-    const submitHandler = async (formValue:Form)=> action(Form.toJson(formValue)).then((response:any) => {
+    const submitHandler = async (form:Form)=> action(Form.toJson(form)).then((response:any) => {
         const record = Record.createFromJson(response, model)
-        setFormValue(Form.createFromRecord(record, model))
+        setForm(Form.createFromRecord(record, model))
         return response;
     })
 
@@ -59,17 +59,16 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
             model: model,
             referencesMap:referencesMap,
             refreshReferencesMap: refreshReferencesMap,
-            formValue: formValue,
-            form: formValue,
+            form: form,
             refresh:refresh,
             lockedFormValue: new Form(),
             loading:loading,
-            setFormValue: setFormValue,
-            submitHandler:()=>submitHandler(formValue),
+            setFormValue: setForm,
+            submitHandler:()=>submitHandler(form),
             partialSubmitHandler:submitHandler,
             resourceName: resourceName,
         }
-    },[model,loading,referencesMap, formValue, resourceName, refresh])
+    },[model,loading,referencesMap, form, resourceName, refresh])
 
 
     useEffect(()=>{
@@ -77,7 +76,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
             setGenericEditRender(
                 <FormGenerator {...editFormProps} formContent={createEditPageToUse} errors={errors} text="Save"/>)
 
-    },[formValue, errors])
+    },[form, errors])
 
 
     return genericEditRender;

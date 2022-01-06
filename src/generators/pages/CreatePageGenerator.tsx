@@ -28,7 +28,7 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
     const model = operations.getOperationModel("post");
     const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
-    const [formValue, setFormValue] = useState<Form>(lockedFormValue);
+    const [form, setForm] = useState<Form>(lockedFormValue);
     const {create, errors:responseErrors, loading} = useCreate();
     const [errors, setErrors] = useState(new Errors([]));
 
@@ -44,7 +44,7 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
     const [genericCreateRender, setGenericCreateRender] = useState(<div/>)
     useEffect(()=>{ setGenericCreateRender(<div/>)},[resourceName])
 
-    const submitHandler = ()=>create(resourceName, Form.toJson(formValue));
+    const submitHandler = ()=>create(resourceName, Form.toJson(form));
 
     useEffect(()=>{
         const newFormGenerator = <FormGenerator
@@ -54,16 +54,15 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
             model={model}
             referencesMap={referencesMap}
             refreshReferencesMap={refreshReferencesMap}
-            formValue={formValue}
-            form={formValue}
+            form={form}
             lockedFormValue={lockedFormValue}
-            setFormValue={setFormValue}
+            setFormValue={setForm}
             errors={errors}
             formContent={createPageToUse}
             refresh={()=>console.log("there is no refresh in creation")}>
         </FormGenerator>
         setGenericCreateRender(newFormGenerator);
-    }, [model, loading, referencesMap, formValue, resourceName, errors])
+    }, [model, loading, referencesMap, form, resourceName, errors])
 
 
     return genericCreateRender;
@@ -73,7 +72,7 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
 export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, errors = new Errors([]), propCreatePage, lockedFormValue=new Form(), loading}) => {
     const createPageToUse:any = propCreatePage
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
-    const [formValue, setFormValue] = useState<Form>(lockedFormValue);
+    const [form, setForm] = useState<Form>(lockedFormValue);
     const [genericCreateRender, setGenericCreateRender] = useState(<div/>)
     useEffect(()=>{ setGenericCreateRender(<div/>)},[model])
 
@@ -85,16 +84,15 @@ export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, err
             model={model}
             referencesMap={referencesMap}
             refreshReferencesMap={refreshReferencesMap}
-            formValue={formValue}
-            form={formValue}
+            form={form}
             lockedFormValue={lockedFormValue}
-            setFormValue={setFormValue}
+            setFormValue={setForm}
             errors={errors}
             formContent={createPageToUse}
             refresh={()=>console.log("there is no refresh in creation")}>
         </FormGenerator>
         setGenericCreateRender(newFormGenerator);
-    }, [model, referencesMap, formValue, errors])
+    }, [model, referencesMap, form, errors])
 
 
     return genericCreateRender;
@@ -116,7 +114,7 @@ export const CreateResource: React.FC<Props> = ({propResourceName:resourceName, 
         const newErrors: Errors =  new Errors(Object.keys(errorFields).map((field) => new Error(field,errorFields[field])))
         setErrors(newErrors)},[responseErrors])
 
-    const submitHandler = async (formValue:Form)=>create(resourceName, Form.toJson(formValue));
+    const submitHandler = async (form:Form)=>create(resourceName, Form.toJson(form));
 
     return GenericCreate({model:model, propCreatePage:createPageToUse, lockedFormValue, errors, submitHandler, loading})
 }

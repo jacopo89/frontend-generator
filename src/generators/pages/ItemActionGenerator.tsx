@@ -37,7 +37,7 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     const createEditPageToUse:any = propEditPage
     const initialValue = useRef(new Form());
-    const [formValue, setFormValue] = useState<Form>(initialValue.current);
+    const [form, setForm] = useState<Form>(initialValue.current);
     const [errors, setErrors] = useState(new Errors([]));
     const {listings:referencesMap, updateListings:refreshReferencesMap} = UpdateListings();
     const {action, errors:responseErrors, loading} = useItemOperation(resourceName, operation);
@@ -51,15 +51,15 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
 
     useEffect(()=>{ setGenericEditRender(<div/>)},[resourceName])
     useEffect(()=>{
-        setFormValue(Form.createFromRecord(record, model))
+        setForm(Form.createFromRecord(record, model))
     }, [record])
 
     const [genericEditRender, setGenericEditRender] = useState(<div/>)
 
-    const submitHandler = async (formValue:Form)=> action(propId,Form.toJson(formValue)).then((response:any) => {
+    const submitHandler = async (form:Form)=> action(propId,Form.toJson(form)).then((response:any) => {
         const record = Record.createFromJson(response, model)
         setRecord(record)
-        setFormValue(Form.createFromRecord(record, model))
+        setForm(Form.createFromRecord(record, model))
         return response;
     })
 
@@ -68,27 +68,26 @@ export const ItemActionGenerator: React.FC<EditFormGeneratorProps> = ({ propId, 
             model: model,
             referencesMap:referencesMap,
             refreshReferencesMap: refreshReferencesMap,
-            formValue: formValue,
-            form: formValue,
+            form: form,
             record:record,
             refresh:refresh,
             lockedFormValue: new Form(),
             loading:loading,
-            setFormValue: setFormValue,
-            submitHandler:()=>submitHandler(formValue),
+            setFormValue: setForm,
+            submitHandler:()=>submitHandler(form),
             partialSubmitHandler:submitHandler,
             resourceName: resourceName,
             resourceId:propId.toString()
         }
-    },[model,loading,referencesMap, formValue, record, resourceName, propId, refresh])
+    },[model,loading,referencesMap, form, record, resourceName, propId, refresh])
 
 
     useEffect(()=>{
-        if(formValue!==initialValue.current){
+        if(form!==initialValue.current){
             setGenericEditRender(
                 <FormGenerator {...editFormProps} formContent={createEditPageToUse} errors={errors} text="Save"/>)
         }
-    },[formValue, errors])
+    },[form, errors])
 
 
     return genericEditRender;
