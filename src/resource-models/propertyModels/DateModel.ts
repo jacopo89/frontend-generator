@@ -16,7 +16,7 @@ export class DateModel extends SinglePropertyModel{
             const target = event.target;
             let value = target.value;
             const name = target.name;
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

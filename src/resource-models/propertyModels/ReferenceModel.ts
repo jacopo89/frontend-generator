@@ -37,7 +37,7 @@ export class ReferenceModel extends SinglePropertyModel{
     getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
         return (vars:any)=>{
             const [name, value] = vars;
-            setFormValue( formValue.updateFormValue(name, value ? value["id"] : undefined));
+            setFormValue( formValue.set(name, value ? value["id"] : undefined));
         }
     }
 

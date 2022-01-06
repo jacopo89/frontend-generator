@@ -13,7 +13,7 @@ import {PropertyFieldConfigurationInterface} from "../configurations/PropertyFie
 export class EmbeddedSingleModel extends EmbeddedPropertyModel{
     setInputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
         const {formValue, setFormValue, refreshReferencesMap, form, referencesMap, errors, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
-        const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
+        const setParentFormValue = (values:any) => setFormValue( formValue.set(props.model.id, values));
 
         // @ts-ignore
         const finalFormValue = (formValue) ? formValue[this.id] : new Form()
@@ -52,7 +52,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
     setOutputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
         const {formValue, refreshReferencesMap, form, referencesMap,setFormValue, errors, lockedFormValue, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
-        const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
+        const setParentFormValue = (values:any) => setFormValue( formValue.set(props.model.id, values));
 
         // @ts-ignore
         const finalFormValue = (formValue) ? formValue[this.id] : new Form()

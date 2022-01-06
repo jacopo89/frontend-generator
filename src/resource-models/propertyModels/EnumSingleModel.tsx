@@ -29,7 +29,7 @@ export class EnumSingleModel extends SinglePropertyModel{
     getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): (vars: any) => void {
         return (vars:any) =>{
             const [name, value] = vars;
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

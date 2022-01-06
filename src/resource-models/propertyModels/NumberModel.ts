@@ -16,7 +16,7 @@ export class NumberModel extends SinglePropertyModel{
             let value = target.value;
             const name = target.name;
             console.log("formvalue in input", formValue)
-            setFormValue( formValue.updateFormValue(name, parseInt(value)));
+            setFormValue( formValue.set(name, parseInt(value)));
         }
     }
 

@@ -65,12 +65,12 @@ export class PropertyModelInputProps{
             const split = _.split(requestedName, ".");
             split.pop();
             const reqName = split.join(".");
-            const newFormValue = split.length===0 ? formvalue : formValue.updateFormValue(reqName, formvalue);
+            const newFormValue = split.length===0 ? formvalue : formValue.set(reqName, formvalue);
             setFormValue(newFormValue)
         };
 
         const propertyProps = new PropertyModelInputProps({...props,form, model:model.getProperty(requestedName), recordValue: record ?  record.getPropertyRecord(requestedName) : undefined })
-        propertyProps.formValue = (formValue) ? formValue.getPropertyFormValue(requestedName) : undefined;
+        propertyProps.formValue = (formValue) ? formValue.get(requestedName) : undefined;
         propertyProps.record = record ?  record.getPropertyRecord(requestedName) : undefined;
         propertyProps.setFormValue = localFormValue;
 

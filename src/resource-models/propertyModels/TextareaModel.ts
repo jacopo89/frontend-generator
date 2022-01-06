@@ -16,7 +16,7 @@ export class TextareaModel extends SinglePropertyModel{
             const target = vars.target;
             let value = target.value;
             const name = target.id;
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

@@ -18,7 +18,7 @@ export class BooleanModel extends SinglePropertyModel {
             const target = event.target;
             let value =  target.checked;
             const name = target.id;
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

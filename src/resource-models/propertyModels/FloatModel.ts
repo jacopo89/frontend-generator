@@ -17,7 +17,7 @@ export class FloatModel extends SinglePropertyModel{
             const target = event.target;
             let value = target.value;
             const name = target.id;
-            setFormValue( formValue.updateFormValue(name, parseFloat(value)));
+            setFormValue( formValue.set(name, parseFloat(value)));
         }
     }
 

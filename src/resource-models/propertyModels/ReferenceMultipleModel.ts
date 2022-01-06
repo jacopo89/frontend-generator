@@ -41,7 +41,7 @@ export class ReferenceMultipleModel extends SinglePropertyModel{
     getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
         return (vars:any)=>{
             const [name, value] = vars; //TODO CHANGE
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

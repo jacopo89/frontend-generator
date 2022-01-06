@@ -20,7 +20,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
 
         const {formValue, recordValue, form, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
         const setParentFormValue = (values:any) => {
-            setFormValue( formValue.updateFormValue(props.model.id, values));
+            setFormValue( formValue.set(props.model.id, values));
         }
         const newErrors = this.manipulateErrors(errors);
 
@@ -69,7 +69,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
     }
 
     setOutputField({record, form, model, setFormValue, loading, formValue, errors, referencesMap, refreshReferencesMap, refresh, partialSubmitHandler, submitHandler  }: EmbeddedMultipleInputPropsInterface, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
-        const setParentFormValue = (values:any) => {setFormValue( formValue.updateFormValue(model.id, values));}
+        const setParentFormValue = (values:any) => {setFormValue( formValue.set(model.id, values));}
 
         const newErrors = this.manipulateErrors(errors);
         // @ts-ignore

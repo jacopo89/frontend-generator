@@ -19,7 +19,7 @@ export class SingleFileModel extends SinglePropertyModel{
     getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): any {
         return (vars:any) => {
             const [name, value] = vars;
-            setFormValue( formValue.updateFormValue(name, value));
+            setFormValue( formValue.set(name, value));
         }
     }
 

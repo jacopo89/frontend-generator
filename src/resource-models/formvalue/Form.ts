@@ -62,14 +62,14 @@ export class Form extends Object{
         return formValue;
     }
 
-    updateFormValue(name:string, value:any):Form{
+    set(name:string, value:any):Form{
         const split = _.split(name, ".");
         const current = split.shift();
             if (split.length!==0) {
 
                 // @ts-ignore
                 const currentFormValue = this.get(current);
-                const result = currentFormValue.updateFormValue(split.join("."), value)
+                const result = currentFormValue.set(split.join("."), value)
                 const newFormValue = _.cloneDeep(this)
                 // @ts-ignore
                 newFormValue.set(current, result )
@@ -83,7 +83,8 @@ export class Form extends Object{
 
 
     }
-    getPropertyFormValue(name:string): any{
+
+    get(name:string): any{
         const split = _.split(name, ".");
         split.pop();
         const reducerModel = (accumulator:any, value:string):any |undefined => {
@@ -116,16 +117,6 @@ export class Form extends Object{
         })
         return json;
 
-    }
-
-    set(name:string, value:any):Form{
-        Form.defineProperty(this, name, {
-            value: value,
-            writable: true,
-            enumerable:true
-        });
-
-        return this;
     }
 
     has(name:string):boolean{
