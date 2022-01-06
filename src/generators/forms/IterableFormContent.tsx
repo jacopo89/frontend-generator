@@ -12,6 +12,7 @@ import {Model} from "../../resource-models/Model";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
+import {EmbeddedFormContent} from "./EmbeddedFormContent";
 
 interface IterableFormContentProps{
     model: Model,
@@ -32,7 +33,6 @@ interface IterableFormContentProps{
     loading:boolean,
     modifyOnlyLastElement?:boolean;
     modifyRule?: (formvalue:any)=> boolean,
-    inputElement?: DetailedReactHTMLElement<any, any>,
     refresh: () => void
 
 }
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const IterableFormContent: React.FC<IterableFormContentProps> = ({model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, loading, submitHandler, errors, modifyOnlyLastElement=false, modifyRule=(formvalue) => true, inputElement, refresh, form}) => {
+export const IterableFormContent: React.FC<IterableFormContentProps> = ({model, record, resourceName, setParentFormValue, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, loading, submitHandler, errors, modifyOnlyLastElement=false, modifyRule=(formvalue) => true, formContent, refresh, form}) => {
 
     const {remove} = useDelete(resourceName);
     const creationTime = useRef(Date.now());
@@ -93,16 +93,13 @@ export const IterableFormContent: React.FC<IterableFormContentProps> = ({model, 
 
     const forms = entries.map(([key, formValue], index) =>{
         const isEditable = modifyRule(formValue);
-        const configuration = new PropertyFieldConfiguration({viewElement:inputElement})
-
-        const formElement = <FormContent form={form} configuration={configuration} refresh={refresh} record={record.get(key) ?? new Record()} lockedFormValue={new Form()} referencesMap={referencesMap} setFormValue={localSetFormValue(key)} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}/>;
-        const formFinal = modifyOnlyLastElement ? ((isEditable) ? formElement  : formElement ) : formElement;
+        const formElement = <EmbeddedFormContent formContent={formContent} form={form} refresh={refresh} record={record.get(key) ?? new Record()} referencesMap={referencesMap} setFormValue={localSetFormValue(key)} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}/>;
 
         return <React.Fragment key={index}>
             <Grid item xs={1}>
                 <Typography>{index+1}</Typography>
             </Grid>
-            <Grid item xs={10}>{formFinal}</Grid>
+            <Grid item xs={10}>{formElement}</Grid>
             <Grid item xs={1}>
                 {isEditable && <CustomDeleteButton icon={true} message={"Delete Item?"} onClick={() => deleteForm(key)}/>}
             </Grid>

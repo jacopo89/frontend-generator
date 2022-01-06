@@ -8,7 +8,7 @@ import {Record} from "../../resource-models/Record";
 import {InputProps} from "../../resource-models/models/InputProps";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 
-interface FormContentProps {
+interface FormContentInterface {
     submitHandler: (e:any) => Promise<any>;
     loading: boolean,
     partialSubmitHandler: (e: any) => Promise<any>;
@@ -32,7 +32,7 @@ interface FormContentProps {
  * FormContent component is responsible for overriding the form, passing all the required props
  * @param props
  */
-export const FormContent: React.FC<FormContentProps> = (props) => {
+export const FormContent: React.FC<FormContentInterface> = (props) => {
 
     const {partialSubmitHandler,loading, form, submitHandler, model, referencesMap ,refreshReferencesMap, formValue, lockedFormValue, setFormValue, errors, configuration, record, refresh}=props;
     if(configuration.viewElement){

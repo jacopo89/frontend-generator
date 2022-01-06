@@ -21,7 +21,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
         return EmbeddedFormContent({
             model:this.getResource().getModel(),
             formContent: configuration?.viewElement,
-            setParentFormValue:setParentFormValue,
+            setFormValue:setParentFormValue,
             refreshReferencesMap:refreshReferencesMap,
             referencesMap:referencesMap,
             formValue:finalFormValue,

@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {FormContent} from "./FormContent";
+import React from "react";
 import {Model} from "../../resource-models/Model";
 import {Errors} from "../errors/Errors";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
+import {Grid} from "@material-ui/core";
+import {PropertyModel} from "../../resource-models/PropertyModel";
+import {InputProps} from "../../resource-models/models/InputProps";
 
 interface EmbeddedFormContentProps{
     model:Model,
     formContent?:  React.DetailedReactHTMLElement<any, any>,
-    setParentFormValue: (values:any) => void,
+    setFormValue: (values:any) => void,
     referencesMap: Map<string, any>
     refreshReferencesMap:()=>void
     formValue: Form,
@@ -22,18 +24,24 @@ interface EmbeddedFormContentProps{
     refresh: ()=>void
 }
 
-export const EmbeddedFormContent: React.FC<EmbeddedFormContentProps> = ({model, refresh, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValue, partialSubmitHandler, submitHandler, errors, record, loading, form}) => {
+export const EmbeddedFormContent: React.FC<EmbeddedFormContentProps> = (props) => {
 
-    const [localFormValue, setLocalFormValue] = useState(new Form());
-
-    useEffect(()=>{
-        if(formValue!==undefined){
-            setLocalFormValue(formValue);
-        }
-    },[formValue])
+    const {partialSubmitHandler,loading, form, submitHandler, model, formContent,referencesMap ,refreshReferencesMap, formValue, setFormValue, errors, record, refresh}=props;
 
     const configuration = new PropertyFieldConfiguration({viewElement: formContent});
+    if(configuration.viewElement){
+        return React.cloneElement(configuration.viewElement, props);
+    }
 
-    return <FormContent form={form} loading={loading} refresh={refresh} record={record} referencesMap={referencesMap} configuration={configuration}  setFormValue={setParentFormValue} model={model} refreshReferencesMap={refreshReferencesMap}
-                        formValue={localFormValue} errors={errors} partialSubmitHandler={partialSubmitHandler} submitHandler={submitHandler}  lockedFormValue={new Form()}/>
+    return <Grid container spacing={2}>
+        {model.properties
+            .map((propertyModel:PropertyModel, index:number) => {
+                    const {xs,md} = propertyModel;
+                    const props = new InputProps({showLabel:true, model:propertyModel,partialSubmitHandler, submitHandler, loading, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), setFormValue, errors, refresh, form, lockedFormValue: new Form()})
+                    return <Grid item xs={xs} md={md} key={index}>
+                        {propertyModel.getPropertyField(props,configuration.isEdit)}
+                    </Grid>
+                }
+            )}
+    </Grid>
 }

@@ -43,7 +43,6 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
             label:this.label,
             partialSubmitHandler:partialSubmitHandler,
             submitHandler:submitHandler,
-            inputElement:configuration?.viewElement,
             record: recordMap,
             recordValue: recordMap,
             refresh:refresh,
