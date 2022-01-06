@@ -14,6 +14,7 @@ interface EmbeddedShowContentProps{
     referencesMap: any;
     refreshReferencesMap: () => void;
     formValue: Form;
+    form: Form;
     lockedFormValue:Form;
     errors: Errors;
     setFormValue: React.Dispatch<React.SetStateAction<Form>>;

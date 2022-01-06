@@ -10,6 +10,7 @@ import {FormContent} from "../forms/FormContent";
 
 export interface IterableShowContentProps{
     model: Model,
+    form: Form,
     record: Map<number, Record>;
     resourceName: string,
     setParentFormValue: (values:any) => void,
@@ -28,7 +29,7 @@ export interface IterableShowContentProps{
 
 }
 
-export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, inputElement, refresh,showElement, loading}) => {
+export const IterableShowContent: React.FC<IterableShowContentProps> = ({model,form, record, resourceName, setParentFormValue, formContent, referencesMap, refreshReferencesMap, formValueArray, label, partialSubmitHandler, submitHandler, errors, inputElement, refresh,showElement, loading}) => {
 
     const recordsList = record;
     if(recordsList.size===0){
@@ -62,7 +63,7 @@ export const IterableShowContent: React.FC<IterableShowContentProps> = ({model, 
                                 const formValue = formValueArray[index]
 
                                 return <Grid item xs={xs} md={md}>
-                                    <ShowContent setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
+                                    <ShowContent form={form} setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
                                 </Grid>
                             })
                         }

@@ -28,7 +28,6 @@ export class InputProps extends PropertyModelInputProps{
     refresh: () => void
 
     constructor(props:InputPropsInterface) {
-        debugger;
         super(props);
         this.refresh = props.refresh;
     }
@@ -109,7 +108,7 @@ export class EmbeddedSingleInputProps extends InputProps{
  * */
 
 export interface EmbeddedMultipleInputPropsInterface extends InputPropsInterface{
-    formValue: Form
+    formValue: Form,
     record: Map<number, Record>
     model: EmbeddedMultipleModel
 }
@@ -121,8 +120,9 @@ export class EmbeddedMultipleInputProps extends InputProps{
 
     constructor(props:EmbeddedMultipleInputPropsInterface) {
         super(props);
-        const {formValue, model, record, recordValue}= props
+        const {formValue, model, record, recordValue,form}= props
         this.formValue = formValue
+        this.form = form;
         this.model = model;
         this.record = record
         this.recordValue= recordValue
@@ -131,6 +131,7 @@ export class EmbeddedMultipleInputProps extends InputProps{
     handleForSet(){
         const nestedErrors = this.model.manipulateErrors(this.errors);
         const label = _.startCase(this.model.label)
+        // @ts-ignore
         return new EmbeddedMultipleSetInputFieldProps({...this, errors:nestedErrors, label})
     }
 

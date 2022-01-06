@@ -35,7 +35,7 @@ export interface Props{
 
 export const FormGenerator: React.FC<Props> = (props:Props) => {
 
-    const {submitHandler, loading, refresh, formContent,partialSubmitHandler, model, referencesMap, refreshReferencesMap, formValue, record, lockedFormValue, setFormValue,  errors, text= "Save" } = props
+    const {submitHandler, loading, refresh, formContent,partialSubmitHandler, model, referencesMap, refreshReferencesMap, formValue, form, record, lockedFormValue, setFormValue,  errors, text= "Save" } = props
     const classes = useFormStyles();
     const dispatch = useDispatch();
     const ref= useRef(null);
@@ -68,7 +68,7 @@ export const FormGenerator: React.FC<Props> = (props:Props) => {
     const configuration = new PropertyFieldConfiguration({viewElement:formContent});
 
     return <ValidatorForm ref={ref} className={classes.form} onSubmit={validationSubmitHandler} onError={()=>dispatch(genericError("Validation Error"))}>
-        <FormContent configuration={configuration} refresh={refresh} model={model} referencesMap={referencesMap} refreshReferencesMap={refreshReferencesMap} setFormValue={setFormValue} formValue={formValue} record={record} lockedFormValue={lockedFormValue} errors={errors} partialSubmitHandler={partialSubmitHandler} submitHandler={submitHandler} loading={loading}/>
+        <FormContent form={form} configuration={configuration} refresh={refresh} model={model} referencesMap={referencesMap} refreshReferencesMap={refreshReferencesMap} setFormValue={setFormValue} formValue={formValue} record={record} lockedFormValue={lockedFormValue} errors={errors} partialSubmitHandler={partialSubmitHandler} submitHandler={submitHandler} loading={loading}/>
         {!formContent && <div style={{margin: "10px 0"}}>
             <ButtonsHorizontalList>
                 <Button variant="contained" color="secondary" onClick={onClickHandler}>{text}</Button>

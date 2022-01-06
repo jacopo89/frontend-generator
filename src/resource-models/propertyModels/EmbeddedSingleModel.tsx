@@ -12,7 +12,7 @@ import {PropertyFieldConfigurationInterface} from "../configurations/PropertyFie
 
 export class EmbeddedSingleModel extends EmbeddedPropertyModel{
     setInputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
-        const {formValue, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
+        const {formValue, setFormValue, refreshReferencesMap, form, referencesMap, errors, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
         const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
 
         // @ts-ignore
@@ -25,6 +25,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
             refreshReferencesMap:refreshReferencesMap,
             referencesMap:referencesMap,
             formValue:finalFormValue,
+            form: form,
             errors:errors,
             partialSubmitHandler:partialSubmitHandler,
             submitHandler:submitHandler,
@@ -50,7 +51,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
 
     setOutputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
-        const {formValue, refreshReferencesMap, referencesMap,setFormValue, errors, lockedFormValue, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
+        const {formValue, refreshReferencesMap, form, referencesMap,setFormValue, errors, lockedFormValue, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
         const setParentFormValue = (values:any) => setFormValue( formValue.updateFormValue(props.model.id, values));
 
         // @ts-ignore
@@ -67,6 +68,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
                 refreshReferencesMap: refreshReferencesMap,
                 referencesMap: referencesMap,
                 formValue: finalFormValue,
+                form:form,
                 errors: errors,
                 partialSubmitHandler: partialSubmitHandler,
                 submitHandler: submitHandler,

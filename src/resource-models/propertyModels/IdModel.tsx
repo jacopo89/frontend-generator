@@ -1,10 +1,12 @@
-import {InputFields, PropertyModel} from "../PropertyModel";
+import {PropertyModel} from "../PropertyModel";
 import {Errors} from "../../generators/errors/Errors";
 import {PropertyFieldConfiguration} from "../configurations/PropertyFieldConfiguration";
 import React from "react";
+import {SingleSetInputFieldProps} from "../models/SetInputFieldProps";
+import {SingleInputPropsInterface} from "../models/InputProps";
 
 export class IdModel extends PropertyModel{
-    setInputField(props: InputFields): React.ReactElement<any, any> | null {
+    setInputField(props: SingleSetInputFieldProps,configuration?:PropertyFieldConfiguration): React.ReactElement<any, any> | null {
         return <></>
     }
 
@@ -20,7 +22,7 @@ export class IdModel extends PropertyModel{
     manipulateErrors(errors: Errors): any {
     }
 
-    getInputField(props: InputFields): React.ReactElement<any, any> | null {
+    getInputField(props: SingleInputPropsInterface, configuration?:PropertyFieldConfiguration): React.ReactElement<any, any> | null {
         return null;
     }
 

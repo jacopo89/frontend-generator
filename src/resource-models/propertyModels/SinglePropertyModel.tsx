@@ -39,9 +39,3 @@ export abstract class SinglePropertyModel extends PropertyModel{
         return value;
     }
 }
-
-interface SingleInputFields extends InputFields{
-    inputHandler: (vars:any) => void,
-    value: any,
-    label:string
-}

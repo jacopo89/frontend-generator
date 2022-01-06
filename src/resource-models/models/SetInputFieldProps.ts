@@ -25,6 +25,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     inputHandler: (vars:any)=>void
     errors: Errors;
     formValue: Form;
+    form: Form;
     label: string;
     lockedFormValue: Form;
     model: PropertyModel;
@@ -39,7 +40,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     setFormValue: React.Dispatch<React.SetStateAction<Form>>
 
     constructor(props: SingleSetInputFieldPropsInterface) {
-        const {hasError, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
+        const {hasError, form, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
         this.hasError = hasError;
         this.errorMessage = errorMessage;
         this.loading = loading;
@@ -47,6 +48,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
         this.inputHandler = inputHandler
         this.errors = errors;
         this.formValue = formValue;
+        this.form = form;
         this.label = label;
         this.lockedFormValue = lockedFormValue;
         this.model = model;
@@ -83,6 +85,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
     record: Record | undefined
     recordValue:Record | Map<number, Record> | undefined
     formValue: Form
+    form:Form
     model: EmbeddedSingleModel
     errors: Errors;
     lockedFormValue: Form;
@@ -95,12 +98,13 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
     refresh: ()=>void
 
     constructor(props: EmbeddedSingleSetInputFieldPropsInterface) {
-        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setFormValue, refresh} = props
+        const {formValue, form, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setFormValue, refresh} = props
         this.formValue = formValue;
         this.model = model;
         this.loading = loading;
         this.errors = errors;
         this.formValue = formValue;
+        this.form = form;
         this.lockedFormValue = lockedFormValue;
         this.model = model;
         this.partialSubmitHandler = partialSubmitHandler;
@@ -122,6 +126,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
 
 interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterface{
     formValue: Form,
+    form: Form,
     record: Map<number, Record>
     recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
@@ -137,6 +142,7 @@ interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterfac
 
 export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetInputFieldPropsInterface{
     formValue: Form
+    form: Form
     record: Map<number, Record>
     recordValue: Record | Map<number, Record> | undefined
     model: EmbeddedMultipleModel
@@ -152,11 +158,11 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
     inputElement: any
 
     constructor(props: EmbeddedMultipleSetInputFieldPropsInterface) {
-        const {formValue, model, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh, inputElement} = props
+        const {formValue, model,form, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh, inputElement} = props
         this.formValue = formValue;
+        this.form = form;
         this.model = model;
         this.errors = errors;
-        this.formValue = formValue;
         this.lockedFormValue = lockedFormValue;
         this.model = model;
         this.partialSubmitHandler = partialSubmitHandler;

@@ -11,6 +11,7 @@ export interface PropertyPropsInterface{
     record:any,
     recordValue: Record | Map<number, Record> | undefined
     formValue: Form | Map<number, Form>,
+    form: Form,
     setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
     lockedFormValue: Form,
     errors: Errors,
@@ -28,6 +29,7 @@ export class PropertyModelInputProps{
     record: Record | Map<number, Record> | undefined
     recordValue: Record | Map<number, Record> | undefined
     formValue: Form | Map<number, Form>
+    form: Form
     setFormValue:  React.Dispatch<React.SetStateAction<Form>>
     lockedFormValue: Form
     errors: Errors
@@ -39,9 +41,10 @@ export class PropertyModelInputProps{
     refresh:()=>void
     showlabel?: boolean;
 
-    constructor({model, record, recordValue, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler,loading, referencesMap, refreshReferencesMap, showLabel=true, refresh}:PropertyPropsInterface) {
+    constructor({model, record, form, recordValue, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler,loading, referencesMap, refreshReferencesMap, showLabel=true, refresh}:PropertyPropsInterface) {
         this.model = model;
         this.record = record;
+        this.form = form;
         this.recordValue = recordValue;
         this.formValue = formValue;
         this.setFormValue = setFormValue;
@@ -57,7 +60,7 @@ export class PropertyModelInputProps{
     }
 
     static createFromFieldProps(requestedName:string, props:ModelInputInterface): PropertyModelInputProps{
-        const {formValue, record, setFormValue, model} = props
+        const {formValue, record, setFormValue, model, form} = props
         const localFormValue = (formvalue:any)=>{
             const split = _.split(requestedName, ".");
             split.pop();
@@ -66,7 +69,7 @@ export class PropertyModelInputProps{
             setFormValue(newFormValue)
         };
 
-        const propertyProps = new PropertyModelInputProps({...props, model:model.getProperty(requestedName), recordValue: record ?  record.getPropertyRecord(requestedName) : undefined })
+        const propertyProps = new PropertyModelInputProps({...props,form, model:model.getProperty(requestedName), recordValue: record ?  record.getPropertyRecord(requestedName) : undefined })
         propertyProps.formValue = (formValue) ? formValue.getPropertyFormValue(requestedName) : undefined;
         propertyProps.record = record ?  record.getPropertyRecord(requestedName) : undefined;
         propertyProps.setFormValue = localFormValue;
