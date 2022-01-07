@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
 
-    const [formValue, setFormValue] = useState({});
+    const [formValue, setForm] = useState({});
     const [errorMessage, setErrorMessage] = useState("ERRORE");
     const [open, setOpen] = React.useState(false);
 
@@ -68,7 +68,7 @@ export default function SignIn() {
         const name = target.id;
 
 
-        setFormValue({...formValue, [name]:value});
+        setForm({...formValue, [name]:value});
     }
 
 

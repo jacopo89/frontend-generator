@@ -6,7 +6,7 @@ export interface InputInterface {
     model: PropertyModel;
     record: any;
     formValue: Form | Map<number, Form>;
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    setForm: React.Dispatch<React.SetStateAction<Form>>;
     lockedFormValue: Form;
     errors: Errors;
     refresh: () => void;

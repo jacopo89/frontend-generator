@@ -56,7 +56,7 @@ export const Create: React.FC<Props> = ({propResourceName:resourceName, propCrea
             refreshReferencesMap={refreshReferencesMap}
             form={form}
             lockedFormValue={lockedFormValue}
-            setFormValue={setForm}
+            setForm={setForm}
             errors={errors}
             formContent={createPageToUse}
             refresh={()=>console.log("there is no refresh in creation")}>
@@ -86,7 +86,7 @@ export const GenericCreate: React.FC<GenericProps> = ({model, submitHandler, err
             refreshReferencesMap={refreshReferencesMap}
             form={form}
             lockedFormValue={lockedFormValue}
-            setFormValue={setForm}
+            setForm={setForm}
             errors={errors}
             formContent={createPageToUse}
             refresh={()=>console.log("there is no refresh in creation")}>

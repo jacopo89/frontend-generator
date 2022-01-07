@@ -1,4 +1,4 @@
-import React, {DetailedReactHTMLElement, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import {Divider, Typography} from "@material-ui/core";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -6,12 +6,10 @@ import IconButton from "@material-ui/core/IconButton";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDelete} from "../../redux/actions/verbs/delete";
 import CustomDeleteButton from "../../rendering/components/buttons/CustomDeleteButton";
-import {FormContent} from "./FormContent";
 import {Errors} from "../errors/Errors";
 import {Model} from "../../resource-models/Model";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
-import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 import {EmbeddedFormContent} from "./EmbeddedFormContent";
 
 interface IterableFormContentProps{
@@ -74,7 +72,7 @@ export const IterableFormContent: React.FC<IterableFormContentProps> = ({model, 
         setParentFormValue(new Map(localFormValueMap));
     }
 
-    const localSetFormValue = (key:any) => {
+    const embeddedSetForm = (key:any) => {
         return (value:any) => {
             setParentFormValue(new Map(localFormValueMap.set(key, value)));
         }
@@ -93,7 +91,7 @@ export const IterableFormContent: React.FC<IterableFormContentProps> = ({model, 
 
     const forms = entries.map(([key, formValue], index) =>{
         const isEditable = modifyRule(formValue);
-        const formElement = <EmbeddedFormContent formContent={formContent} form={form} refresh={refresh} record={record.get(key) ?? new Record()} referencesMap={referencesMap} setFormValue={localSetFormValue(key)} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}/>;
+        const formElement = <EmbeddedFormContent formContent={formContent} form={form} refresh={refresh} record={record.get(key) ?? new Record()} referencesMap={referencesMap} setForm={embeddedSetForm(key)} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}/>;
 
         return <React.Fragment key={index}>
             <Grid item xs={1}>

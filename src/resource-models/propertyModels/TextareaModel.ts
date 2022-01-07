@@ -11,12 +11,12 @@ export class TextareaModel extends SinglePropertyModel{
         return TextareaInput(propsWithModel);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): any {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): any {
         return (vars:any)=>{
             const target = vars.target;
             let value = target.value;
             const name = target.id;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

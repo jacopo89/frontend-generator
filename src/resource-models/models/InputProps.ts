@@ -13,11 +13,6 @@ import {PropertyModelInputInterface, PropertyModelInputProps} from "./PropertyMo
 import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
 import SetInputFieldInterface from "../interface/SetInputFieldInterface";
 
-
-/**
- *  SINGLE INPUT PROPS
- */
-
 export interface SingleInputPropsInterface extends SetInputFieldInterface{
     formValue: Form
 }
@@ -37,10 +32,10 @@ export class SingleInputProps extends PropertyModelInputProps{
     handleForSet(){
         const formValue = this.formValue;
         const record = this.record;
-        const setFormValue = this.setFormValue
+        const setForm = this.setForm
         const {hasError, errorMessage} = this.model.manipulateErrors(this.errors ?? new Errors([]));
         const label = _.startCase(this.model.label)
-        const inputHandler = this.model.getInputOnChangeHandler({formValue,setFormValue});
+        const inputHandler = this.model.getInputOnChangeHandler({formValue,setForm});
         // @ts-ignore
         const value = (formValue) ? formValue[this.model.id] : undefined;
         // @ts-ignore

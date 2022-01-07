@@ -38,10 +38,10 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
     refresh: () => void
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>
+    setForm: React.Dispatch<React.SetStateAction<Form>>
 
     constructor(props: SingleSetInputFieldPropsInterface) {
-        const {hasError, form, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setFormValue, propertyRecord, refresh, loading} = props;
+        const {hasError, form, errorMessage, value, inputHandler, errors, formValue, label, lockedFormValue, model, partialSubmitHandler, submitHandler, record, recordValue, referencesMap, refreshReferencesMap, setForm, propertyRecord, refresh, loading} = props;
         this.hasError = hasError;
         this.errorMessage = errorMessage;
         this.loading = loading;
@@ -59,7 +59,7 @@ export class SingleSetInputFieldProps implements SingleInputPropsInterface{
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
         this.recordValue = recordValue;
-        this.setFormValue = setFormValue
+        this.setForm = setForm
         this.refresh = refresh
         this.propertyRecord = propertyRecord;
     }
@@ -95,11 +95,11 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
     loading: boolean
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>
+    setForm: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
 
     constructor(props: EmbeddedSingleSetInputFieldPropsInterface) {
-        const {formValue, form, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setFormValue, refresh} = props
+        const {formValue, form, model, errors,lockedFormValue, partialSubmitHandler, referencesMap, refreshReferencesMap, submitHandler, loading, record, recordValue, setForm, refresh} = props
         this.formValue = formValue;
         this.model = model;
         this.loading = loading;
@@ -114,7 +114,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
         this.recordValue = recordValue;
-        this.setFormValue = setFormValue
+        this.setForm = setForm
         this.refresh = refresh
     }
 
@@ -137,7 +137,7 @@ interface EmbeddedMultipleSetInputFieldPropsInterface extends PropertyModelInput
     submitHandler: (e:any) => Promise<any>
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>
+    setForm: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
 }
 
@@ -154,11 +154,11 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
     submitHandler: (e:any) => Promise<any>
     referencesMap: Map<string, any>;
     refreshReferencesMap: ()=>void
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>
+    setForm: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
 
     constructor(props: EmbeddedMultipleSetInputFieldPropsInterface) {
-        const {formValue, model,form, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh} = props
+        const {formValue, model,form, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setForm, refresh} = props
         this.formValue = formValue;
         this.form = form;
         this.model = model;
@@ -172,7 +172,7 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
         this.refreshReferencesMap = refreshReferencesMap;
         this.record = record;
         this.recordValue = recordValue;
-        this.setFormValue = setFormValue
+        this.setForm = setForm
         this.refresh = refresh
     }
 }

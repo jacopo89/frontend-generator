@@ -10,7 +10,7 @@ import {PropertyModel} from "../../resource-models/PropertyModel";
 interface EmbeddedFormContentInterface{
     model:Model,
     formContent?:  React.DetailedReactHTMLElement<any, any>,
-    setFormValue: (values:any) => void,
+    setForm: (values:any) => void,
     referencesMap: Map<string, any>
     refreshReferencesMap:()=>void
     formValue: Form,

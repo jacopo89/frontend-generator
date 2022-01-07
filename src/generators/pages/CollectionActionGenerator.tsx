@@ -63,7 +63,7 @@ export const CollectionActionGenerator: React.FC<EditFormGeneratorProps> = ({ pr
             refresh:refresh,
             lockedFormValue: new Form(),
             loading:loading,
-            setFormValue: setForm,
+            setForm: setForm,
             submitHandler:()=>submitHandler(form),
             partialSubmitHandler:submitHandler,
             resourceName: resourceName,

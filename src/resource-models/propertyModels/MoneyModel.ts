@@ -11,9 +11,9 @@ export class MoneyModel extends SinglePropertyModel{
         return MoneyInput(propsWithModel)
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): (vars: any) => void {return (vars:any) =>{
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): (vars: any) => void {return (vars:any) =>{
             const [name, value] = vars;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

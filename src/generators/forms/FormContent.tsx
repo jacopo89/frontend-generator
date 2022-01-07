@@ -19,7 +19,7 @@ interface FormContentInterface {
     form: Form;
     lockedFormValue:Form;
     errors: Errors;
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    setForm: React.Dispatch<React.SetStateAction<Form>>;
     refresh:()=>void,
     configuration: PropertyFieldConfiguration
 }

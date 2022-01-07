@@ -12,8 +12,8 @@ import {PropertyFieldConfigurationInterface} from "../configurations/PropertyFie
 
 export class EmbeddedSingleModel extends EmbeddedPropertyModel{
     setInputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
-        const {formValue, setFormValue, refreshReferencesMap, form, referencesMap, errors, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
-        const setParentFormValue = (values:any) => setFormValue( formValue.set(props.model.id, values));
+        const {formValue, setForm, refreshReferencesMap, form, referencesMap, errors, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
+        const setParentFormValue = (values:any) => setForm( formValue.set(props.model.id, values));
 
         // @ts-ignore
         const finalFormValue = (formValue) ? formValue[this.id] : new Form()
@@ -21,7 +21,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
         return EmbeddedFormContent({
             model:this.getResource().getModel(),
             formContent: configuration?.viewElement,
-            setFormValue:setParentFormValue,
+            setForm:setParentFormValue,
             refreshReferencesMap:refreshReferencesMap,
             referencesMap:referencesMap,
             formValue:finalFormValue,
@@ -51,8 +51,8 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
 
     setOutputField(props: EmbeddedSingleSetInputFieldProps, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
-        const {formValue, refreshReferencesMap, form, referencesMap,setFormValue, errors, lockedFormValue, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
-        const setParentFormValue = (values:any) => setFormValue( formValue.set(props.model.id, values));
+        const {formValue, refreshReferencesMap, form, referencesMap,setForm, errors, lockedFormValue, partialSubmitHandler, submitHandler, record, refresh, loading} =  props;
+        const setParentFormValue = (values:any) => setForm( formValue.set(props.model.id, values));
 
         // @ts-ignore
         const finalFormValue = (formValue) ? formValue[this.id] : new Form()
@@ -63,7 +63,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
                 model: this.getResource().getModel(),
                 formContent: configuration?.viewElement,
                 showElement: configuration?.viewElement,
-                setFormValue: setParentFormValue,
+                setForm: setParentFormValue,
                 lockedFormValue: lockedFormValue,
                 refreshReferencesMap: refreshReferencesMap,
                 referencesMap: referencesMap,
@@ -79,7 +79,7 @@ export class EmbeddedSingleModel extends EmbeddedPropertyModel{
             </>
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: any): (vars: any) => void {
+    getInputOnChangeHandler({formValue, setForm}: any): (vars: any) => void {
         return function (p1: any) {
         };
     }

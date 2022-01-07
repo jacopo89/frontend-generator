@@ -8,7 +8,7 @@ interface Props{
     model: PropertyModel,
     record: Record
     formValue: Form
-    setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
+    setForm:  React.Dispatch<React.SetStateAction<Form>>,
     lockedFormValue: Form,
     errors: Errors,
     submitHandler: (e: any) => Promise<any>;
@@ -22,7 +22,7 @@ export class SinglePropertyProps{
     model: PropertyModel
     record: Record
     formValue: Form
-    setFormValue:  React.Dispatch<React.SetStateAction<Form>>
+    setForm:  React.Dispatch<React.SetStateAction<Form>>
     lockedFormValue: Form
     errors: Errors
     submitHandler: (e: any) => Promise<any>;
@@ -31,11 +31,11 @@ export class SinglePropertyProps{
     refreshReferencesMap:()=>void;
     showlabel: boolean;
 
-    constructor({model, record, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler, referencesMap, refreshReferencesMap, showLabel=true}:Props) {
+    constructor({model, record, formValue, setForm, lockedFormValue, errors, submitHandler, partialSubmitHandler, referencesMap, refreshReferencesMap, showLabel=true}:Props) {
         this.model = model;
         this.record = record;
         this.formValue = formValue;
-        this.setFormValue = setFormValue;
+        this.setForm = setForm;
         this.lockedFormValue = lockedFormValue;
         this.errors = errors;
         this.submitHandler = submitHandler;

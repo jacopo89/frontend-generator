@@ -15,9 +15,9 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
 
     setInputField(props: EmbeddedMultipleSetInputFieldProps, configuration?: PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
-        const {formValue, recordValue, form, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
+        const {formValue, recordValue, form, setForm, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
         const setParentFormValue = (values:any) => {
-            setFormValue( formValue.set(props.model.id, values));
+            setForm( formValue.set(props.model.id, values));
         }
         const newErrors = this.manipulateErrors(errors);
 
@@ -52,7 +52,7 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
         return this.setInputField(newProps.handleForSet(), configuration);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: any): (vars: any) => void {
+    getInputOnChangeHandler({formValue, setForm}: any): (vars: any) => void {
         return function (p1: any) {
         };
     }
@@ -65,8 +65,8 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
         </>
     }
 
-    setOutputField({record, form, model, setFormValue, loading, formValue, errors, referencesMap, refreshReferencesMap, refresh, partialSubmitHandler, submitHandler  }: EmbeddedMultipleInputPropsInterface, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
-        const setParentFormValue = (values:any) => {setFormValue( formValue.set(model.id, values));}
+    setOutputField({record, form, model, setForm, loading, formValue, errors, referencesMap, refreshReferencesMap, refresh, partialSubmitHandler, submitHandler  }: EmbeddedMultipleInputPropsInterface, configuration?:PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
+        const setParentFormValue = (values:any) => {setForm( formValue.set(model.id, values));}
 
         const newErrors = this.manipulateErrors(errors);
         // @ts-ignore

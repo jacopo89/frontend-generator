@@ -9,7 +9,7 @@ export interface ModelInputInterface{
     record?: Record,
     formValue: Form,
     form: Form,
-    setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
+    setForm:  React.Dispatch<React.SetStateAction<Form>>,
     lockedFormValue: Form,
     errors: Errors,
     submitHandler: (e: any) => Promise<any>;

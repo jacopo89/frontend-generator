@@ -11,12 +11,12 @@ export class DateModel extends SinglePropertyModel{
         return DateInput(propsWithModel);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): any {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): any {
         return (event :any) => {
             const target = event.target;
             let value = target.value;
             const name = target.name;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

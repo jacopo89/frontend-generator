@@ -10,13 +10,13 @@ export class NumberModel extends SinglePropertyModel{
         return NumberInput({...props, onClick:props.inputHandler});
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): (vars: any) => void {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): (vars: any) => void {
         return (vars:any) => {
             const target = vars.target;
             let value = target.value;
             const name = target.name;
             console.log("formvalue in input", formValue)
-            setFormValue( formValue.set(name, parseInt(value)));
+            setForm( formValue.set(name, parseInt(value)));
         }
     }
 

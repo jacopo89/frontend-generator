@@ -15,12 +15,12 @@ export class StringModel extends SinglePropertyModel{
         return StringInput(propsWithModel);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
+    getInputOnChangeHandler({formValue, setForm}:InputOnChangeHandler){
         return (vars:any)=>{
             const target = vars.target;
             let value = target.value;
             const name = target.id;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

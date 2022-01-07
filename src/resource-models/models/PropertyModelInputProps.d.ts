@@ -8,7 +8,7 @@ export interface PropertyPropsInterface {
     model: PropertyModel;
     record: any;
     formValue: Form | Map<number, Form>;
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    setForm: React.Dispatch<React.SetStateAction<Form>>;
     lockedFormValue: Form;
     errors: Errors;
     submitHandler: (e: any) => Promise<any>;
@@ -22,7 +22,7 @@ export declare class PropertyModelInputProps {
     model: PropertyModel;
     record: Record | Map<number, Record> | undefined;
     formValue: Form | Map<number, Form>;
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    setForm: React.Dispatch<React.SetStateAction<Form>>;
     lockedFormValue: Form;
     errors: Errors;
     submitHandler: (e: any) => Promise<any>;
@@ -31,7 +31,7 @@ export declare class PropertyModelInputProps {
     refreshReferencesMap: () => void;
     refresh: () => void;
     showlabel?: boolean;
-    constructor({ model, record, formValue, setFormValue, lockedFormValue, errors, submitHandler, partialSubmitHandler, referencesMap, refreshReferencesMap, showLabel, refresh }: PropertyPropsInterface);
+    constructor({ model, record, formValue, setForm, lockedFormValue, errors, submitHandler, partialSubmitHandler, referencesMap, refreshReferencesMap, showLabel, refresh }: PropertyPropsInterface);
     static createFromFieldProps(requestedName: string, props: ModelInputInterface): PropertyModelInputProps;
 }
 export interface PropertyModelInputInterface extends PropertyModelInputProps {

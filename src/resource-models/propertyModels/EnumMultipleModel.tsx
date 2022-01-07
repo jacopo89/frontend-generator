@@ -26,16 +26,16 @@ export class EnumMultipleModel extends SinglePropertyModel{
         this.colorMap = others.colorMap;
     }
     setInputField(props: EnumMultipleInputFields): React.ReactElement<any, any> | null {
-        const {formValue, setFormValue, value} = props;
+        const {formValue, setForm, value} = props;
 
-        const propsWithModel = {...props, model:this, value:value ?? [], onChange:this.getInputOnChangeHandler({formValue, setFormValue})}
+        const propsWithModel = {...props, model:this, value:value ?? [], onChange:this.getInputOnChangeHandler({formValue, setForm})}
         return EnumMultipleInput(propsWithModel)
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): (vars: any) => void {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): (vars: any) => void {
         return (vars:any) =>{
             const [name, value] = vars;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

@@ -34,10 +34,10 @@ export class ReferenceModel extends SinglePropertyModel{
         return ReferenceInput(propsWithModel)
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
+    getInputOnChangeHandler({formValue, setForm}:InputOnChangeHandler){
         return (vars:any)=>{
             const [name, value] = vars;
-            setFormValue( formValue.set(name, value ? value["id"] : undefined));
+            setForm( formValue.set(name, value ? value["id"] : undefined));
         }
     }
 

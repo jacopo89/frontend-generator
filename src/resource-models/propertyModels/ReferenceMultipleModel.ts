@@ -38,10 +38,10 @@ export class ReferenceMultipleModel extends SinglePropertyModel{
         return ReferenceMultipleInput(propsWithModel)
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}:InputOnChangeHandler){
+    getInputOnChangeHandler({formValue, setForm}:InputOnChangeHandler){
         return (vars:any)=>{
             const [name, value] = vars; //TODO CHANGE
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

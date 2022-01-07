@@ -92,6 +92,6 @@ export abstract class PropertyModel {
 
 export interface InputOnChangeHandler{
     formValue:Form,
-    setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
+    setForm:  React.Dispatch<React.SetStateAction<Form>>,
 }
 

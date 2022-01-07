@@ -8,51 +8,51 @@ import {
 
 
 
-const fileOnChange = ({formValue, setFormValue, vars}) => {
+const fileOnChange = ({formValue, setForm, vars}) => {
 
     const [name, value] = vars;
-    setFormValue({...formValue, [name]: value});
+    setForm({...formValue, [name]: value});
 
 }
 
-const controlledOnChange = ( {formValue, setFormValue, vars}) =>{
+const controlledOnChange = ( {formValue, setForm, vars}) =>{
     const [event] = vars;
     const target = event.target;
     let value = target.value;
     const name = target.id;
 
-    setFormValue({...formValue, [name]:value});
+    setForm({...formValue, [name]:value});
 }
 
-const numberOnChange = ( {formValue, setFormValue, vars}) =>{
+const numberOnChange = ( {formValue, setForm, vars}) =>{
     const [event] = vars;
     const target = event.target;
     let value = target.value;
     const name = target.id;
 
 
-    setFormValue({...formValue, [name]: parseInt(value)});
+    setForm({...formValue, [name]: parseInt(value)});
 }
 
-const floatOnChange = ( {formValue, setFormValue, vars}) =>{
+const floatOnChange = ( {formValue, setForm, vars}) =>{
     const [event] = vars;
     const target = event.target;
     let value = target.value;
     const name = target.id;
 
-    setFormValue({...formValue, [name]: parseFloat(value)});
+    setForm({...formValue, [name]: parseFloat(value)});
 }
 
-const phoneOnChange = ({formValue, setFormValue, vars}) =>{
+const phoneOnChange = ({formValue, setForm, vars}) =>{
     const [name, value] = vars;
-    setFormValue({...formValue, [name]: value});
+    setForm({...formValue, [name]: value});
 }
-const moneyOnChange = ({formValue, setFormValue, vars}) =>{
+const moneyOnChange = ({formValue, setForm, vars}) =>{
     const [name, value] = vars;
-    setFormValue({...formValue, [name]: value});
+    setForm({...formValue, [name]: value});
 }
 
-const checkboxOnChange = ( {formValue, setFormValue, vars}) =>{
+const checkboxOnChange = ( {formValue, setForm, vars}) =>{
     const [event] = vars;
     const target = event.target;
     console.log(target.checked);
@@ -61,25 +61,25 @@ const checkboxOnChange = ( {formValue, setFormValue, vars}) =>{
     let value =  target.checked;
     const name = target.id;
 
-    setFormValue({...formValue, [name]: value});
+    setForm({...formValue, [name]: value});
 }
 
-const autoCompleteOnchange = ( {formValue, setFormValue, vars}) => {
+const autoCompleteOnchange = ( {formValue, setForm, vars}) => {
     const [name, value] = vars;
-    setFormValue({...formValue,[name]: value});
+    setForm({...formValue,[name]: value});
 }
 
-const dateOnChange = ( {formValue, setFormValue, vars}) => {
+const dateOnChange = ( {formValue, setForm, vars}) => {
     const [name, value] = vars;
 
-    setFormValue({...formValue,[name]: value});
+    setForm({...formValue,[name]: value});
 }
 
 const embeddedOnChange = (vars)=> {};
 
-export function onChangeHandler({type, formValue, setFormValue, vars}){
+export function onChangeHandler({type, formValue, setForm, vars}){
 
-    const props = {vars:vars, formValue:formValue, setFormValue:setFormValue}
+    const props = {vars:vars, formValue:formValue, setForm:setForm}
 
     switch (type){
 

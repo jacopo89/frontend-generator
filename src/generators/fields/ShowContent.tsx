@@ -18,7 +18,7 @@ export interface ShowContent{
     form: Form;
     lockedFormValue:Form;
     errors: Errors;
-    setFormValue: React.Dispatch<React.SetStateAction<Form>>;
+    setForm: React.Dispatch<React.SetStateAction<Form>>;
     formContent?:React.DetailedReactHTMLElement<any, any>;
     refresh:()=>void
 }

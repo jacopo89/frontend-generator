@@ -11,10 +11,10 @@ export class PhoneModel extends SinglePropertyModel{
         return PhoneInput(propsWithModel);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): any {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): any {
         return (vars:any) =>{
             const [name, value] = vars;
-            setFormValue( formValue.set(name, value));
+            setForm( formValue.set(name, value));
         }
     }
 

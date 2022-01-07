@@ -49,11 +49,19 @@ export class Record extends Object{
     }
 
 
+    /**
+     * METODO FONDAMENTALE: prende il record Value appropriato di passaggio in passaggio. Attenzione, però, dà per scontato che il record venga aggiornato di passaggio in passaggio
+     *
+     * @param name
+     */
     getPropertyRecord(name:string): any{
+
         const split = _.split(name, ".");
+
         const reducerModel = (accumulator:any, value:string):any |undefined => {
             return accumulator ? accumulator[value] : new Record();
         }
+
         // @ts-ignore
         return split.reduce(reducerModel, this);
     }

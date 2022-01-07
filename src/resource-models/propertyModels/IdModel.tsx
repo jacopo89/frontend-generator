@@ -10,7 +10,7 @@ export class IdModel extends PropertyModel{
         return <></>
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: any): (vars: any) => void {
+    getInputOnChangeHandler({formValue, setForm}: any): (vars: any) => void {
         return function (p1: any) {
         };
     }

@@ -11,13 +11,13 @@ export class FloatModel extends SinglePropertyModel{
         return FloatInput(propsWithModel);
     }
 
-    getInputOnChangeHandler({formValue, setFormValue}: InputOnChangeHandler): any {
+    getInputOnChangeHandler({formValue, setForm}: InputOnChangeHandler): any {
         return (vars:any) => {
             const [event] = vars;
             const target = event.target;
             let value = target.value;
             const name = target.id;
-            setFormValue( formValue.set(name, parseFloat(value)));
+            setForm( formValue.set(name, parseFloat(value)));
         }
     }
 

@@ -6,7 +6,6 @@ import {Record} from "../../resource-models/Record";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Errors} from "../errors/Errors";
 import {ShowContent} from "./ShowContent";
-import {FormContent} from "../forms/FormContent";
 
 export interface IterableShowContentProps{
     model: Model,
@@ -61,7 +60,7 @@ export const IterableShowContent: React.FC<IterableShowContentProps> = ({model,f
                                 const formValue = formValueArray[index]
 
                                 return <Grid item xs={12} md={6}>
-                                    <ShowContent form={form} setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
+                                    <ShowContent form={form} setForm={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
                                 </Grid>
                             })
                         }
