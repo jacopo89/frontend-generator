@@ -1,4 +1,4 @@
-import {InputPropsInterface, SingleInputPropsInterface} from "./InputProps";
+import {SingleInputPropsInterface} from "./InputProps";
 import {Record} from "../Record";
 import {Form} from "../formvalue/Form";
 import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
@@ -6,6 +6,7 @@ import {EmbeddedMultipleModel} from "../propertyModels/EmbeddedMultipleModel";
 import {Errors} from "../../generators/errors/Errors";
 import {PropertyModel} from "../PropertyModel";
 import React from "react";
+import {PropertyModelInputInterface} from "./PropertyModelInputProps";
 
 /**
  *  PARAMETER FOR SET INPUT FIELD - SINGLE
@@ -77,7 +78,7 @@ interface EmbeddedSingleSetInputFieldPropsInterface extends EmbeddedSingleInputP
 }
 
 
-interface EmbeddedSingleInputPropsInterface extends InputPropsInterface{
+interface EmbeddedSingleInputPropsInterface extends PropertyModelInputInterface{
     model:EmbeddedSingleModel
 }
 
@@ -124,7 +125,7 @@ export class EmbeddedSingleSetInputFieldProps implements EmbeddedSingleInputProp
  *  PARAMETER FOR SET INPUT FIELD - EMBEDDED MULTIPLE
  */
 
-interface EmbeddedMultipleSetInputFieldPropsInterface extends InputPropsInterface{
+interface EmbeddedMultipleSetInputFieldPropsInterface extends PropertyModelInputInterface{
     formValue: Form,
     form: Form,
     record: Map<number, Record>
@@ -155,10 +156,9 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
     refreshReferencesMap: ()=>void
     setFormValue: React.Dispatch<React.SetStateAction<Form>>
     refresh: ()=>void
-    inputElement: any
 
     constructor(props: EmbeddedMultipleSetInputFieldPropsInterface) {
-        const {formValue, model,form, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh, inputElement} = props
+        const {formValue, model,form, errors,lockedFormValue, partialSubmitHandler, loading,referencesMap, refreshReferencesMap, submitHandler, record, recordValue, setFormValue, refresh} = props
         this.formValue = formValue;
         this.form = form;
         this.model = model;
@@ -174,6 +174,5 @@ export class EmbeddedMultipleSetInputFieldProps implements EmbeddedMultipleSetIn
         this.recordValue = recordValue;
         this.setFormValue = setFormValue
         this.refresh = refresh
-        this.inputElement = inputElement;
     }
 }

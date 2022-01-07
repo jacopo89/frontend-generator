@@ -2,7 +2,6 @@ import React, {DetailedReactHTMLElement, ReactElement} from "react";
 import {Errors} from "../generators/errors/Errors";
 import {Form} from "./formvalue/Form";
 import {Record} from "./Record";
-import {InputPropsInterface} from "./models/InputProps";
 import {PropertyFieldConfiguration} from "./configurations/PropertyFieldConfiguration";
 import _ from "lodash";
 import {PropertyModelInputInterface} from "./models/PropertyModelInputProps";
@@ -95,21 +94,4 @@ export interface InputOnChangeHandler{
     formValue:Form,
     setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
 }
-
-export interface InputFields{
-    model: PropertyModel,
-    formValue: Form | Map<number, Form>,
-    record?: Record | Map<number,Record>,
-    setFormValue:  React.Dispatch<React.SetStateAction<Form>>,
-    lockedFormValue: Form,
-    errors: Errors,
-    submitHandler: (e: any) => Promise<any>;
-    partialSubmitHandler: (e: any) => Promise<any>;
-    referencesMap: Map<string, any>;
-    form?: React.DetailedReactHTMLElement<any, any>,
-    refreshReferencesMap:()=>void;
-    inputElement?: DetailedReactHTMLElement<any, any>,
-    refresh?: () => void
-}
-
 

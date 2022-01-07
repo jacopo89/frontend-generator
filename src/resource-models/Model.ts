@@ -76,23 +76,23 @@ export class Model{
      * @param props
      * @param viewElement
      */
-    getInputField(requestedName:string, props: ModelInputInterface, viewElement: DetailedReactHTMLElement<any, any>): ReactElement<any, any>|null{
-        const newProps = this.setFieldProps(requestedName, props)
+    getInputField(requestedName:string, props: ModelInputInterface, viewElement?: DetailedReactHTMLElement<any, any>): ReactElement<any, any>|null{
+        const newProps: PropertyModelInputProps = this.setFieldProps(requestedName, props)
         return this.getProperty(requestedName).getInputField(newProps, new PropertyFieldConfiguration({viewElement:viewElement}));
     }
 
-    getOutputField(requestedName:string, props: ModelInputInterface, viewElement:DetailedReactHTMLElement<any, any>, showLabel:boolean = true): ReactElement<any, any>|null{
-        const newProps = this.setFieldProps(requestedName, props);
+    getOutputField(requestedName:string, props: ModelInputInterface, viewElement?:DetailedReactHTMLElement<any, any>, showLabel:boolean = true): ReactElement<any, any>|null{
+        const newProps: PropertyModelInputProps = this.setFieldProps(requestedName, props);
         return this.getProperty(requestedName).getOutputField(newProps, new PropertyFieldConfiguration({viewElement:viewElement, showLabel:showLabel}));
     }
 
     getConfiguredInputField(requestedName:string, props: ModelInputInterface, propertyFieldConfiguration:PropertyFieldConfiguration){
-        const newProps = this.setFieldProps(requestedName, props);
+        const newProps: PropertyModelInputProps = this.setFieldProps(requestedName, props);
         return this.getProperty(requestedName).getInputField(newProps, propertyFieldConfiguration);
     }
 
     getConfiguredOutputField(requestedName:string, props: ModelInputInterface, propertyFieldConfiguration:PropertyFieldConfiguration){
-        const newProps = this.setFieldProps(requestedName, props);
+        const newProps: PropertyModelInputProps = this.setFieldProps(requestedName, props);
         return this.getProperty(requestedName).getOutputField(newProps, propertyFieldConfiguration);
     }
 

@@ -8,7 +8,7 @@ import {ModelInputInterface} from "../interface/ModelInputInterface";
 
 export interface PropertyPropsInterface{
     model: PropertyModel,
-    record:any,
+    record?:Record | Map<number, Record> | undefined,
     recordValue: Record | Map<number, Record> | undefined
     formValue: Form | Map<number, Form>,
     form: Form,
@@ -59,6 +59,11 @@ export class PropertyModelInputProps{
         this.refresh = refresh;
     }
 
+    /**
+     * This method creates the most basic props for an input field.
+     * @param requestedName
+     * @param props
+     */
     static createFromFieldProps(requestedName:string, props:ModelInputInterface): PropertyModelInputProps{
         const {formValue, record, setFormValue, model, form} = props
         const localFormValue = (formvalue:any)=>{

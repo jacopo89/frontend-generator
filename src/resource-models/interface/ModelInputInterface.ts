@@ -6,7 +6,7 @@ import {Errors} from "../../generators/errors/Errors";
 
 export interface ModelInputInterface{
     model: Model,
-    record: Record,
+    record?: Record,
     formValue: Form,
     form: Form,
     setFormValue:  React.Dispatch<React.SetStateAction<Form>>,

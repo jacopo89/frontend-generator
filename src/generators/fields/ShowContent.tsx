@@ -4,7 +4,6 @@ import {Model} from "../../resource-models/Model";
 import {Record} from "../../resource-models/Record";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Errors} from "../errors/Errors";
-import {InputProps} from "../../resource-models/models/InputProps";
 
 export interface ShowContent{
     showElement?:  React.DetailedReactHTMLElement<any, any>
@@ -25,16 +24,15 @@ export interface ShowContent{
 }
 
 export const ShowContent: React.FC<ShowContent> = (props) => {
-    const {model, refresh, formValue, lockedFormValue, setFormValue, showElement, formContent, referencesMap, refreshReferencesMap, partialSubmitHandler, submitHandler, errors, record, loading, form} = props
+    const {model, showElement} = props
     if(showElement){
         return React.cloneElement(showElement, props);
     }
 
     return <Grid container spacing={2}>
         {model?.properties.map((propertyModel, index) => {
-            const props = new InputProps({model:propertyModel,partialSubmitHandler, submitHandler, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh, showLabel:true, loading:loading, form})
             return <Grid key={index} item xs={12} md={6}>
-                {propertyModel.getOutputField(props)}
+                {model.getOutputField(propertyModel.id,props)}
             </Grid>
         })
         }

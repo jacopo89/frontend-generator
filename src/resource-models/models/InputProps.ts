@@ -1,4 +1,3 @@
-import React, {DetailedReactHTMLElement} from "react";
 import {Form} from "../formvalue/Form";
 import {SinglePropertyModel} from "../propertyModels/SinglePropertyModel";
 import _ from "lodash";
@@ -12,45 +11,24 @@ import {EmbeddedMultipleModel} from "../propertyModels/EmbeddedMultipleModel";
 import {Errors} from "../../generators/errors/Errors";
 import {PropertyModelInputInterface, PropertyModelInputProps} from "./PropertyModelInputProps";
 import {EmbeddedSingleModel} from "../propertyModels/EmbeddedSingleModel";
+import SetInputFieldInterface from "../interface/SetInputFieldInterface";
 
-/**
- * INPUT PROPS
- */
-
-export interface InputPropsInterface extends PropertyModelInputInterface{
-    inputElement?: DetailedReactHTMLElement<any, any>
-    refresh: () => void,
-    showLabel?: boolean
-}
-
-export class InputProps extends PropertyModelInputProps{
-    inputElement?: DetailedReactHTMLElement<any, any>
-    refresh: () => void
-
-    constructor(props:InputPropsInterface) {
-        super(props);
-        this.refresh = props.refresh;
-    }
-}
 
 /**
  *  SINGLE INPUT PROPS
  */
 
-export interface SingleInputPropsInterface extends InputPropsInterface{
-    inputHandler: (vars:any) => void,
-    value: any,
-    label:string
+export interface SingleInputPropsInterface extends SetInputFieldInterface{
     formValue: Form
 }
 
-export class SingleInputProps extends InputProps{
+export class SingleInputProps extends PropertyModelInputProps{
     formValue: Form;
     model: SinglePropertyModel;
 
     constructor(props:SingleInputPropsInterface) {
-        console.log("constructing input props");
-        super(props);
+        super(props)
+
         const {formValue, model}= props
         this.formValue = formValue
         this.model = model;
@@ -76,12 +54,12 @@ export class SingleInputProps extends InputProps{
 /**
  * EMBEDDED SINGLE INPUT PROPS
  */
-export interface EmbeddedSingleInputPropsInterface extends InputPropsInterface{
+export interface EmbeddedSingleInputPropsInterface extends PropertyModelInputInterface{
     formValue: Form,
     model: EmbeddedSingleModel;
 }
 
-export class EmbeddedSingleInputProps extends InputProps{
+export class EmbeddedSingleInputProps extends PropertyModelInputProps{
     formValue: Form;
     record: Record|undefined;
     model: EmbeddedSingleModel;
@@ -107,13 +85,14 @@ export class EmbeddedSingleInputProps extends InputProps{
  *
  * */
 
-export interface EmbeddedMultipleInputPropsInterface extends InputPropsInterface{
+export interface EmbeddedMultipleInputPropsInterface extends PropertyModelInputInterface{
     formValue: Form,
     record: Map<number, Record>
     model: EmbeddedMultipleModel
+    showLabel: boolean
 }
 
-export class EmbeddedMultipleInputProps extends InputProps{
+export class EmbeddedMultipleInputProps extends PropertyModelInputProps{
     formValue: Form
     record: Map<number, Record>;
     model: EmbeddedMultipleModel;

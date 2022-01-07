@@ -9,16 +9,13 @@ import {EmbeddedMultipleSetInputFieldProps} from "../models/SetInputFieldProps";
 import {PropertyFieldConfigurationInterface} from "../configurations/PropertyFieldConfiguration";
 import {Typography} from "@material-ui/core";
 import _ from "lodash";
-import {EmbeddedSingleModel} from "./EmbeddedSingleModel";
-import {PropertyModelCore} from "../PropertyModelCore";
-import {EMBEDDED_SINGLE} from "../../generators/forms/inputs/InputTypes";
 
 
 export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
 
     setInputField(props: EmbeddedMultipleSetInputFieldProps, configuration?: PropertyFieldConfigurationInterface): React.ReactElement<any, any> | null {
 
-        const {formValue, recordValue, form, inputElement, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
+        const {formValue, recordValue, form, setFormValue, refreshReferencesMap, referencesMap, errors, partialSubmitHandler, submitHandler, loading, record, refresh} =  props;
         const setParentFormValue = (values:any) => {
             setFormValue( formValue.set(props.model.id, values));
         }
@@ -127,16 +124,5 @@ export class EmbeddedMultipleModel extends EmbeddedPropertyModel{
             }
         })
         return map;
-    }
-
-    getEmbeddedSingleModel(id:string): EmbeddedSingleModel{
-        return new EmbeddedSingleModel(id, new PropertyModelCore({
-            type: EMBEDDED_SINGLE,
-            resource: this.getResource(),
-            label: this.label,
-            resourceName: this.resourceName,
-            optionText: this.optionText,
-            form: this.form
-        }));
     }
 }

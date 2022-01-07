@@ -5,7 +5,6 @@ import {Model} from "../../resource-models/Model";
 import {Errors} from "../errors/Errors";
 import {Form} from "../../resource-models/formvalue/Form";
 import {Record} from "../../resource-models/Record";
-import {InputProps} from "../../resource-models/models/InputProps";
 import {PropertyFieldConfiguration} from "../../resource-models/configurations/PropertyFieldConfiguration";
 
 interface FormContentInterface {
@@ -34,7 +33,7 @@ interface FormContentInterface {
  */
 export const FormContent: React.FC<FormContentInterface> = (props) => {
 
-    const {partialSubmitHandler,loading, form, submitHandler, model, referencesMap ,refreshReferencesMap, formValue, lockedFormValue, setFormValue, errors, configuration, record, refresh}=props;
+    const { model, lockedFormValue, configuration}=props;
     if(configuration.viewElement){
         return React.cloneElement(configuration.viewElement, props);
     }
@@ -42,9 +41,8 @@ export const FormContent: React.FC<FormContentInterface> = (props) => {
     return <Grid container spacing={2}>
         {model.properties.map((propertyModel:PropertyModel, index:number) => {
                 const xs = 12; const md = 6;
-                const props = new InputProps({showLabel:true, model:propertyModel,partialSubmitHandler, submitHandler, loading, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh, form})
                 return <Grid item xs={xs} md={md} key={index}>
-                    {!lockedFormValue.has(propertyModel.id) && propertyModel.getPropertyField(props,configuration.isEdit)}
+                    {!lockedFormValue.has(propertyModel.id) && model.getInputField(propertyModel.id,props)}
                 </Grid>
             }
         )}

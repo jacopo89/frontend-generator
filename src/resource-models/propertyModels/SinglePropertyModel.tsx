@@ -1,4 +1,4 @@
-import {InputFields, PropertyModel} from "../PropertyModel";
+import {PropertyModel} from "../PropertyModel";
 import {Errors} from "../../generators/errors/Errors";
 import {Typography} from "@material-ui/core";
 import React from "react";
