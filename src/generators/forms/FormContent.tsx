@@ -40,9 +40,8 @@ export const FormContent: React.FC<FormContentInterface> = (props) => {
     }
 
     return <Grid container spacing={2}>
-        {model.properties
-            .map((propertyModel:PropertyModel, index:number) => {
-                const {xs,md} = propertyModel;
+        {model.properties.map((propertyModel:PropertyModel, index:number) => {
+                const xs = 12; const md = 6;
                 const props = new InputProps({showLabel:true, model:propertyModel,partialSubmitHandler, submitHandler, loading, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh, form})
                 return <Grid item xs={xs} md={md} key={index}>
                     {!lockedFormValue.has(propertyModel.id) && propertyModel.getPropertyField(props,configuration.isEdit)}

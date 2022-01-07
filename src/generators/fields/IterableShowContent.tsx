@@ -57,12 +57,10 @@ export const IterableShowContent: React.FC<IterableShowContentProps> = ({model,f
                     <Grid container spacing={2}>
                         {
                             model.properties.map((propertyModel, index) => {
-                                const {xs, md, id} = propertyModel;
-
                                 // @ts-ignore
                                 const formValue = formValueArray[index]
 
-                                return <Grid item xs={xs} md={md}>
+                                return <Grid item xs={12} md={6}>
                                     <ShowContent form={form} setFormValue={setParentFormValue} refresh={refresh} record={record.get(index) ?? new Record()} lockedFormValue={new Form()} formContent={inputElement} referencesMap={referencesMap} model={model} refreshReferencesMap={refreshReferencesMap} partialSubmitHandler={partialSubmitHandler} key={index} formValue={formValue} errors={errors} submitHandler={submitHandler} loading={loading}></ShowContent>
                                 </Grid>
                             })

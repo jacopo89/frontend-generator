@@ -36,7 +36,7 @@ export const EmbeddedFormContent: React.FC<EmbeddedFormContentProps> = (props) =
     return <Grid container spacing={2}>
         {model.properties
             .map((propertyModel:PropertyModel, index:number) => {
-                    const {xs,md} = propertyModel;
+                    const xs = 12; const md = 6;
                     const props = new InputProps({showLabel:true, model:propertyModel,partialSubmitHandler, submitHandler, loading, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), setFormValue, errors, refresh, form, lockedFormValue: new Form()})
                     return <Grid item xs={xs} md={md} key={index}>
                         {propertyModel.getPropertyField(props,configuration.isEdit)}

@@ -33,8 +33,7 @@ export const ShowContent: React.FC<ShowContent> = (props) => {
     return <Grid container spacing={2}>
         {model?.properties.map((propertyModel, index) => {
             const props = new InputProps({model:propertyModel,partialSubmitHandler, submitHandler, referencesMap ,refreshReferencesMap, formValue, record:record?.getPropertyRecord(propertyModel.id), recordValue:record?.getPropertyRecord(propertyModel.id), lockedFormValue, setFormValue, errors, refresh, showLabel:true, loading:loading, form})
-            const {xs, md, id} = propertyModel;
-            return <Grid key={index} item xs={xs} md={md}>
+            return <Grid key={index} item xs={12} md={6}>
                 {propertyModel.getOutputField(props)}
             </Grid>
         })

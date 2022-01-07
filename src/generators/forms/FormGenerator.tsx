@@ -13,7 +13,6 @@ import {Record} from "../../resource-models/Record";
 import {Errors} from "../errors/Errors";
 
 export interface Props{
-    resourceId?: string;
     submitHandler: (e: any) => Promise<any>;
     partialSubmitHandler: (e: any) => Promise<any>;
     loading: boolean;
@@ -26,7 +25,6 @@ export interface Props{
     setFormValue: React.Dispatch<React.SetStateAction<Form>>;
     text?:string;
     errors: Errors;
-    showButton?:boolean;
     formContent?:any;
     refresh: () => void
 }
@@ -40,7 +38,7 @@ export const FormGenerator: React.FC<Props> = (props:Props) => {
     const ref= useRef(null);
 
     // validation use effect
-    useEffect(()=>{
+    /*useEffect(()=>{
         ValidatorForm.addValidationRule('isUrl', (value:string) => {
             const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
                 '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
@@ -51,7 +49,7 @@ export const FormGenerator: React.FC<Props> = (props:Props) => {
             return !!pattern.test(value);
 
         });
-        },[form])
+        },[form])*/
 
     const validationSubmitHandler = (e:any) => {
         submitHandler(e)

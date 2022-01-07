@@ -21,8 +21,6 @@ export interface PropertyModel{
     single?:boolean;
     form: React.DetailedReactHTMLElement<any, any>;
     options?: Option[];
-    xs?:GridRange;
-    md?:GridRange;
     adornment?:string,
     showElement?:React.DetailedReactHTMLElement<any, any>;
     modifyOnlyLastElement?:boolean;
@@ -54,13 +52,11 @@ export abstract class PropertyModel {
     resourceName: string;
     optionText: string;
     form: React.DetailedReactHTMLElement<any, any>;
-    xs?: GridRange;
-    md?: GridRange;
     colorMap ?: object;
     modelResourceName: string;
 
     constructor(id: string, rest: any) {
-        const {type, label, validators = [], errorMessages = [], resourceName, optionText, form, xs = 12, md = 6, colorMap, modelResourceName} = rest;
+        const {type, label, validators = [], errorMessages = [], resourceName, optionText, form, colorMap, modelResourceName} = rest;
         this.id = id;
         this.type = type;
         this.label = _.startCase(label);
@@ -69,8 +65,6 @@ export abstract class PropertyModel {
         this.resourceName = resourceName;
         this.optionText = optionText;
         this.form = form;
-        this.xs = xs;
-        this.md = md;
         this.colorMap = colorMap;
         this.modelResourceName = modelResourceName;
     }
